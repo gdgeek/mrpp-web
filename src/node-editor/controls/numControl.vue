@@ -4,32 +4,30 @@
 
 <script>
 export default {
-  props: ["readonly", "emitter", "ikey", "getData", "putData"],
+  props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
 
-  data() {
+  data () {
     return {
-      value: 0,
+      value: 0
     }
   },
-
   methods: {
-    change(e){
-      this.value = +e.target.value;
-      this.update();
+    change (e) {
+      this.value = +e.target.value
+      this.update()
     },
-    update() {
-      if (this.ikey)
+    update () {
+      if (this.ikey) {
         this.putData(this.ikey, this.value)
-      this.emitter.trigger('process');
+        this.emitter.trigger('process')
+      }
     }
   },
-  mounted() {
-    this.value = this.getData(this.ikey);
+  mounted () {
+    this.value = this.getData(this.ikey)
   }
 }
 </script>
 
 <style>
 </style>
-
-

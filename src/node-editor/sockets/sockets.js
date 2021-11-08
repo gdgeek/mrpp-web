@@ -1,5 +1,4 @@
-import Rete from "rete";
+import Rete from 'rete'
 
-var NumSocket = new Rete.Socket('Number');
-export { NumSocket };
-
+var NumSocket = new Rete.Socket('Number')
+export { NumSocket }
