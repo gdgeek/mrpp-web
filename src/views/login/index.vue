@@ -1,30 +1,5 @@
 <template>
   <div class="login-container">
-    <el-row :gutter="20">
-      <el-col
-      :span="12"
-      :offset="6"
-        >
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="12" :offset="6"
-        ><div class="grid-content bg-purple"></div
-      ></el-col>
-      <el-col :span="12" :offset="6"
-        ><div class="grid-content bg-purple">
-          <div class="title-container">
-            <h3 class="title">混合现实编程平台</h3>
-          </div>
-        </div></el-col
-      >
-      <el-col :span="12" :offset="6"
-        ><div class="grid-content bg-purple"></div
-      ></el-col>
-      <el-col :span="12" :offset="6"
-        ><div class="grid-content bg-purple"></div
-      ></el-col>
-    </el-row>
-
     <el-form
       ref="loginForm"
       :model="loginForm"
@@ -33,6 +8,33 @@
       auto-complete="on"
       label-position="left"
     >
+      <div class="title-container">
+        <h3 class="title">混合现实编程平台</h3>
+      </div>
+      <!-- 手写开始 -->
+      <div class="loginbox">
+        <div class="loginboxhead">
+          <div class="box-title">Mixed Reality Programming Platform</div>
+          <h1 class="box-welcome">欢迎!</h1>
+          <p class="box-text">准备好出发了么？</p>
+          <div class="box-link">
+            <el-link type="primary" :underline="false">登录账号 </el-link>
+            <br />
+            <el-link type="primary" :underline="false">注册用户 </el-link>
+          </div>
+        </div>
+        <hr />
+        <div class="loginboxbody">
+          <div class="box-hint">微信扫码，得到测试资格</div>
+          <img 
+          src="@/assets/qrcode.jpg" 
+          class="box-qrcode"
+          width="100%" 
+          alt="qrcode" 
+          />
+        </div>
+      </div>
+      <!-- 手写结束 -->
       <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
@@ -87,7 +89,6 @@
 </template>
 
 <script>
-
 import { validUsername } from '@/utils/validate'
 
 export default {
@@ -164,9 +165,10 @@ export default {
 /* 修复input 背景不协调 和光标变色 */
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
-$bg: #283443;
-$light_gray: #fff;
+$bg:#283443;
+$light_gray:#fff;
 $cursor: #fff;
+
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
   .login-container .el-input input {
     color: $cursor;
@@ -207,50 +209,94 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg: #d3d6de;
-$dark_gray: #ffffff;
-$light_gray: #000;
-
-.el-row {
-  margin-bottom: 20px;
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-.el-col {
-  border-radius: 4px;
-}
-.bg-purple-dark {
-  background: #99a9bf;
-}
-.bg-purple {
-  background: #d3dce6;
-}
-.bg-purple-light {
-  background: #e5e9f2;
-}
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-}
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
-}
+$bg:#2d3a4b;
+$dark_gray:#889aa4;
+$light_gray:#eee;
 
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  background-color: #d3d6de;
   overflow: hidden;
-
+ 
   .login-form {
     position: relative;
-    width: 520px;
+    width: 430px;
     max-width: 100%;
-    padding: 160px 35px 0;
+    padding: 80px 35px 0;
     margin: 0 auto;
     overflow: hidden;
+  }
+  
+  .loginbox {
+    position: relative;
+    height: 670px;
+    width: 430px;
+    max-width: 100%;
+    padding: 20px 20px 0;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    border-radius: 2px;
+    background-color: #fff;
+    overflow: hidden;
+  }
+
+  .loginboxhead {
+    height:252px;
+    max-width: 100%;
+    // background-color: pink;
+  }
+
+  .box-title {
+    font-size: 14px;
+    text-align: center;
+    color: #666;
+  }
+
+  .box-welcome {
+    position: absolute;
+    left: 20px;
+    top: 76px;
+    font-size: 36px;
+    font-weight: normal;
+    color: #666;
+  }
+
+  .box-text {
+    position: absolute;
+    left: 20px;
+    top: 152px;
+    font-size: 21px;
+    font-weight: lighter;
+    color: #666;
+  }
+
+  .box-link {
+    position: absolute;
+    left: 20px;
+    top: 220px;
+  }
+
+  .loginboxbody {
+    padding-top: 14px;
+    height:310px;
+    max-width: 100%;
+    // background-color: rgb(127, 193, 219);
+  }
+
+  .box-hint {
+    font-size: 14px;
+    font-weight: lighter;
+    color: #666;
+    font-weight: bold;
+    // background-color: pink;
+  }
+
+  .box-qrcode {
+    margin-top: 2px;
+    border: 1px solid;
+    border-radius: 4px;
+    border-color:rgb(213, 216, 216);
   }
 
   .tips {
@@ -278,8 +324,8 @@ $light_gray: #000;
 
     .title {
       font-size: 35px;
-      color: $light_gray;
-      margin: 0px auto 40px auto;
+      color: #444444;
+      margin: 12px auto 30px auto;
       text-align: center;
       font-weight: bold;
     }
