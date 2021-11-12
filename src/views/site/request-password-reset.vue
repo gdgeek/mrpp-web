@@ -1,29 +1,24 @@
 <template>
   <Site>
-    <div class="login-head">
-      <h1 class="login-welcome">欢迎!</h1>
-      <p class="login-text">准备好出发了么？</p>
-      <div class="login-link">
-asdfasdfdsfasf;lasdfk
-        <router-link to="/site/login">
-          <el-link type="primary" :underline="false">登录账号 </el-link>
-        </router-link>
-        <br />
-        <router-link to="/site/signup">
-          <el-link type="primary" :underline="false">注册用户 </el-link>
-        </router-link>
-        <br />
-      </div>
-    </div>
-    <hr />
-    <div class="login-body">
-      <div class="login-hint">微信扫码，得到测试资格</div>
-      <img
-        src="@/assets/qrcode.jpg"
-        class="login-qrcode"
-        width="100%"
-        alt="qrcode"
-      />
+    <p class="request-tips">请填写你的电子邮件。一个重置密码的链接将被发送到那里。</p>
+    <el-form class="request-body" ref="form" :model="form" label-width="80px">
+      <el-form-item label="密码">
+        <el-input v-model="form.name" suffix-icon="el-icon-lock"></el-input>
+      </el-form-item>
+
+      <el-form-item class="request-button">
+        <el-button type="primary" @click="onSubmit">确定</el-button>
+      </el-form-item>
+    </el-form>
+    <div class="request-link">
+      <router-link to="/site/login">
+        <el-link type="primary" :underline="false">登录账号 </el-link>
+      </router-link>
+      <br />
+      <router-link to="/site/signup">
+        <el-link type="primary" :underline="false">注册用户 </el-link>
+      </router-link>
+      <br />
     </div>
   </Site>
 </template>
@@ -33,73 +28,57 @@ asdfasdfdsfasf;lasdfk
 import Site from '@/components/Site.vue'
 
 export default {
-  name: 'LoginIndex',
+  name: 'requestIndex',
   components: {
     Site
-  }
+  },
+  data() {
+      return {
+        form: {
+          name: '',
+          region: '',
+          date1: '',
+          date2: '',
+          delivery: false,
+          type: [],
+          resource: '',
+          desc: ''
+        }
+      }
+    },
+    methods: {
+      onSubmit() {
+        console.log('submit!');
+      }
+    }
 }
 </script>
-
-
 
 <style lang="scss" scoped>
 $bg: #2d3a4b;
 $dark_gray: #889aa4;
 $light_gray: #eee;
 
-.login-head {
-  padding: 10px 10px 10px 10px;
-  max-width: 100%;
-}
-
-.login-title {
-  font-size: 14px;
-  padding: 10px 10px 10px 10px;
+.request-tips {
+  margin: 30px 60px 0;
   text-align: center;
-  color: #666;
-}
-
-.login-welcome {
-  left: 20px;
-  top: 76px;
-  font-size: 36px;
-  font-weight: normal;
-  color: #666;
-}
-
-.login-text {
-  left: 20px;
-  top: 152px;
-  font-size: 21px;
   font-weight: lighter;
-  color: #666;
 }
-
-.login-link {
-  left: 20px;
-  top: 220px;
-}
-
-.login-body {
-  padding-top: 14px;
+.request-body {
+  margin-top: 20px;
   height: 100%;
   max-width: 100%;
-  padding: 10px 10px 20px 10px;
-  // background-color: rgb(127, 193, 219);
+  padding: 10px 60px 0px 10px;
 }
-
-.login-hint {
-  font-size: 14px;
-  font-weight: lighter;
-  color: #666;
-  font-weight: bold;
-  // background-color: pink;
+.request-button {
+  padding-left: 180px;
 }
-
-.login-qrcode {
-  margin-top: 2px;
-  border: 1px solid;
-  border-radius: 4px;
-  border-color: rgb(213, 216, 216);
+.request-link {
+  padding: 0 10px;
+  margin-bottom: 20px;
 }
+.request-link a{ 
+  color: rgb(28, 160, 212); 
+} 
 </style>
+

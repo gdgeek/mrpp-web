@@ -1,16 +1,16 @@
 <template>
   <Site>
     <div class="login-head">
-      <h1 class="login-welcome">欢迎!</h1>
-      <p class="login-text">准备好出发了么？</p>
+      <h1 class="login-welcome">登录页面修改中</h1>
+      <p class="login-text">登录页面</p>
       <div class="login-link">
 
         <router-link to="/site/login">
           <el-link type="primary" :underline="false">登录账号 </el-link>
         </router-link>
         <br />
-        <router-link to="/site/signup">
-          <el-link type="primary" :underline="false">注册用户 </el-link>
+        <router-link to="/site/request-password-reset">
+          <el-link type="primary" :underline="false">找回遗忘的密码 </el-link>
         </router-link>
         <br />
       </div>
@@ -60,24 +60,19 @@ $light_gray: #eee;
 }
 
 .login-welcome {
-  left: 20px;
-  top: 76px;
   font-size: 36px;
   font-weight: normal;
   color: #666;
 }
 
 .login-text {
-  left: 20px;
-  top: 152px;
   font-size: 21px;
   font-weight: lighter;
   color: #666;
 }
 
 .login-link {
-  left: 20px;
-  top: 220px;
+  padding: 10px 10px 10px 10px;
 }
 
 .login-body {
@@ -85,7 +80,6 @@ $light_gray: #eee;
   height: 100%;
   max-width: 100%;
   padding: 10px 10px 20px 10px;
-  // background-color: rgb(127, 193, 219);
 }
 
 .login-hint {
@@ -93,7 +87,6 @@ $light_gray: #eee;
   font-weight: lighter;
   color: #666;
   font-weight: bold;
-  // background-color: pink;
 }
 
 .login-qrcode {

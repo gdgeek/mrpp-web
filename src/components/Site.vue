@@ -4,14 +4,34 @@
       <div class="title">
         <h4>混合现实编程平台</h4>
       </div>
-      <!-- 手写开始 -->
+      <!-- box start-->
       <div class="box">
         <div class="sub-title">Mixed Reality Programming Platform</div>
         <slot></slot>
       </div>
-      <!-- 手写结束 -->
-
-      <div class="box">增加内容</div>
+      <!-- box end -->
+      <!-- footer start -->
+      <div class="footer">
+        <div class="foot-summary linkcolor">
+          <el-link 
+          href="https://trello.com/b/oxFuPkQy/" 
+          target="_blank"
+          type="primary" 
+          :underline="false" 
+          >当前进行工作 </el-link>
+        </div>  
+          <hr/>
+        <div class="foot-summary linkcolor">
+          <el-link type="primary" :underline="false">平台商业计划书 </el-link>
+        </div> 
+      </div>
+      <div class="foot-tips linkcolor">
+        <el-link href="https://bujiaban.com" target="_blank" :underline="false">上海不加班网络科技有限公司 </el-link>
+        <br />
+        <el-link href="https://beian.miit.gov.cn/" target="_blank" :underline="false">沪ICP备15039333号 </el-link>
+      </div>
+      <br />
+      <!-- footer end -->
     </div>
   </div>
 </template>
@@ -27,6 +47,8 @@ $bg:#2d3a4b;
 $dark_gray:#889aa4;
 $light_gray:#eee;
 
+.linkcolor a{ color: rgb(28, 160, 212);}
+
 .container {
   min-height: 100%;
   width: 100%;
@@ -37,18 +59,18 @@ $light_gray:#eee;
     position: relative;
     width: 500px;
     max-width: 100%;
-    padding: 80px 35px 0;
+    padding: 70px 35px 0;
     margin: 0 auto;
     overflow: hidden;
   }
   .box {
     position: relative;
     height: 100%;
-    width: 500;
+    width: 500px;
     max-width: 100%;
     padding: 10px 10px 10px 10px;
     margin: 0 auto;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     border-radius: 3px;
     background-color: #fff;
     overflow: hidden;
@@ -66,6 +88,21 @@ $light_gray:#eee;
     padding: 10px 10px 10px 10px;
     text-align: center;
     color: #666;
+  }
+  .footer {
+    height: 100%;
+    padding: 10px 10px 10px 10px;
+    border-radius: 3px;
+    background-color: #fff;
+    overflow: hidden;
+  }
+  .foot-summary {
+    height: 46px;
+    padding: 12px 10px;
+  }
+  .foot-tips {
+    margin: 30px 0 70px 0;
+    overflow: hidden;
   }
 }
 </style>
