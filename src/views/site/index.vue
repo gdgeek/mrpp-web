@@ -4,9 +4,14 @@
       <h1 class="login-welcome">欢迎!</h1>
       <p class="login-text">准备好出发了么？</p>
       <div class="login-link">
-        <el-link type="primary" :underline="false">登录账号 </el-link>
+        <router-link to="/site/login">
+          <el-link type="primary" :underline="false">登录账号 </el-link>
+        </router-link>
         <br />
-        <el-link type="primary" :underline="false">注册用户 </el-link>
+        <router-link to="/site/signup">
+          <el-link type="primary" :underline="false">注册用户 </el-link>
+        </router-link>
+        <br />
       </div>
     </div>
     <hr />

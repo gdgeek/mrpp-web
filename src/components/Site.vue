@@ -7,7 +7,6 @@
       <!-- 手写开始 -->
       <div class="box">
         <div class="sub-title">Mixed Reality Programming Platform</div>
-
         <slot></slot>
       </div>
       <!-- 手写结束 -->
@@ -42,7 +41,6 @@ $light_gray:#eee;
     margin: 0 auto;
     overflow: hidden;
   }
-  
   .box {
     position: relative;
     height: 100%;
@@ -55,7 +53,6 @@ $light_gray:#eee;
     background-color: #fff;
     overflow: hidden;
   }
-
   .title {
     font-size: 35px;
     color: #444444;
@@ -70,8 +67,5 @@ $light_gray:#eee;
     text-align: center;
     color: #666;
   }
-
-
-
 }
 </style>

@@ -37,28 +37,37 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/login',
-    component: () => import('@/views/login/index'),
+    path: '/abc',
+    component: () => import('@/views/site/index'),
     hidden: true
   },
-
+  {
+    path: '/site',
+    component: () => import('@/views/site/index'),
+    hidden: true
+  },
+  {
+    path: '/site/request-password-reset',
+    component: () => import('@/views/site/request-password-reset'),
+    hidden: true
+  },
+  {
+    path: '/site/login',
+    component: () => import('@/views/site/login'),
+    hidden: true
+  },
+  {
+    path: '/site/signup',
+    component: () => import('@/views/site/signup'),
+    hidden: true
+  },
   {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true
   },
 
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
-    }]
-  },
+  
 
   {
     path: '/example',
