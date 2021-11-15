@@ -12,8 +12,51 @@ import App from './App'
 import store from './store'
 import router from './router'
 
+
+import VueAxios from 'vue-axios'
+import axios from 'axios'
+import VueCookies from 'vue-cookies'
+
+
 import '@/icons' // icon
 import '@/permission' // permission control
+
+
+Vue.use(VueCookies)
+Vue.$cookies.config('7d')
+/*
+axios.interceptors.request.use(
+  function (config) {
+    if (store.state.api.access_token !== null) {
+      config.headers.Authorization = 'Bearer ' + store.state.api.access_token
+    }
+    return config
+  },
+  function (error) {
+    return Promise.reject(error)
+  }
+)
+axios.interceptors.response.use(
+response => {
+  return response
+},
+error => {
+  if (error.response) {
+    switch (error.response.status) {
+      case 401:
+        // 返回 401 清除token信息并跳转到登录页面
+        confirm('过期')
+        router.replace({
+          path: '/'
+        })
+        location.reload()
+    }
+  }
+  return Promise.reject(error.response.data)   // 返回接口返回的错误信息
+})
+*/
+Vue.use(VueAxios, axios)
+
 
 /**
  * If you don't want to use mock-server
@@ -23,10 +66,12 @@ import '@/permission' // permission control
  * Currently MockJs will be used in the production environment,
  * please remove it before going online ! ! !
  */
+/*
 if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')
   mockXHR()
 }
+*/
 
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale })

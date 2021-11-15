@@ -42,12 +42,15 @@
       <el-form-item>
         <el-button type="primary" @click="onSubmit">Create</el-button>
         <el-button @click="onCancel">Cancel</el-button>
+        <el-button @click="onTest">test</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
+
+import { importRouter } from '@/router'
 export default {
   data() {
     return {
@@ -66,6 +69,9 @@ export default {
   methods: {
     onSubmit() {
       this.$message('submit!')
+    },
+    onTest() {
+      importRouter()
     },
     onCancel() {
       this.$message({

@@ -11,31 +11,6 @@ const mutations = {
   }
 }
 const actions = {
-  async login ({ commit, state }, {username, password, succeed, failed}) {
-    Vue.axios.post(state.url + '/sites/login', {
-      username,
-      password
-    }).then((response) => {
-      console.log(response)
-      if (response.data) {
-        console.log(response.data.access_token)
-        commit('setupAccessToken', response.data.access_token)
-        if (typeof (succeed) !== 'undefined') {
-          succeed(response.data)
-        }
-      } else {
-        console.log(failed)
-        if (typeof (failed) !== 'undefined') {
-          failed()
-        }
-      }
-    }).catch(function (error) {
-      console.log(error)
-      if (typeof (failed) !== 'undefined') {
-        failed(error)
-      }
-    })
-  },
   async signup ({ state }, {data, succeed, failed}) {
     Vue.axios.post(state.url + '/sites/signup', {
       SignupForm: data

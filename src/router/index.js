@@ -31,6 +31,8 @@ import Layout from '@/layout'
  * all roles can be accessed
  */
 export const constantRoutes = [
+
+  
   {
     path: '/rete',
     component: () => import('@/views/test/rete'),
@@ -54,10 +56,11 @@ export const constantRoutes = [
   {
     path: '/site/login',
     component: () => import('@/views/site/login'),
-    hidden: true
-  },
+    hidden: true,
+  }, 
   {
     path: '/site/signup',
+    component: Layout,
     component: () => import('@/views/site/signup'),
     hidden: true
   },
@@ -66,9 +69,18 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
-
-  
-
+  {
+    path: '/',
+    component: Layout,
+    children: [
+      {
+        path: 'inde111x',
+        name: 'Form',
+        component: () => import('@/views/form/index'),
+        meta: { title: 'Form12121', icon: 'form' }
+      }
+    ]
+  },
   {
     path: '/example',
     component: Layout,
@@ -184,12 +196,25 @@ const createRouter = () => new Router({
   routes: constantRoutes
 })
 
+
+
 const router = createRouter()
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
+}
+const ttt = () => new Router({
+  mode: 'history', // require service support
+  scrollBehavior: () => ({ y: 0 }),
+  routes: []
+})
+
+export function importRouter(){
+  const newRouter = ttt()
+  router.matcher = newRouter.matcher // reset router
+  alert(1)
 }
 
 export default router

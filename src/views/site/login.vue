@@ -1,15 +1,15 @@
 <template>
   <Site>
-    <el-form class="login-body" ref="form" :model="form" label-width="75px">
-      <el-form-item label="用户名">
-        <el-input v-model="form.name" suffix-icon="el-icon-user"></el-input>
+    <el-form class="login-body" :rules="rules" ref="form" :model="form" label-width="75px">
+      <el-form-item label="用户名" prop="username">
+        <el-input v-model="form.username" suffix-icon="el-icon-user"></el-input>
       </el-form-item>
-      <el-form-item label="密码">
-        <el-input v-model="form.name" suffix-icon="el-icon-lock"></el-input>
+      <el-form-item label="密码" prop="password">
+        <el-input  type="password" v-model="form.password" suffix-icon="el-icon-lock"></el-input>
       </el-form-item>
 
       <el-form-item class="login-button">
-        <el-button type="primary" @click="onSubmit">开始创造世界</el-button>
+        <el-button type="primary" @click="submit('form')">开始创造</el-button>
       </el-form-item>
     </el-form>
     <div class="login-link">
@@ -28,31 +28,85 @@
 <script>
 // @ is an alias to /src
 import Site from '@/components/Site.vue'
-
+import { getToken, setToken} from '@/utils/auth'
+import {login} from '@/api/user'
 export default {
   name: 'Login',
   components: {
     Site
   },
+  computed: {
+  },
   data() {
-      return {
-        form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
-        }
-      }
-    },
-    methods: {
-      onSubmit() {
-        console.log('submit!');
+    return {
+      isShow: false,
+      title: 'test',
+      form: {
+        username: null,
+        password: null
+      },
+      rules: {
+        username: [
+          { required: true, message: '请输入用户名称', trigger: 'blur' },
+          { min: 5, message: '用户名称长度应该大于5', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 6, message: '密码长度应该大于6', trigger: 'blur' }
+        ]
       }
     }
+  },
+
+  methods: {
+    succeed (data) {
+      setToken(data.access_token)
+      this.$router.push('/')
+      ///let token = getToken()
+      //
+
+    },
+    failed (message) {
+      //alert(message)
+    },
+    submit (formName) {
+      let self = this
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          login({
+            username: self.form.username,
+            password: self.form.password
+          }).then((response) => {
+            console.log(response)
+            if (response.data) {
+              self.succeed(response.data)
+            }
+          }).catch(function (error) {
+            console.log(error)
+            self.failed(error)
+            if (typeof (failed) !== 'undefined') {
+              failed(error)
+            }
+          })
+        } else {
+          return false
+        }
+      })
+    },
+    error (msg) {
+      this.title = ''
+      if (typeof (msg) === 'string') {
+        this.title = msg
+      } else {
+        let i = 0
+        for (let item in msg) {
+          ++i
+          this.title += i + '.' + item + ' : ' + msg[item] + '\n'
+        }
+      }
+      this.isShow = true
+    }
+  }
 }
 </script>
 
