@@ -30,7 +30,7 @@
 import Site from '@/components/Site.vue'
 
 export default {
-  name: 'LoginIndex',
+  name: 'Login',
   components: {
     Site
   },

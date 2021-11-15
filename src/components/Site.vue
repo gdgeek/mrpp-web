@@ -18,17 +18,17 @@
           target="_blank"
           type="primary" 
           :underline="false" 
-          >当前进行工作 </el-link>
+          ><i class="el-icon-s-flag"></i> 当前进行工作 </el-link>
         </div>  
           <hr/>
         <div class="foot-summary linkcolor">
-          <el-link type="primary" :underline="false">平台商业计划书 </el-link>
+          <el-link type="primary" :underline="false"><i class="el-icon-picture"></i> 平台商业计划书 </el-link>
         </div> 
       </div>
       <div class="foot-tips linkcolor">
-        <el-link href="https://bujiaban.com" target="_blank" :underline="false">上海不加班网络科技有限公司 </el-link>
+        <el-link href="https://bujiaban.com" target="_blank" :underline="false"><i class="el-icon-s-home"></i> 上海不加班网络科技有限公司 </el-link>
         <br />
-        <el-link href="https://beian.miit.gov.cn/" target="_blank" :underline="false">沪ICP备15039333号 </el-link>
+        <el-link href="https://beian.miit.gov.cn/" target="_blank" :underline="false"><i class="el-icon-s-order"></i> 沪ICP备15039333号 </el-link>
       </div>
       <br />
       <!-- footer end -->
