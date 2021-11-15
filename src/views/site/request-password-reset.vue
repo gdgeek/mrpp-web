@@ -1,9 +1,9 @@
 <template>
   <Site>
     <p class="request-tips">请填写你的电子邮件。一个重置密码的链接将被发送到那里。</p>
-    <el-form class="request-body" ref="form" :model="form" label-width="80px">
+    <el-form ref="form" class="request-body" :model="form" label-width="80px">
       <el-form-item label="密码">
-        <el-input v-model="form.name" suffix-icon="el-icon-lock"></el-input>
+        <el-input v-model="form.name" suffix-icon="el-icon-lock" />
       </el-form-item>
 
       <el-form-item class="request-button">
@@ -14,11 +14,11 @@
       <router-link to="/site/login">
         <el-link type="primary" :underline="false">登录账号 </el-link>
       </router-link>
-      <br />
+      <br>
       <router-link to="/site/signup">
         <el-link type="primary" :underline="false">注册用户 </el-link>
       </router-link>
-      <br />
+      <br>
     </div>
   </Site>
 </template>
@@ -28,29 +28,29 @@
 import Site from '@/components/Site.vue'
 
 export default {
-  name: 'requestIndex',
+  name: 'RequestIndex',
   components: {
     Site
   },
   data() {
-      return {
-        form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
-        }
-      }
-    },
-    methods: {
-      onSubmit() {
-        console.log('submit!');
+    return {
+      form: {
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
       }
     }
+  },
+  methods: {
+    onSubmit() {
+      console.log('submit!')
+    }
+  }
 }
 </script>
 
@@ -77,8 +77,8 @@ $light_gray: #eee;
   padding: 0 10px;
   margin-bottom: 20px;
 }
-.request-link a{ 
-  color: rgb(28, 160, 212); 
-} 
+.request-link a{
+  color: rgb(28, 160, 212);
+}
 </style>
 

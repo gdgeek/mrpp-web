@@ -7,8 +7,8 @@ const state = {
     }
   ]
 }
-function title () {
-  let items = []
+function title() {
+  const items = []
   items.push(
     {
       type: 'item',
@@ -18,10 +18,10 @@ function title () {
   )
   return items
 }
-function tree (info) {
-  let items = []
+function tree(info) {
+  const items = []
   info.forEach(
-    function (item, index) {
+    function(item, index) {
       if (item.items) {
         items.push(
           {
@@ -48,7 +48,7 @@ function tree (info) {
   return items
 }
 const mutations = {
-  saveMenu (state, info) {
+  saveMenu(state, info) {
     state.items = title().concat(tree(info))
   }
 }

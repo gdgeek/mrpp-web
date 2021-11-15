@@ -5,13 +5,13 @@ const state = {
 }
 
 const mutations = {
-  setTitle (state, title) {
+  setTitle(state, title) {
     state.title = title
   },
-  setSubTitle (state, subTitle) {
+  setSubTitle(state, subTitle) {
     state.subTitle = subTitle
   },
-  setBreadcrumbs (state, breadcrumbs) {
+  setBreadcrumbs(state, breadcrumbs) {
     state.breadcrumbs = breadcrumbs
   }
 }

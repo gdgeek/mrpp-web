@@ -6,25 +6,25 @@ const state = {
   access_token: null
 }
 const mutations = {
-  setupAccessToken (state, token) {
+  setupAccessToken(state, token) {
     state.access_token = token
   }
 }
 const actions = {
-  async signup ({ state }, {data, succeed, failed}) {
+  async signup({ state }, { data, succeed, failed }) {
     Vue.axios.post(state.url + '/sites/signup', {
       SignupForm: data
     }).then((response) => {
       console.log(response)
       succeed(response.data)
-    }).catch(function (error) {
+    }).catch(function(error) {
       console.log(error)
       if (typeof (failed) !== 'undefined') {
         failed(error)
       }
     })
   },
-  async loadMenu ({ state }, { succeed, failed }) {
+  async loadMenu({ state }, { succeed, failed }) {
     Vue.axios.get(state.url + '/menus').then((response) => {
       if (response.data) {
         if (typeof (succeed) !== 'undefined') {
@@ -35,14 +35,14 @@ const actions = {
           failed()
         }
       }
-    }).catch(function (error) {
+    }).catch(function(error) {
       console.log(error)
       if (typeof (failed) !== 'undefined') {
         failed(error)
       }
     })
   },
-  async loadUser ({ state }, { succeed, failed }) {
+  async loadUser({ state }, { succeed, failed }) {
     Vue.axios.get(state.url + '/servers/user').then((response) => {
       if (response.data) {
         if (typeof (succeed) !== 'undefined') {
@@ -53,7 +53,7 @@ const actions = {
           failed()
         }
       }
-    }).catch(function (error) {
+    }).catch(function(error) {
       console.log(error)
       if (typeof (failed) !== 'undefined') {
         failed(error)

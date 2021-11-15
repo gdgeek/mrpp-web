@@ -1,22 +1,22 @@
 <template>
-  <div id="rete" v-show="visible" ref="rete"></div>
+  <div v-show="visible" id="rete" ref="rete" />
 </template>
 
 <script>
-import init from "../node-editor";
+import init from '../node-editor'
 
 export default {
   data() {
     return {
       visible: true
-    };
-  },
-  methods: {
+    }
   },
   mounted() {
-    init(this.$refs.rete);
+    init(this.$refs.rete)
+  },
+  methods: {
   }
-};
+}
 </script>
 
 <style>

@@ -1,11 +1,11 @@
 <template>
   <Site>
-    <el-form class="login-body" :rules="rules" ref="form" :model="form" label-width="75px">
+    <el-form ref="form" class="login-body" :rules="rules" :model="form" label-width="75px">
       <el-form-item label="用户名" prop="username">
-        <el-input v-model="form.username" suffix-icon="el-icon-user"></el-input>
+        <el-input v-model="form.username" suffix-icon="el-icon-user" />
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input  type="password" v-model="form.password" suffix-icon="el-icon-lock"></el-input>
+        <el-input v-model="form.password" type="password" suffix-icon="el-icon-lock" />
       </el-form-item>
 
       <el-form-item class="login-button">
@@ -16,11 +16,11 @@
       <router-link to="/site/signup">
         <el-link type="primary" :underline="false">注册新账号 </el-link>
       </router-link>
-      <br />
+      <br>
       <router-link to="/site/request-password-reset">
         <el-link type="primary" :underline="false">找回遗忘的密码 </el-link>
       </router-link>
-      <br />
+      <br>
     </div>
   </Site>
 </template>
@@ -28,14 +28,12 @@
 <script>
 // @ is an alias to /src
 import Site from '@/components/Site.vue'
-import { getToken, setToken} from '@/utils/auth'
-import {login} from '@/api/user'
+import { getToken, setToken } from '@/utils/auth'
+import { login } from '@/api/user'
 export default {
   name: 'Login',
   components: {
     Site
-  },
-  computed: {
   },
   data() {
     return {
@@ -57,20 +55,21 @@ export default {
       }
     }
   },
+  computed: {
+  },
 
   methods: {
-    succeed (data) {
+    succeed(data) {
       setToken(data.access_token)
       this.$router.push('/')
-      ///let token = getToken()
+      // /let token = getToken()
       //
-
     },
-    failed (message) {
-      //alert(message)
+    failed(message) {
+      // alert(message)
     },
-    submit (formName) {
-      let self = this
+    submit(formName) {
+      const self = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
           login({
@@ -81,7 +80,7 @@ export default {
             if (response.data) {
               self.succeed(response.data)
             }
-          }).catch(function (error) {
+          }).catch(function(error) {
             console.log(error)
             self.failed(error)
             if (typeof (failed) !== 'undefined') {
@@ -93,13 +92,13 @@ export default {
         }
       })
     },
-    error (msg) {
+    error(msg) {
       this.title = ''
       if (typeof (msg) === 'string') {
         this.title = msg
       } else {
         let i = 0
-        for (let item in msg) {
+        for (const item in msg) {
           ++i
           this.title += i + '.' + item + ' : ' + msg[item] + '\n'
         }
@@ -128,8 +127,8 @@ $light_gray: #eee;
   padding: 0 10px;
   margin-bottom: 20px;
 }
-.login-link a{ 
-  color: rgb(28, 160, 212); 
-} 
+.login-link a{
+  color: rgb(28, 160, 212);
+}
 </style>
 

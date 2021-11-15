@@ -32,16 +32,22 @@ import Layout from '@/layout'
  */
 export const constantRoutes = [
 
-  
   {
     path: '/rete',
     component: () => import('@/views/test/rete'),
     hidden: true
   },
+  
   {
-    path: '/abc',
-    component: () => import('@/views/site/index'),
-    hidden: true
+    path: '/document',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Index',
+        component: () => import('@/views/document/index')
+      }
+    ]
   },
   {
     path: '/site',
@@ -56,8 +62,8 @@ export const constantRoutes = [
   {
     path: '/site/login',
     component: () => import('@/views/site/login'),
-    hidden: true,
-  }, 
+    hidden: true
+  },
   {
     path: '/site/signup',
     component: Layout,
@@ -74,7 +80,7 @@ export const constantRoutes = [
     component: Layout,
     children: [
       {
-        path: 'inde111x',
+        path: 'index',
         name: 'Form',
         component: () => import('@/views/form/index'),
         meta: { title: 'Form12121', icon: 'form' }
@@ -196,8 +202,6 @@ const createRouter = () => new Router({
   routes: constantRoutes
 })
 
-
-
 const router = createRouter()
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
@@ -211,7 +215,7 @@ const ttt = () => new Router({
   routes: []
 })
 
-export function importRouter(){
+export function importRouter() {
   const newRouter = ttt()
   router.matcher = newRouter.matcher // reset router
   alert(1)

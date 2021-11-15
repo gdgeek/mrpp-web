@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Rete/>
+    <Rete />
   </div>
 </template>
 

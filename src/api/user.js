@@ -8,7 +8,12 @@ export function login(data) {
     data
   })
 }
-
+export function getMenu() {
+  return request({
+    url: '/servers/menu',
+    method: 'get'
+  })
+}
 export function getInfo(token) {
   return request({
     url: '/servers/user',

@@ -7,40 +7,38 @@
       <!-- box start-->
       <div class="box">
         <div class="sub-title">Mixed Reality Programming Platform</div>
-        <slot></slot>
+        <slot />
       </div>
       <!-- box end -->
       <!-- footer start -->
       <div class="footer">
         <div class="foot-summary linkcolor">
-          <el-link 
-          href="https://trello.com/b/oxFuPkQy/" 
-          target="_blank"
-          type="primary" 
-          :underline="false" 
-          ><i class="el-icon-s-flag"></i> 当前进行工作 </el-link>
-        </div>  
-          <hr/>
+          <el-link
+            href="https://trello.com/b/oxFuPkQy/"
+            target="_blank"
+            type="primary"
+            :underline="false"
+          ><i class="el-icon-s-flag" /> 当前进行工作 </el-link>
+        </div>
+        <hr>
         <div class="foot-summary linkcolor">
-          <el-link type="primary" :underline="false"><i class="el-icon-picture"></i> 平台商业计划书 </el-link>
-        </div> 
+          <el-link type="primary" :underline="false"><i class="el-icon-picture" /> 平台商业计划书 </el-link>
+        </div>
       </div>
       <div class="foot-tips linkcolor">
-        <el-link href="https://bujiaban.com" target="_blank" :underline="false"><i class="el-icon-s-home"></i> 上海不加班网络科技有限公司 </el-link>
-        <br />
-        <el-link href="https://beian.miit.gov.cn/" target="_blank" :underline="false"><i class="el-icon-s-order"></i> 沪ICP备15039333号 </el-link>
+        <el-link href="https://bujiaban.com" target="_blank" :underline="false"><i class="el-icon-s-home" /> 上海不加班网络科技有限公司 </el-link>
+        <br>
+        <el-link href="https://beian.miit.gov.cn/" target="_blank" :underline="false"><i class="el-icon-s-order" /> 沪ICP备15039333号 </el-link>
       </div>
-      <br />
+      <br>
       <!-- footer end -->
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {}
 </script>
-
-
 
 <style lang="scss" scoped>
 $bg:#2d3a4b;
@@ -54,7 +52,7 @@ $light_gray:#eee;
   width: 100%;
   background-color: #d3d6de;
   overflow: hidden;
- 
+
   .main {
     position: relative;
     width: 500px;
@@ -81,7 +79,7 @@ $light_gray:#eee;
     margin: 12px auto 30px auto;
     text-align: center;
     font-weight: bold;
-   
+
   }
   .sub-title {
     font-size: 14px;

@@ -2,6 +2,7 @@
   <div :class="{'has-logo':showLogo}">
     <logo v-if="showLogo" :collapse="isCollapse" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
+      
       <el-menu
         :default-active="activeMenu"
         :collapse="isCollapse"
@@ -12,8 +13,9 @@
         :collapse-transition="false"
         mode="vertical"
       >
-        <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path" />
+        <sidebar-item v-for="item in items" :key="item.url[0]" :item="item" :collapse="isCollapse" :base-path="item.url[0]" />
       </el-menu>
+
     </el-scrollbar>
   </div>
 </template>
@@ -26,12 +28,23 @@ import variables from '@/styles/variables.scss'
 
 export default {
   components: { SidebarItem, Logo },
+  created (){
+    this.menu.forEach(function(element){
+      console.log(element)
+      console.log(element.icon)
+      console.log(element.url[0])
+    })
+  },
   computed: {
     ...mapGetters([
-      'sidebar'
+      'sidebar',
+      'menu'
     ]),
     routes() {
       return this.$router.options.routes
+    },
+    items() {
+      return this.menu
     },
     activeMenu() {
       const route = this.$route

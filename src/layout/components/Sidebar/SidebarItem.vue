@@ -1,14 +1,38 @@
 <template>
   <div v-if="!item.hidden">
-    <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
-      <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
-        <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
-          <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />
-        </el-menu-item>
-      </app-link>
-    </template>
+    <div v-if="!item.items">
 
-    <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
+      <app-link :to="item.url[0]" v-if="this.$route.path !== item.url[0]"  :align="align">
+        <el-menu-item index="item.url[0]"><font-awesome-icon :icon="item.icon"></font-awesome-icon>  <span v-if="!collapse">{{item.label}}</span></el-menu-item>
+      </app-link>
+      <div v-else :align="align">
+        <el-menu-item disabled index="item.url[0]"><font-awesome-icon :icon="item.icon"></font-awesome-icon>  <span v-if="!collapse">{{item.label}}</span></el-menu-item>
+      </div>
+    </div>
+    <div v-else>
+       <el-submenu ref="subMenu" :index="item.url[0]" popper-append-to-body>
+        <template slot="title" >
+          <div :align="align" >
+          <font-awesome-icon :icon="item.icon"></font-awesome-icon> <span v-if="!collapse">{{item.label}}</span>
+          </div>
+         
+        </template>
+       
+        <sidebar-item
+        v-for="child in item.items"
+        :key="child.url[0]"
+        :is-nest="true"
+        :item="child"
+        :base-path="child.url[0]"
+        class="nest-menu"
+        />
+    </el-submenu>
+       
+    </div>
+  
+    
+
+    <el-submenu v-if="false" ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
       <template slot="title">
         <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
       </template>
@@ -36,6 +60,10 @@ export default {
   components: { Item, AppLink },
   mixins: [FixiOSBug],
   props: {
+    collapse: {
+      type: Boolean,
+      required: true
+    },
     // route object
     item: {
       type: Object,
@@ -49,6 +77,14 @@ export default {
       type: String,
       default: ''
     }
+  },
+  computed: {
+    align() {
+      return this.collapse? 'center': 'left'
+    }
+  },
+  created() {
+    console.log(this.$route.path)
   },
   data() {
     // To fix https://github.com/PanJiaChen/vue-admin-template/issues/237

@@ -1,26 +1,26 @@
 <template>
   <Site>
     <div class="signup-head">
-      <el-form class="signup-form"  label-width="70px">
+      <el-form class="signup-form" label-width="70px">
         <el-form-item label="用户名">
-          <el-input suffix-icon="el-icon-user"></el-input>
+          <el-input suffix-icon="el-icon-user" />
         </el-form-item>
         <el-form-item label="电子邮件">
-          <el-input suffix-icon="el-icon-message"></el-input>
+          <el-input suffix-icon="el-icon-message" />
         </el-form-item>
         <el-form-item label="密码">
-          <el-input suffix-icon="el-icon-lock"></el-input>
+          <el-input suffix-icon="el-icon-lock" />
         </el-form-item>
         <el-form-item label="确认密码">
-          <el-input suffix-icon="el-icon-view"></el-input>
+          <el-input suffix-icon="el-icon-view" />
         </el-form-item>
         <el-form-item label="邀请码">
-          <el-input suffix-icon="el-icon-connection"></el-input>
+          <el-input suffix-icon="el-icon-connection" />
         </el-form-item>
         <el-form-item>
           <el-button-group class="signup-button">
             <el-button type="primary">注册</el-button>
-            <el-button >重置</el-button>
+            <el-button>重置</el-button>
           </el-button-group>
         </el-form-item>
       </el-form>
@@ -28,14 +28,14 @@
         <router-link to="/site/login">
           <el-link type="primary" :underline="false">登录账号 </el-link>
         </router-link>
-        <br />
+        <br>
         <router-link to="/site/request-password-reset">
           <el-link type="primary" :underline="false">找回遗忘的密码 </el-link>
         </router-link>
-        <br />
+        <br>
       </div>
     </div>
-    <hr />
+    <hr>
     <div class="signup-body">
       <div class="signup-hint">微信扫码，得到测试资格</div>
       <img
@@ -43,7 +43,7 @@
         class="signup-qrcode"
         width="100%"
         alt="qrcode"
-      />
+      >
     </div>
   </Site>
 </template>
@@ -59,7 +59,6 @@ export default {
   }
 }
 </script>
-
 
 <style lang="scss" scoped>
 $bg: #2d3a4b;
@@ -82,9 +81,9 @@ $light_gray: #eee;
 .signup-link {
   padding: 10px 10px 10px 10px;
 }
-.signup-link a{ 
-  color: rgb(28, 160, 212); 
-} 
+.signup-link a{
+  color: rgb(28, 160, 212);
+}
 
 .signup-body {
   padding-top: 14px;
