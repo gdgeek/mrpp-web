@@ -14,10 +14,18 @@
 // @ is an alias to /src
 import Site from '@/components/Site.vue'
 
+import { verifEmail } from '@/api/user'
 export default {
   name: 'VerifyEmail',
   components: {
     Site
+  },
+  created: function (){
+    verifEmail(this.token).then(response => {
+        console.log(response)
+    }).catch(error => {
+        console.log(error)
+    })
   }
 }
 </script>

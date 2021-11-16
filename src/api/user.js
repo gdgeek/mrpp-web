@@ -8,6 +8,12 @@ export function login(data) {
     data
   })
 }
+export function verifEmail(token){
+  return request({
+    url: '/sites/verify-email?token=' + token,
+    method: 'get'
+  })
+}
 export function signup(data){
   return request({
     url: '/sites/signup',
