@@ -29,9 +29,13 @@
           <el-link type="primary" :underline="false">登录账号 </el-link>
         </router-link>
         <br>
+        <router-link to="/site/resend-verification-email">
+          <el-link type="primary" :underline="false">重新发送验证邮件 </el-link>
+        </router-link>
+        <br>
         <router-link to="/site/request-password-reset">
           <el-link type="primary" :underline="false">找回遗忘的密码 </el-link>
-        </router-link>
+        </router-link>   
         <br>
       </div>
     </div>
@@ -70,7 +74,7 @@ $light_gray: #eee;
   max-width: 100%;
 }
 .signup-form {
-  margin-top: 10px;
+  margin-top: 20px;
   height: 100%;
   max-width: 100%;
   padding: 10px 20px 0px 10px;

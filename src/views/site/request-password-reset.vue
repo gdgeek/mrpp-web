@@ -1,13 +1,13 @@
 <template>
   <Site>
-    <p class="request-tips">请填写你的电子邮件。一个重置密码的链接将被发送到那里。</p>
-    <el-form ref="form" class="request-body" :model="form" label-width="80px">
+    <p class="request-tips">请输入您注册时候的邮箱，一个重置密码的链接将被发送到那里。</p>
+    <el-form ref="form" class="request-body" :model="form" label-width="70px">
       <el-form-item label="密码">
         <el-input v-model="form.name" suffix-icon="el-icon-lock" />
       </el-form-item>
 
       <el-form-item class="request-button">
-        <el-button type="primary" @click="onSubmit">确定</el-button>
+        <el-button style="width: 160px" type="primary" @click="onSubmit">确定</el-button>
       </el-form-item>
     </el-form>
     <div class="request-link">
@@ -28,7 +28,7 @@
 import Site from '@/components/Site.vue'
 
 export default {
-  name: 'RequestIndex',
+  name: 'RequestPasswordReset',
   components: {
     Site
   },
@@ -62,7 +62,6 @@ $light_gray: #eee;
 .request-tips {
   margin: 30px 60px 0;
   text-align: center;
-  font-weight: lighter;
 }
 .request-body {
   margin-top: 20px;
@@ -71,7 +70,7 @@ $light_gray: #eee;
   padding: 10px 60px 0px 10px;
 }
 .request-button {
-  padding-left: 180px;
+  padding-left: 46px;
 }
 .request-link {
   padding: 0 10px;

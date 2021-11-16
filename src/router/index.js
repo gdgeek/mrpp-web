@@ -70,6 +70,11 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/site/resend-verification-email',
+    component: () => import('@/views/site/resend-verification-email'),
+    hidden: true
+  },
+  {
     path: '/site/login',
     component: () => import('@/views/site/login'),
     hidden: true
@@ -78,6 +83,12 @@ export const constantRoutes = [
     path: '/site/signup',
     component: Layout,
     component: () => import('@/views/site/signup'),
+    hidden: true
+  },
+   {
+    path: '/site/verify-email',
+    component: Layout,
+    component: () => import('@/views/site/verify-email'),
     hidden: true
   },
   {

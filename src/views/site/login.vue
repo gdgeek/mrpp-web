@@ -9,7 +9,7 @@
       </el-form-item>
 
       <el-form-item class="login-button">
-        <el-button type="primary" @click="submit('form')">开始创造</el-button>
+        <el-button style="width: 160px" type="primary" @click="submit('form')">开始创造</el-button>
       </el-form-item>
     </el-form>
     <div class="login-link">
@@ -115,13 +115,13 @@ $dark_gray: #889aa4;
 $light_gray: #eee;
 
 .login-body {
-  margin-top: 20px;
+  margin-top: 36px;
   height: 100%;
   max-width: 100%;
   padding: 10px 40px 0px 10px;
 }
 .login-button {
-  padding-left: 146px;
+  padding-left: 41px;
 }
 .login-link {
   padding: 0 10px;

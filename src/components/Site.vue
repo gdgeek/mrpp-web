@@ -69,7 +69,7 @@ $light_gray:#eee;
     padding: 10px 10px 10px 10px;
     margin: 0 auto;
     margin-bottom: 20px;
-    border-radius: 3px;
+    border-radius: 5px;
     background-color: #fff;
     overflow: hidden;
   }
@@ -90,7 +90,7 @@ $light_gray:#eee;
   .footer {
     height: 100%;
     padding: 10px 10px 10px 10px;
-    border-radius: 3px;
+    border-radius: 5px;
     background-color: #fff;
     overflow: hidden;
   }
