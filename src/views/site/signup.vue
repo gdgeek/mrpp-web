@@ -1,5 +1,6 @@
 <template>
   <Site>
+    <h2 class="signup-title">注册用户</h2>
     <div class="signup-head">
       <el-form ref="form" :rules="rules" :model="form" class="signup-form" label-width="80px">
         <el-form-item label="用户名"  prop="username">
@@ -162,8 +163,14 @@ $bg: #2d3a4b;
 $dark_gray: #889aa4;
 $light_gray: #eee;
 
+.signup-title{
+  color: #444444;
+  margin: 20px 0 20px;
+  text-align: center;
+  font-weight: bold;
+}
 .signup-head {
-  padding: 10px 10px 10px 10px;
+  padding: 0 10px 10px 10px;
   max-width: 100%;
 }
 .signup-form {
@@ -173,13 +180,14 @@ $light_gray: #eee;
   padding: 10px 20px 0px 10px;
 }
 .signup-button {
-  padding-left: 50px;
+  padding-left: 42px;
 }
 .signup-link {
   padding: 10px 10px 10px 10px;
 }
 .signup-link a{
   color: rgb(28, 160, 212);
+  font-size: 16px;
 }
 
 .signup-body {

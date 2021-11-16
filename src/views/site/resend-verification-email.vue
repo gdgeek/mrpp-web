@@ -1,6 +1,6 @@
 <template>
   <Site>
-    
+    <h2 class="resend-title">重新验证邮件</h2>
     <p class="resend-tips">请输入您的邮箱，我们会重新发送验证邮件到这里。</p>
     <el-form ref="form" class="resend-body" :rules="rules" :model="form" label-width="80px">
      <el-form-item label="电子邮件"  prop="email">
@@ -31,7 +31,7 @@ import Site from '@/components/Site.vue'
 import { resendVerificationEmail } from '@/api/user'
 
 export default {
-  name: 'resendVerificationEmail',
+  name: 'ResendVerificationEmail',
   components: {
     Site
   },
@@ -77,7 +77,12 @@ export default {
 $bg: #2d3a4b;
 $dark_gray: #889aa4;
 $light_gray: #eee;
-
+.resend-title {
+  color: #444444;
+  margin: 20px 0 20px;
+  text-align: center;
+  font-weight: bold;
+}
 .resend-tips {
   margin: 30px 60px 0;
   text-align: center;
@@ -86,10 +91,10 @@ $light_gray: #eee;
   margin-top: 20px;
   height: 100%;
   max-width: 100%;
-  padding: 10px 60px 0px 10px;
+  padding: 10px 30px 0px 20px;
 }
 .resend-button {
-  padding-left: 46px;
+  text-align:right;
 }
 .resend-link {
   padding: 0 10px;
@@ -97,6 +102,7 @@ $light_gray: #eee;
 }
 .resend-link a{
   color: rgb(28, 160, 212);
+  font-size: 16px;
 }
 </style>
 

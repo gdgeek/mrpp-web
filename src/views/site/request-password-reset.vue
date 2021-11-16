@@ -1,5 +1,6 @@
 <template>
   <Site>
+    <h2 class="request-title">找回密码</h2>
     <p class="request-tips">请输入您注册时候的邮箱，一个重置密码的链接将被发送到那里。</p>
     <el-form ref="form" class="request-body" :rules="rules" :model="form" label-width="80px">
       <el-form-item label="注册邮箱"  prop="email">
@@ -7,7 +8,7 @@
       </el-form-item>
 
       <el-form-item class="request-button">
-        <el-button style="width: 160px" type="primary" @click="submit('form')">确定</el-button>
+        <el-button style="width: 120px" type="primary" @click="submit('form')">确定</el-button>
       </el-form-item>
     </el-form>
     <div class="request-link">
@@ -77,25 +78,33 @@ $bg: #2d3a4b;
 $dark_gray: #889aa4;
 $light_gray: #eee;
 
+.request-title {
+    color: #444444;
+    margin: 20px 0 20px;
+    text-align: center;
+    font-weight: bold;
+}
 .request-tips {
-  margin: 30px 60px 0;
+  margin: 10px 60px 0;
   text-align: center;
 }
 .request-body {
   margin-top: 20px;
   height: 100%;
   max-width: 100%;
-  padding: 10px 60px 0px 10px;
+  padding: 10px 30px 0px 20px;
 }
 .request-button {
-  padding-left: 46px;
+  text-align:right;
 }
 .request-link {
+  
   padding: 0 10px;
   margin-bottom: 20px;
 }
 .request-link a{
   color: rgb(28, 160, 212);
+  font-size: 16px;
 }
 </style>
 

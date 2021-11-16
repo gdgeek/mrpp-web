@@ -1,5 +1,6 @@
 <template>
   <Site>
+    <h2 class="login-title">登录账号</h2>
     <el-form ref="form" class="login-body" :rules="rules" :model="form" label-width="75px">
       <el-form-item label="用户名" prop="username">
         <el-input v-model="form.username" suffix-icon="el-icon-user" />
@@ -9,12 +10,12 @@
       </el-form-item>
 
       <el-form-item class="login-button">
-        <el-button style="width: 160px" type="primary" @click="submit('form')">开始创造</el-button>
+        <el-button style="width: 110px" type="primary" @click="submit('form')">开始创造</el-button>
       </el-form-item>
     </el-form>
     <div class="login-link">
       <router-link to="/site/signup">
-        <el-link type="primary" :underline="false">注册账号 </el-link>
+        <el-link type="primary" :underline="false">注册用户 </el-link>
       </router-link>
       <br>
       <router-link to="/site/request-password-reset">
@@ -113,7 +114,12 @@ export default {
 $bg: #2d3a4b;
 $dark_gray: #889aa4;
 $light_gray: #eee;
-
+.login-title{
+  color: #444444;
+  margin: 20px 0 20px;
+  text-align: center;
+  font-weight: bold;
+}
 .login-body {
   margin-top: 36px;
   height: 100%;
@@ -121,7 +127,7 @@ $light_gray: #eee;
   padding: 10px 40px 0px 10px;
 }
 .login-button {
-  padding-left: 41px;
+  text-align:right;
 }
 .login-link {
   padding: 0 10px;
@@ -129,6 +135,7 @@ $light_gray: #eee;
 }
 .login-link a{
   color: rgb(28, 160, 212);
+  font-size: 16px;
 }
 </style>
 
