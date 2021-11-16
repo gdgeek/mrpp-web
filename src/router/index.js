@@ -37,7 +37,17 @@ export const constantRoutes = [
     component: () => import('@/views/test/rete'),
     hidden: true
   },
-  
+  {
+    path: '/home',
+    component: Layout,
+    children: [
+      {
+        path: 'invitation',
+        name: 'Invitation',
+        component: () => import('@/views/jump')
+      }
+    ]
+  },
   {
     path: '/document',
     component: Layout,
