@@ -8,6 +8,28 @@ export function login(data) {
     data
   })
 }
+export function signup(data){
+  return request({
+    url: '/sites/signup',
+    method: 'post',
+    data
+  })
+}
+export function requestPasswordReset(data){
+  return request({
+    url: '/sites/request-password-reset',
+    method: 'post',
+    data
+  })
+
+}
+export function resendVerificationEmail(data){
+  return request({
+    url: '/sites/resend-verification-email',
+    method: 'post',
+    data
+  })
+}
 export function getMenu() {
   return request({
     url: '/servers/menu',

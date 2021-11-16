@@ -1,13 +1,13 @@
 <template>
   <Site>
     <p class="request-tips">请输入您注册时候的邮箱，一个重置密码的链接将被发送到那里。</p>
-    <el-form ref="form" class="request-body" :model="form" label-width="70px">
-      <el-form-item label="密码">
-        <el-input v-model="form.name" suffix-icon="el-icon-lock" />
+    <el-form ref="form" class="request-body" :rules="rules" :model="form" label-width="80px">
+      <el-form-item label="注册邮箱"  prop="email">
+        <el-input v-model="form.email" suffix-icon="el-icon-lock" />
       </el-form-item>
 
       <el-form-item class="request-button">
-        <el-button style="width: 160px" type="primary" @click="onSubmit">确定</el-button>
+        <el-button style="width: 160px" type="primary" @click="submit('form')">确定</el-button>
       </el-form-item>
     </el-form>
     <div class="request-link">
@@ -27,6 +27,7 @@
 // @ is an alias to /src
 import Site from '@/components/Site.vue'
 
+import { requestPasswordReset } from '@/api/user'
 export default {
   name: 'RequestPasswordReset',
   components: {
@@ -34,21 +35,38 @@ export default {
   },
   data() {
     return {
-      form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+       form: {
+        email: null
+      },
+      rules: {
+        email: [
+          { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+          { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+        ]
       }
     }
   },
   methods: {
-    onSubmit() {
-      console.log('submit!')
+    submit (formName) {
+      let self = this
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          self.postEmail()
+        } else {
+          return false
+        }
+      })
+    },
+    postEmail () {
+      let self = this
+      requestPasswordReset({
+        PasswordResetRequestForm: self.form
+      }).then((response) => {
+        console.log(response)
+      }).catch(function (error) {
+        console.log(error)
+        
+      })
     }
   }
 }

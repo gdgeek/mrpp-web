@@ -1,20 +1,16 @@
 <template>
   <Site>
+    
     <p class="resend-tips">请输入您的邮箱，我们会重新发送验证邮件到这里。</p>
-    <el-form ref="form" class="resend-body" :rules="rules" :model="form" label-width="70px">
-     <el-form-item label="电子邮件">
+    <el-form ref="form" class="resend-body" :rules="rules" :model="form" label-width="80px">
+     <el-form-item label="电子邮件"  prop="email">
        <el-input v-model="form.email" suffix-icon="el-icon-message" />
      </el-form-item>
       <el-form-item class="resend-button">
-        <el-button style="width: 160px" type="primary" @click="onSubmit">确定</el-button>
+        <el-button style="width: 160px" type="primary" @click="submit('form')">确定</el-button>
       </el-form-item>
     </el-form>
-     <el-alert
-        :title="title"
-        type="error"
-        v-show="isShow"
-        :closable="false"
-      ></el-alert>
+    
     <div class="resend-link">
       <router-link to="/site/login">
         <el-link type="primary" :underline="false">登录账号 </el-link>
@@ -32,15 +28,15 @@
 // @ is an alias to /src
 import Site from '@/components/Site.vue'
 
+import { resendVerificationEmail } from '@/api/user'
+
 export default {
-  name: 'resendPasswordReset',
+  name: 'resendVerificationEmail',
   components: {
     Site
   },
   data() {
     return {
-      isShow: false,
-      title: 'test',
       form: {
         email: null,
       },
@@ -53,9 +49,26 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
-      console.log('submit!')
-    }
+    submit(formName) {
+      let self = this
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          self.postEmail()
+        } else {
+          return false
+        }
+      })
+    },
+    postEmail () {
+      let self = this
+      resendVerificationEmail({
+        ResendVerificationEmailForm: self.form
+      }).then((response) => {
+          console.log(response)
+      }).catch(function (error) {
+          console.log(error)
+      })
+    },
   }
 }
 </script>

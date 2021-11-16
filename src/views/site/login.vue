@@ -14,11 +14,11 @@
     </el-form>
     <div class="login-link">
       <router-link to="/site/signup">
-        <el-link type="primary" :underline="false">注册新账号 </el-link>
+        <el-link type="primary" :underline="false">注册账号 </el-link>
       </router-link>
       <br>
       <router-link to="/site/request-password-reset">
-        <el-link type="primary" :underline="false">找回遗忘的密码 </el-link>
+        <el-link type="primary" :underline="false">找回密码 </el-link>
       </router-link>
       <br>
     </div>
@@ -28,7 +28,7 @@
 <script>
 // @ is an alias to /src
 import Site from '@/components/Site.vue'
-import { getToken, setToken } from '@/utils/auth'
+import { setToken } from '@/utils/auth'
 import { login } from '@/api/user'
 export default {
   name: 'Login',

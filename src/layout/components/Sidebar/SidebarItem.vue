@@ -3,17 +3,17 @@
     <div v-if="!item.items">
 
       <app-link :to="item.url[0]" v-if="this.$route.path !== item.url[0]"  :align="align">
-        <el-menu-item index="item.url[0]"><font-awesome-icon :icon="item.icon"></font-awesome-icon>  <span v-if="!collapse">{{item.label}}</span></el-menu-item>
+        <el-menu-item index="item.url[0]"><font-awesome-icon :icon="item.icon"></font-awesome-icon>  <span v-if="!isCollapse">{{item.label}}</span></el-menu-item>
       </app-link>
       <div v-else :align="align">
-        <el-menu-item disabled index="item.url[0]"><font-awesome-icon :icon="item.icon"></font-awesome-icon>  <span v-if="!collapse">{{item.label}}</span></el-menu-item>
+        <el-menu-item disabled index="item.url[0]"><font-awesome-icon :icon="item.icon"></font-awesome-icon>  <span v-if="!isCollapse">{{item.label}}</span></el-menu-item>
       </div>
     </div>
     <div v-else>
        <el-submenu ref="subMenu" :index="item.url[0]" popper-append-to-body>
         <template slot="title" >
           <div :align="align" >
-          <font-awesome-icon :icon="item.icon"></font-awesome-icon> <span v-if="!collapse">{{item.label}}</span>
+          <font-awesome-icon :icon="item.icon"></font-awesome-icon> <span v-if="!isCollapse">{{item.label}}</span>
           </div>
          
         </template>
@@ -24,6 +24,7 @@
         :is-nest="true"
         :item="child"
         :base-path="child.url[0]"
+        :collapse="false"
         class="nest-menu"
         />
     </el-submenu>
@@ -79,8 +80,11 @@ export default {
     }
   },
   computed: {
+    isCollapse() {
+      return this.collapse
+    },
     align() {
-      return this.collapse? 'center': 'left'
+      return this.isCollapse? 'center': 'left'
     }
   },
   created() {
