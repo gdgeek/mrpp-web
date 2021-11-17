@@ -1,7 +1,7 @@
 <template>
   <Site>
     <h2 class="reset-title">重置密码</h2>
-    <p class="reset-tips">请输入您注册时候的邮箱，一个重置密码的链接将被发送到那里。</p>
+    <p class="reset-tips">请输入您新的密码，用于重置。</p>
     <el-form ref="form" class="reset-body" :rules="rules" :model="form" label-width="80px">
       <el-form-item label="密码" prop="password">
         <el-input autocomplete="off" suffix-icon="el-icon-lock" v-model="form.password" type="password" />
@@ -30,7 +30,7 @@
 // @ is an alias to /src
 import Site from '@/components/Site.vue'
 
-import { requestPasswordReset } from '@/api/user'
+import { RestpPassword } from '@/api/user'
 export default {
   name: 'ResetPassword',
   components: {

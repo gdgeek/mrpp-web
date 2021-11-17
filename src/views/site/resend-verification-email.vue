@@ -7,7 +7,7 @@
        <el-input v-model="form.email" suffix-icon="el-icon-message" />
      </el-form-item>
       <el-form-item class="resend-button">
-        <el-button style="width: 160px" type="primary" @click="submit('form')">确定</el-button>
+        <el-button style="width: 120px" type="primary" @click="submit('form')">确定</el-button>
       </el-form-item>
     </el-form>
     
@@ -84,7 +84,7 @@ $light_gray: #eee;
   font-weight: bold;
 }
 .resend-tips {
-  margin: 30px 60px 0;
+  margin: 30px 100px 0;
   text-align: center;
 }
 .resend-body {

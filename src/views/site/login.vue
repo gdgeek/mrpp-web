@@ -10,7 +10,7 @@
       </el-form-item>
 
       <el-form-item class="login-button">
-        <el-button style="width: 110px" type="primary" @click="submit('form')">开始创造</el-button>
+        <el-button style="width: 120px" type="primary" @click="submit('form')">开始创造</el-button>
       </el-form-item>
     </el-form>
     <div class="login-link">

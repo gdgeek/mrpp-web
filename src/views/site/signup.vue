@@ -20,8 +20,8 @@
         </el-form-item>
         <el-form-item>
           <el-button-group class="signup-button">
-            <el-button type="primary" @click="submit('form')">注册</el-button>
-            <el-button @click="resetForm('form')">重置</el-button>
+            <el-button style="width: 110px" type="primary" @click="submit('form')">注册</el-button>
+            <el-button style="width: 110px" @click="resetForm('form')">重置</el-button>
           </el-button-group>
         </el-form-item>
       </el-form>
@@ -178,9 +178,6 @@ $light_gray: #eee;
   height: 100%;
   max-width: 100%;
   padding: 10px 20px 0px 10px;
-}
-.signup-button {
-  padding-left: 42px;
 }
 .signup-link {
   padding: 10px 10px 10px 10px;
