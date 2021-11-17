@@ -1,10 +1,29 @@
 <template>
   <Site>
     <div class="verify-head">
-      <h1 class="verify-welcome">欢迎!</h1>
-      <p class="verify-text">准备好出发了么？</p>
+     
       <div>
          <p class="verify-lead">正在验证信箱</p>
+         <el-alert v-if="fail"
+          title="验证失败"
+          :closable="false"
+          type="error">
+          无效的信箱token！
+        </el-alert>
+      </div>
+        <br />
+       <div class="module-link">
+        <router-link to="/site/index">
+          <el-link type="primary" :underline="false">欢迎页面 </el-link>
+        </router-link>
+        <br />
+        <router-link to="/site/login">
+          <el-link type="primary" :underline="false">登录账号 </el-link>
+        </router-link>
+        <br />
+        <router-link to="/site/signup">
+          <el-link type="primary" :underline="false">注册用户 </el-link>
+        </router-link>
       </div>
     </div>
   </Site>
@@ -17,14 +36,28 @@ import Site from '@/components/Site.vue'
 import { verifEmail } from '@/api/user'
 export default {
   name: 'VerifyEmail',
+
+  data () {
+    return {
+      fail: false
+    }
+  },
+  computed: {
+    token () {
+      return this.$route.query.token
+    }
+  },
   components: {
     Site
   },
   created: function (){
+    const self = this
     verifEmail(this.token).then(response => {
-        console.log(response)
+      console.log(response)
+      self.$store.commit('flashSetup', {title: '信箱验证成功', description: '邮箱验证成功，请登录平台。'})
+      self.$router.push({path: '/'})
     }).catch(error => {
-        console.log(error)
+        self.fail = true
     })
   }
 }
@@ -62,7 +95,7 @@ $light_gray: #eee;
 
 .verify-lead {
   font-size: 21px;
-  font-weight: lighter;
+  font-weight: normal;
   color: #666;
 }
 </style>

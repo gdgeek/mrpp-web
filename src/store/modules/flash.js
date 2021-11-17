@@ -1,21 +1,21 @@
 const state = {
   main: {
-    title: null,
-    type: null,
-    description: null
+    title: 'title',
+    type: 'success',
+    description: 'description',
+    show: false
   }
 }
 
 const mutations = {
-  flashSetup(state, { title, type, description }) {
+  flashSetup(state, { title, type = 'success', description = null}) {
     state.main.title = title
     state.main.type = type
     state.main.description = description
+    state.main.show = true
   },
   flashClean(state) {
-    state.main.title = null
-    state.main.type = null
-    state.main.description = null
+    state.main.show = false
   }
 
 }

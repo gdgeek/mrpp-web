@@ -14,11 +14,12 @@ export function verifEmail(token){
     method: 'get'
   })
 }
-export function signup(data){
+export function signup(info){
+  console.log(info)
   return request({
     url: '/sites/signup',
     method: 'post',
-    data
+    data: {"SignupForm": info}
   })
 }
 export function requestPasswordReset(data){

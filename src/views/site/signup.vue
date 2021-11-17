@@ -58,9 +58,17 @@
 <script>
 // @ is an alias to /src
 import Site from '@/components/Site.vue'
+import { mapMutations } from 'vuex'
 import { signup } from '@/api/user'
 export default {
   name: 'Signup',
+  methods: {
+    ...mapMutations([
+      'flashSetup'
+    ])
+  },
+  created () {
+  },
   data () {
     let validatePassword = (rule, value, callback) => {
       if (value === '') {
@@ -82,8 +90,6 @@ export default {
       }
     }
     return {
-      isShow: false,
-      title: 'test',
       form: {
         username: null,
         email: null,
@@ -124,7 +130,8 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           signup(self.form).then(data => {
-            self.back()
+            self.$store.commit('flashSetup', {title: '注册成功', description: '感谢您的注册。请检查您的收件箱中的验证邮件。'})
+            self.$router.push({path: '/'})
           }).catch(error => {
             console.log(error)
           })
@@ -143,10 +150,6 @@ export default {
         }
       }
       this.isShow = true
-    },
-    back () {
-      //this.flashSetup({title: '注册成功', type: 'success', description: '感谢您的注册。请检查您的收件箱中的验证邮件。'})
-      this.$router.push({path: '/'})
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()

@@ -53,7 +53,6 @@ error => {
   return Promise.reject(error.response.data)   // 返回接口返回的错误信息
 })
 */
-Vue.use(VueAxios, axios)
 
 /**
  * If you don't want to use mock-server
