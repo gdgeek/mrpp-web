@@ -35,19 +35,6 @@ export function resendVerificationEmail(data) {
     data: { ResendVerificationEmailForm: data }
   })
 }
-export function getMenu() {
-  return request({
-    url: '/servers/menu',
-    method: 'get'
-  })
-}
-export function getInfo(token) {
-  return request({
-    url: '/servers/user',
-    method: 'get',
-    params: { token }
-  })
-}
 export function resetPasswordToken(token) {
   return request({
     url: '/sites/password-reset-token?token=' + token,
@@ -59,11 +46,5 @@ export function resetPassword(token, data) {
     url: '/sites/reset-password?token=' + token,
     method: 'post',
     data: { ResetPasswordForm: data }
-  })
-}
-export function logout() {
-  return request({
-    url: '/servers/logout',
-    method: 'get'
   })
 }

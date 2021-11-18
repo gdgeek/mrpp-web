@@ -2,36 +2,35 @@
   <div v-if="!item.hidden">
     <div v-if="!item.items">
 
-      <app-link :to="item.url[0]" v-if="this.$route.path !== item.url[0]"  :align="align">
-        <el-menu-item index="item.url[0]"><font-awesome-icon :icon="item.icon"></font-awesome-icon>  <span v-if="!isCollapse">{{item.label}}</span></el-menu-item>
+      <app-link v-if="this.$route.path !== item.url[0]" :to="item.url[0]" :align="align">
+        <el-menu-item :index="layer+':' + item.url[0]"><font-awesome-icon :icon="item.icon" />  <span v-if="!isCollapse">{{ item.label }}</span></el-menu-item>
       </app-link>
       <div v-else :align="align">
-        <el-menu-item disabled index="item.url[0]"><font-awesome-icon :icon="item.icon"></font-awesome-icon>  <span v-if="!isCollapse">{{item.label}}</span></el-menu-item>
+        <el-menu-item disabled :index="layer+':' + item.url[0]"><font-awesome-icon :icon="item.icon" />  <span v-if="!isCollapse">{{ item.label }}</span></el-menu-item>
       </div>
     </div>
     <div v-else>
-       <el-submenu ref="subMenu" :index="item.url[0]" popper-append-to-body>
-        <template slot="title" >
-          <div :align="align" >
-          <font-awesome-icon :icon="item.icon"></font-awesome-icon> <span v-if="!isCollapse">{{item.label}}</span>
+      <el-submenu ref="subMenu" :index="layer+':' + item.url[0]" popper-append-to-body>
+        <template slot="title">
+          <div :align="align">
+            <font-awesome-icon :icon="item.icon" /> <span v-if="!isCollapse">{{ item.label }}</span>
           </div>
-         
+
         </template>
-       
+
         <sidebar-item
-        v-for="child in item.items"
-        :key="child.url[0]"
-        :is-nest="true"
-        :item="child"
-        :base-path="child.url[0]"
-        :collapse="false"
-        class="nest-menu"
+          v-for="child in item.items"
+          :key="child.url[0]"
+          :is-nest="true"
+          :item="child"
+          :base-path="child.url[0]"
+          :collapse="false"
+          :layer="layer+1"
+          class="nest-menu"
         />
-    </el-submenu>
-       
+      </el-submenu>
+
     </div>
-  
-    
 
     <el-submenu v-if="false" ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
       <template slot="title">
@@ -65,7 +64,10 @@ export default {
       type: Boolean,
       required: true
     },
-    // route object
+    layer: {
+      type: Number,
+      required: 0
+    },
     item: {
       type: Object,
       required: true
@@ -79,22 +81,22 @@ export default {
       default: ''
     }
   },
-  computed: {
-    isCollapse() {
-      return this.collapse
-    },
-    align() {
-      return this.isCollapse? 'center': 'left'
-    }
-  },
-  created() {
-    console.log(this.$route.path)
-  },
   data() {
     // To fix https://github.com/PanJiaChen/vue-admin-template/issues/237
     // TODO: refactor with render function
     this.onlyOneChild = null
     return {}
+  },
+  computed: {
+    isCollapse() {
+      return this.collapse
+    },
+    align() {
+      return this.isCollapse ? 'center' : 'left'
+    }
+  },
+  created() {
+    console.log(this.$route.path)
   },
   methods: {
     hasOneShowingChild(children = [], parent) {

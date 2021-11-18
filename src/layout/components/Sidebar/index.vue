@@ -2,7 +2,7 @@
   <div :class="{'has-logo':showLogo}">
     <logo v-if="showLogo" :collapse="isCollapse" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
-      
+
       <el-menu
         :default-active="activeMenu"
         :collapse="isCollapse"
@@ -28,8 +28,8 @@ import variables from '@/styles/variables.scss'
 
 export default {
   components: { SidebarItem, Logo },
-  created (){
-    this.menu.forEach(function(element){
+  created() {
+    this.menu.forEach(function(element) {
       console.log(element)
       console.log(element.icon)
       console.log(element.url[0])
