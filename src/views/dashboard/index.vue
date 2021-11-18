@@ -8,7 +8,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: '混合现实',
+  name: 'Dashboard',
   computed: {
     ...mapGetters([
       'name'

@@ -30,7 +30,7 @@ service.interceptors.response.use(
   /**
    * If you want to get http information such as headers or status
    * Please return  response => response
-  */
+   */
 
   /**
    * Determine the request status by custom code
@@ -39,7 +39,7 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-    if(typeof(res.code) === 'undefined'){
+    if (typeof res.code === 'undefined') {
       res.code = 20000
     }
     // if the custom code is not 20000, it is judged as an error.
@@ -53,11 +53,15 @@ service.interceptors.response.use(
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
       if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
         // to re-login
-        MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-          confirmButtonText: 'Re-Login',
-          cancelButtonText: 'Cancel',
-          type: 'warning'
-        }).then(() => {
+        MessageBox.confirm(
+          'You have been logged out, you can cancel to stay on this page, or log in again',
+          'Confirm logout',
+          {
+            confirmButtonText: 'Re-Login',
+            cancelButtonText: 'Cancel',
+            type: 'warning'
+          }
+        ).then(() => {
           store.dispatch('user/resetToken').then(() => {
             location.reload()
           })
@@ -70,27 +74,27 @@ service.interceptors.response.use(
   },
   error => {
     console.log('err' + error) // for debug
-    
+
     Message({
       message: error.message,
       type: 'error',
-      duration: 5 * 1000,
-    }) 
+      duration: 5 * 1000
+    })
     setTimeout(() => {
       let message = ''
-      try{
-        message = JSON.parse(error.response.data.message);
-      }catch{
-        message = error.response.data.message;
+      try {
+        message = JSON.parse(error.response.data.message)
+      } catch {
+        message = error.response.data.message
       }
       Message({
         message: message,
         type: 'error',
-        duration: 5 * 1000,
-      }) 
-    }, 300);
-    
-    return Promise.reject(error.response.data) 
+        duration: 5 * 1000
+      })
+    }, 300)
+
+    return Promise.reject(error.response.data)
     // return Promise.reject(error)
   }
 )
