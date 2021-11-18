@@ -1,8 +1,8 @@
 <template>
   <Site>
     <div class="logout-head">
-      <h1 class="logout-welcome">欢迎!</h1>
-      <p class="logout-text">准备好出发了么？</p>
+      <h1 class="logout-welcome"> 正在登出</h1>
+      <p class="logout-text">向服务器注销此次登陆</p>
       <div>
         <p class="logout-lead" />
       </div>
@@ -13,18 +13,19 @@
 <script>
 // @ is an alias to /src
 import Site from '@/components/Site.vue'
-import { verifEmail } from '@/api/user'
 export default {
   name: 'Logout',
   components: {
     Site
   },
   created: function() {
-    verifEmail(this.token).then(response => {
-      console.log(response)
-    }).catch(error => {
-      console.log(error)
-    })
+    this.logout()
+  },
+  methods: {
+    async logout() {
+      await this.$store.dispatch('user/logout')
+      this.$router.push(`/site?redirect=${this.$route.fullPath}`)
+    }
   }
 }
 </script>

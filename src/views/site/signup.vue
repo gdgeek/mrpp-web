@@ -164,7 +164,7 @@ export default {
                 title: '注册成功',
                 description: '感谢您的注册。请检查您的收件箱中的验证邮件。'
               })
-              self.$router.push({ path: '/' })
+              self.$router.push({ path: '/site' })
             })
             .catch(error => {
               console.log(error)

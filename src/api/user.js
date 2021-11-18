@@ -33,7 +33,7 @@ export function resendVerificationEmail(data) {
   return request({
     url: '/sites/resend-verification-email',
     method: 'post',
-    data
+    data: { ResendVerificationEmailForm: data }
   })
 }
 export function getMenu() {

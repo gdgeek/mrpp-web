@@ -69,7 +69,7 @@ export default {
           type: 'error',
           description: '验证码错误或者过期，请重新申请修改密码。'
         })
-        self.$router.push({ path: '/' })
+        self.$router.push({ path: '/site' })
       })
     },
     submit(formName) {
@@ -81,7 +81,7 @@ export default {
               title: '修改密码成功',
               description: '请登录您的账户。'
             })
-            self.$router.push({ path: '/' })
+            self.$router.push({ path: '/site' })
           }).catch(error => {
             console.log(error)
           })

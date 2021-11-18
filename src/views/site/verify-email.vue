@@ -55,7 +55,7 @@ export default {
           title: '信箱验证成功',
           description: '邮箱验证成功，请登录平台。'
         })
-        self.$router.push({ path: '/' })
+        self.$router.push({ path: '/site' })
       }).catch(error => {
         console.log(error)
         self.fail = true

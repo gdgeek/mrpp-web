@@ -87,7 +87,7 @@ export default {
             description:
               '请检查您的收件箱中的验证邮件，通过链接来重新设置您的密码。'
           })
-          self.$router.push({ path: '/' })
+          self.$router.push({ path: '/site' })
         })
         .catch(function(error) {
           console.log(error)
