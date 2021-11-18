@@ -12,11 +12,11 @@ const whiteList = [
   '/site',
   '/site/index',
   '/site/verify-email',
- '/site/login',
+  '/site/login',
   '/site/signup',
- '/site/request-password-reset',
- '/site/resend-verification-email',
- '/site/resetpassword',
+  '/site/request-password-reset',
+  '/site/resend-verification-email',
+  '/site/reset-password'
 ] // no redirect whitelist
 
 router.beforeEach(async(to, from, next) => {

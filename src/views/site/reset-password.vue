@@ -47,11 +47,47 @@
 <script>
 // @ is an alias to /src
 import Site from '@/components/Site.vue'
-// import { RestpPassword } from '@/api/user'
+import { resetPasswordToken, resetPassword } from '@/api/user'
+import { mapMutations } from 'vuex'
 export default {
   name: 'ResetPassword',
   components: {
     Site
+  },
+  methods: {
+    ...mapMutations([
+      'flashSetup'
+    ]),
+    checkToken: function() {
+      const self = this
+      resetPasswordToken(self.token).then(response => {
+        console.log(response)
+      }).catch(error => {
+        console.log(error)
+        self.flashSetup({
+          title: '修改密码失败',
+          type: 'error',
+          description: '验证码错误或者过期，请重新申请修改密码。'
+        })
+        self.$router.push({ path: '/' })
+      })
+    },
+    submit(formName) {
+      const self = this
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          resetPassword(self.token, self.form).then(response => {
+            self.flashSetup({
+              title: '修改密码成功',
+              description: '请登录您的账户。'
+            })
+            self.$router.push({ path: '/' })
+          }).catch(error => {
+            console.log(error)
+          })
+        }
+      })
+    }
   },
   data() {
     const validatePassword = (rule, value, callback) => {
@@ -64,20 +100,43 @@ export default {
         callback()
       }
     }
+    const checkPassword = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'))
+      } else if (value !== this.form.password) {
+        callback(new Error('两次输入密码不一致!'))
+      } else {
+        callback()
+      }
+    }
 
     return {
       form: {
-        password: null
+        password: null,
+        checkPassword: null
       },
       rules: {
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
           { min: 6, message: '密码长度应该大于6', trigger: 'blur' },
           { validator: validatePassword, trigger: 'blur' }
+        ],
+        checkPassword: [
+          { required: true, message: '请输入校验密码', trigger: 'blur' },
+          { validator: checkPassword, trigger: 'blur' }
         ]
       }
     }
+  },
+  computed: {
+    token() {
+      return this.$route.query.token
+    }
+  },
+  created: function() {
+    this.checkToken()
   }
+
 }
 </script>
 

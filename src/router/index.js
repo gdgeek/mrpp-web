@@ -100,8 +100,8 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/site/resetpassword',
-    component: () => import('@/views/site/resetpassword'),
+    path: '/site/reset-password',
+    component: () => import('@/views/site/reset-password'),
     hidden: true
   },
   {

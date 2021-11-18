@@ -4,7 +4,7 @@
       <h1 class="logout-welcome">欢迎!</h1>
       <p class="logout-text">准备好出发了么？</p>
       <div>
-         <p class="logout-lead"></p>
+        <p class="logout-lead" />
       </div>
     </div>
   </Site>
@@ -13,18 +13,17 @@
 <script>
 // @ is an alias to /src
 import Site from '@/components/Site.vue'
-
-import { Logout } from '@/api/user'
+import { verifEmail } from '@/api/user'
 export default {
   name: 'Logout',
   components: {
     Site
   },
-  created: function (){
+  created: function() {
     verifEmail(this.token).then(response => {
-        console.log(response)
+      console.log(response)
     }).catch(error => {
-        console.log(error)
+      console.log(error)
     })
   }
 }

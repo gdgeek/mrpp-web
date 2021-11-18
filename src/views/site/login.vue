@@ -1,25 +1,37 @@
 <template>
   <Site>
     <h2 class="login-title">登录账号</h2>
-    <el-form ref="form" class="login-body" :rules="rules" :model="form" label-width="75px">
+    <el-form
+      ref="form"
+      class="login-body"
+      :rules="rules"
+      :model="form"
+      label-width="75px"
+    >
       <el-form-item label="用户名" prop="username">
         <el-input v-model="form.username" suffix-icon="el-icon-user" />
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input v-model="form.password" type="password" suffix-icon="el-icon-lock" />
+        <el-input
+          v-model="form.password"
+          type="password"
+          suffix-icon="el-icon-lock"
+        />
       </el-form-item>
 
       <el-form-item class="login-button">
-        <el-button style="width: 120px" type="primary" @click="submit('form')">开始创造</el-button>
+        <el-button style="width: 120px" type="primary" @click="submit('form')">
+          开始创造
+        </el-button>
       </el-form-item>
     </el-form>
     <div class="login-link">
       <router-link to="/site/signup">
-        <el-link type="primary" :underline="false">注册用户 </el-link>
+        <el-link type="primary" :underline="false">注册用户</el-link>
       </router-link>
       <br>
       <router-link to="/site/request-password-reset">
-        <el-link type="primary" :underline="false">找回密码 </el-link>
+        <el-link type="primary" :underline="false">找回密码</el-link>
       </router-link>
       <br>
     </div>
@@ -56,38 +68,33 @@ export default {
       }
     }
   },
-  computed: {
-  },
+  computed: {},
 
   methods: {
     succeed(data) {
       setToken(data.access_token)
       this.$router.push('/')
-      // /let token = getToken()
-      //
     },
     failed(message) {
-      // alert(message)
     },
     submit(formName) {
       const self = this
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(valid => {
         if (valid) {
           login({
             username: self.form.username,
             password: self.form.password
-          }).then((response) => {
-            console.log(response)
-            if (response.data) {
-              self.succeed(response.data)
-            }
-          }).catch(function(error) {
-            console.log(error)
-            self.failed(error)
-            if (typeof (failed) !== 'undefined') {
-              failed(error)
-            }
           })
+            .then(response => {
+              console.log(response)
+              if (response.data) {
+                self.succeed(response.data)
+              }
+            })
+            .catch(function(error) {
+              console.log(error)
+              self.failed(error)
+            })
         } else {
           return false
         }
@@ -95,7 +102,7 @@ export default {
     },
     error(msg) {
       this.title = ''
-      if (typeof (msg) === 'string') {
+      if (typeof msg === 'string') {
         this.title = msg
       } else {
         let i = 0
@@ -114,7 +121,7 @@ export default {
 $bg: #2d3a4b;
 $dark_gray: #889aa4;
 $light_gray: #eee;
-.login-title{
+.login-title {
   color: #444444;
   margin: 20px 0 20px;
   text-align: center;
@@ -127,15 +134,14 @@ $light_gray: #eee;
   padding: 10px 40px 0px 10px;
 }
 .login-button {
-  text-align:right;
+  text-align: right;
 }
 .login-link {
   padding: 0 10px;
   margin-bottom: 20px;
 }
-.login-link a{
+.login-link a {
   color: rgb(28, 160, 212);
   font-size: 16px;
 }
 </style>
-
