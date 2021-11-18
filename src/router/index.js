@@ -31,12 +31,10 @@ import Layout from '@/layout'
  * all roles can be accessed
  */
 export const constantRoutes = [
-
-
   {
     path: '/',
     redirect: '/document/index',
-    component: Layout,
+    component: Layout
   },
   {
     path: '/polygen',
@@ -58,7 +56,6 @@ export const constantRoutes = [
         component: () => import('@/views/polygen/view')
       }
     ]
-    
   },
   {
     path: '/rete',
@@ -119,13 +116,11 @@ export const constantRoutes = [
   },
   {
     path: '/site/signup',
-    component: Layout,
     component: () => import('@/views/site/signup'),
     hidden: true
   },
-   {
+  {
     path: '/site/verify-email',
-    component: Layout,
     component: () => import('@/views/site/verify-email'),
     hidden: true
   },
@@ -199,13 +194,15 @@ export const constantRoutes = [
             children: [
               {
                 path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
+                component: () =>
+                  import('@/views/nested/menu1/menu1-2/menu1-2-1'),
                 name: 'Menu1-2-1',
                 meta: { title: 'Menu1-2-1' }
               },
               {
                 path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
+                component: () =>
+                  import('@/views/nested/menu1/menu1-2/menu1-2-2'),
                 name: 'Menu1-2-2',
                 meta: { title: 'Menu1-2-2' }
               }
@@ -243,11 +240,12 @@ export const constantRoutes = [
   { path: '*', redirect: '/404', hidden: true }
 ]
 
-const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
-})
+const createRouter = () =>
+  new Router({
+    // mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRoutes
+  })
 
 const router = createRouter()
 
@@ -256,11 +254,12 @@ export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
 }
-const ttt = () => new Router({
-  mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: []
-})
+const ttt = () =>
+  new Router({
+    mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }),
+    routes: []
+  })
 
 export function importRouter() {
   const newRouter = ttt()
