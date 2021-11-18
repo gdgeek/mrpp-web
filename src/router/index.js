@@ -32,6 +32,34 @@ import Layout from '@/layout'
  */
 export const constantRoutes = [
 
+
+  {
+    path: '/',
+    redirect: '/document/index',
+    component: Layout,
+  },
+  {
+    path: '/polygen',
+    component: Layout,
+    children: [
+      {
+        path: 'upload',
+        name: 'Upload',
+        component: () => import('@/views/polygen/upload')
+      },
+      {
+        path: 'index',
+        name: 'Index',
+        component: () => import('@/views/polygen/index')
+      },
+      {
+        path: 'view',
+        name: 'View',
+        component: () => import('@/views/polygen/view')
+      }
+    ]
+    
+  },
   {
     path: '/rete',
     component: () => import('@/views/test/rete'),
@@ -105,18 +133,6 @@ export const constantRoutes = [
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true
-  },
-  {
-    path: '/',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form12121', icon: 'form' }
-      }
-    ]
   },
   {
     path: '/example',
@@ -249,7 +265,6 @@ const ttt = () => new Router({
 export function importRouter() {
   const newRouter = ttt()
   router.matcher = newRouter.matcher // reset router
-  alert(1)
 }
 
 export default router

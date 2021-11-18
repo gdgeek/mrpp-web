@@ -29,8 +29,7 @@
 <script>
 // @ is an alias to /src
 import Site from '@/components/Site.vue'
-
-import { RestpPassword } from '@/api/user'
+// import { RestpPassword } from '@/api/user'
 export default {
   name: 'ResetPassword',
   components: {
