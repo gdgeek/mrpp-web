@@ -13,10 +13,7 @@ import App from './App'
 import store from './store'
 import router from './router'
 
-import VueAxios from 'vue-axios'
-import axios from 'axios'
 import VueCookies from 'vue-cookies'
-
 import '@/icons' // icon
 import '@/permission' // permission control
 

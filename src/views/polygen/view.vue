@@ -1,13 +1,17 @@
 <template>
   <div class="document-index">
     <el-row :gutter="20" style="margin-left:18px;margin-top:28px;margin-right:18px;">
-      <el-col :sm="24">
-        <el-alert
-          :title="info.title"
-          type="warning"
-        >{{ info.description }}
-          <el-progress style="width:100%" :percentage="50">1213</el-progress>
-        </el-alert>
+      <el-col :sm="24" class="panel-group">
+        <el-card v-if="window" class="box-card" shadow="never" style="color:#dfa234;background:#fcf6ec;border-color:#fcf6ec">
+          <div slot="header" class="clearfix">
+            <b>{{ info.title }}</b>
+            <el-button style="float: right; padding: 4px 4px" icon="el-icon-close" circle @click="window= false" />
+          </div>
+          <div>
+            {{ info.description }}<p />
+            <el-progress :text-inside="true" :stroke-width="20" :percentage="70" />
+          </div>
+        </el-card>
         <br>
       </el-col>
 
@@ -18,8 +22,34 @@
             <b id="title">  模型名称：</b>
           </div>
           <div class="box-item">
-            <aside style="margin-top: 15px" />
+            <div v-if="loading" style="height: 300px; width: 100%; text-align:center">
+              <h5><font-awesome-icon icon="cog" /> 模型预处理...</h5>
+              <br><br><br>
+              <i class="fa fa-cog fa-spin" />
+
+              <font-awesome-icon icon="cog" size="6x" pulse />
+            </div>
+            <a-scene
+              v-else
+              id="a-scene"
+              name="scene"
+              background="color: #E0FFFF"
+              embedded=""
+              style="height: 300px; width: 100%"
+            >
+              <a-entity id="cameraWrapper" position="0 -1.6 1">
+                <a-camera />
+              </a-entity>
+
+              <a-entity
+                target-scale="target:1;callback:infoCallback"
+                :gltf-model="model"
+                position="0 0 0"
+              />
+            </a-scene>
+
           </div>
+
         </el-card>
         <br>
       </el-col>
@@ -41,6 +71,10 @@
   </div>
 </template>
 <script>
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faSpinner, faAlignLeft } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faSpinner, faAlignLeft)
 import SparkMD5 from 'spark-md5'
 import { fileMD5, fileCos, fileUpload, fileHas, fileUrl } from '../../assets/js/file.js'
 import 'aframe'
@@ -50,6 +84,8 @@ export default {
   name: 'PolygenView',
   data: function() {
     return {
+      loading: true,
+      window: true,
       data: null,
       info: { class: 'info-box', icon: 'fa fa-cog fa-spin', title: '载入模型', description: '从服务器获得模型数据' },
       extent: { min: 0, max: 1 },
@@ -301,3 +337,112 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.panel-group {
+  margin-top: 18px;
+
+  .card-panel-col {
+    margin-bottom: 32px;
+  }
+
+  .card-panel {
+    height: 108px;
+    cursor: pointer;
+    font-size: 12px;
+    position: relative;
+    overflow: hidden;
+    color: #666;
+    background: #fff;
+    box-shadow: 4px 4px 40px rgba(0, 0, 0, .05);
+    border-color: rgba(0, 0, 0, .05);
+
+    &:hover {
+      .card-panel-icon-wrapper {
+        color: #fff;
+      }
+
+      .icon-people {
+        background: #40c9c6;
+      }
+
+      .icon-message {
+        background: #36a3f7;
+      }
+
+      .icon-money {
+        background: #f4516c;
+      }
+
+      .icon-shopping {
+        background: #34bfa3
+      }
+    }
+
+    .icon-people {
+      color: #40c9c6;
+    }
+
+    .icon-message {
+      color: #36a3f7;
+    }
+
+    .icon-money {
+      color: #f4516c;
+    }
+
+    .icon-shopping {
+      color: #34bfa3
+    }
+
+    .card-panel-icon-wrapper {
+      float: left;
+      margin: 14px 0 0 14px;
+      padding: 16px;
+      transition: all 0.38s ease-out;
+      border-radius: 6px;
+    }
+
+    .card-panel-icon {
+      float: left;
+      font-size: 48px;
+    }
+
+    .card-panel-description {
+      float: left;
+      font-weight: bold;
+      margin: 26px;
+
+      .card-panel-text {
+        line-height: 18px;
+        color: rgba(0, 0, 0, 0.45);
+        font-size: 16px;
+        margin-bottom: 12px;
+      }
+
+      .card-panel-num {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+@media (max-width:550px) {
+  .card-panel-description {
+    display: none;
+  }
+
+  .card-panel-icon-wrapper {
+    float: none !important;
+    width: 100%;
+    height: 100%;
+    margin: 0 !important;
+
+    .svg-icon {
+      display: block;
+      margin: 14px auto !important;
+      float: none !important;
+    }
+  }
+}
+</style>
