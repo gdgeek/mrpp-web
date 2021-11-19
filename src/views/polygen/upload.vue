@@ -10,15 +10,15 @@
         <div style="position:relative;">
           <div class="progress-item">
             <span>解析文件</span>
-            <el-progress :percentage="md5.percentage" :status="md5.status" />
+            <el-progress :percentage="md5.percentage" />
           </div>
           <div class="progress-item">
             <span>上传文件</span>
-            <el-progress :percentage="upload.percentage" :status="upload.status" />
+            <el-progress :percentage="upload.percentage" />
           </div>
           <div class="progress-item">
             <span>保存信息</span>
-            <el-progress :percentage="save.percentage" :status="save.status" />
+            <el-progress :percentage="save.percentage" />
           </div>
           <el-divider />
 
@@ -33,10 +33,11 @@
 
 <script>
 
-import Vue from 'vue'
 import SparkMD5 from 'spark-md5'
 import { fileOpen, fileMD5, fileHas, fileUrl, fileUpload, fileCos } from '../../assets/js/file.js'
 import { mapMutations } from 'vuex'
+import { postFile } from '@/api/files'
+import { postPolygen } from '@/api/resources'
 export default {
   name: 'RequestPasswordReset',
   data: function() {
@@ -102,30 +103,27 @@ export default {
     },
     savePolygen(name, file) {
       const self = this
-      const polygen = { name, file_id: file, type: 'polygen' }
-      Vue.axios.post(this.api + '/resources', polygen)
-        .then((response) => {
-          console.log(response.data)
-          self.save = self.progress(1)
-          self.$router.push({ path: '/polygen/view', query: { id: response.data.id }})
-        }).catch(err => {
-          console.log(err)
-        })
+      // const polygen = { name, file_id: file, type: 'polygen' }
+      postPolygen(name, file).then((response) => {
+        console.log(response.data)
+        self.save = self.progress(1)
+        self.$router.push({ path: '/polygen/view', query: { id: response.data.id }})
+      }).catch(err => {
+        console.log(err)
+      })
     },
     saveFile(filename, md5, type, url) {
       const self = this
-      const file = { filename, md5, type, url }
-      Vue.axios.post(this.api + '/files', file)
-        .then((response) => {
-          self.save = self.progress(0.5)
-          self.savePolygen(filename, response.data.id)
-        }).catch(err => {
-          console.log(err)
-        })
+      postFile(filename, md5, type, url).then((response) => {
+        self.save = self.progress(0.5)
+        self.savePolygen(filename, response.data.id)
+      }).catch(err => {
+        console.log(err)
+      })
     },
     selectFile() {
       const self = this
-      fileOpen('jpg').then(function(file) {
+      fileOpen('.glb').then(function(file) {
         self.step('md5')
         fileMD5(file, function(p) {
           self.md5 = self.progress(p)

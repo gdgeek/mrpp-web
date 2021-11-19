@@ -1,12 +1,12 @@
 import COS from 'cos-js-sdk-v5'
-import Vue from 'vue'
+import { sts } from '@/api/servers'
 const config = {bucket: 'mrpp-1257979353', region: 'ap-chengdu'}
 function fileCos () {
   return new Promise((resolve, reject) => {
     let cos = new COS({
       // 必选参数
       getAuthorization: function (options, callback) {
-        Vue.axios.get( '' + '/servers/sts').then((response) => {
+        sts().then((response) => {
           console.log(response)
           if (response.data) {
             const data = response.data
