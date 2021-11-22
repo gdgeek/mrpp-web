@@ -86,7 +86,7 @@
 // @ is an alias to /src
 import Site from '@/components/Site.vue'
 import { mapMutations } from 'vuex'
-import { signup } from '@/api/user'
+import { signup } from '@/api/sites'
 export default {
   name: 'Signup',
 

@@ -36,7 +36,7 @@
 // @ is an alias to /src
 import Site from '@/components/Site.vue'
 import { mapMutations } from 'vuex'
-import { resendVerificationEmail } from '@/api/user'
+import { resendVerificationEmail } from '@/api/sites'
 
 export default {
   name: 'ResendVerificationEmail',

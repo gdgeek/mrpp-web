@@ -47,7 +47,7 @@
 <script>
 // @ is an alias to /src
 import Site from '@/components/Site.vue'
-import { resetPasswordToken, resetPassword } from '@/api/user'
+import { resetPasswordToken, resetPassword } from '@/api/sites'
 import { mapMutations } from 'vuex'
 export default {
   name: 'ResetPassword',

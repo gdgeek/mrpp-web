@@ -1,4 +1,5 @@
-import { login, logout, getInfo, getMenu, signup } from '@/api/user'
+import { login, signup } from '@/api/sites'
+import { getInfo, getMenu, logout } from '@/api/servers'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -14,7 +15,7 @@ const getDefaultState = () => {
 const state = getDefaultState()
 
 const mutations = {
-  RESET_STATE: (state) => {
+  RESET_STATE: state => {
     Object.assign(state, getDefaultState())
   },
   SET_TOKEN: (state, token) => {
@@ -36,76 +37,90 @@ const actions = {
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
-        const data = response.data
+      login({ username: username.trim(), password: password })
+        .then(response => {
+          const data = response.data
 
-        console.log(data.token)
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
-        resolve(response)
-      }).catch(error => {
-        reject(error)
-      })
+          console.log(data.token)
+          commit('SET_TOKEN', data.token)
+          setToken(data.token)
+          resolve(response)
+        })
+        .catch(error => {
+          reject(error)
+        })
     })
   },
-  signup({ commit }, info){
+  signup({ commit }, info) {
     return new Promise((resolve, reject) => {
-      signup(info).then(response => {
-        console.log(response)
-        resolve(response)
-      }) .catch(error => {
-        reject(error)
-      })
+      signup(info)
+        .then(response => {
+          console.log(response)
+          resolve(response)
+        })
+        .catch(error => {
+          reject(error)
+        })
     })
   },
   getMenu({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getMenu().then(response => {
-        console.log(response)
-        const data = response.data
-        if (!data) {
-          return reject('No Menu.')
-        }
-        const { menu } = data
-        commit('SET_MENU', menu)
-     //   commit('SET_AVATAR', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')
-        resolve(data)
-      }).catch(error => {
-        console.log(error)
-        reject(error)
-      })
+      getMenu()
+        .then(response => {
+          console.log(response)
+          const data = response.data
+          if (!data) {
+            return reject('No Menu.')
+          }
+          const { menu } = data
+          commit('SET_MENU', menu)
+          //   commit('SET_AVATAR', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')
+          resolve(data)
+        })
+        .catch(error => {
+          console.log(error)
+          reject(error)
+        })
     })
   },
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
-        const data = response.data
-        if (!data) {
-          return reject('Verification failed, please Login again.')
-        }
-        const { username, email } = data
-        commit('SET_NAME', username)
-        commit('SET_AVATAR', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')
-        resolve(data)
-      }).catch(error => {
-        console.log(error)
-        reject(error)
-      })
+      getInfo(state.token)
+        .then(response => {
+          const data = response.data
+          if (!data) {
+            return reject('Verification failed, please Login again.')
+          }
+          const { username } = data
+          commit('SET_NAME', username)
+          commit(
+            'SET_AVATAR',
+            'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
+          )
+          // commit('SET_AVATAR', '@/assert/qrcode.jpg')
+          resolve(data)
+        })
+        .catch(error => {
+          console.log(error)
+          reject(error)
+        })
     })
   },
 
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
-        removeToken() // must remove  token  first
-        resetRouter()
-        commit('RESET_STATE')
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
+      logout(state.token)
+        .then(() => {
+          removeToken() // must remove  token  first
+          resetRouter()
+          commit('RESET_STATE')
+          resolve()
+        })
+        .catch(error => {
+          reject(error)
+        })
     })
   },
 
@@ -125,4 +140,3 @@ export default {
   mutations,
   actions
 }
-

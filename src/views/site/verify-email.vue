@@ -29,7 +29,7 @@
 // @ is an alias to /src
 import Site from '@/components/Site.vue'
 
-import { verifEmail } from '@/api/user'
+import { verifEmail } from '@/api/sites'
 export default {
   name: 'VerifyEmail',
   components: {

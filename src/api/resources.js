@@ -35,10 +35,11 @@ export function deleteVideo(id) {
   return deleteResources(id)
 }
 function putResources(id, resource) {
+  console.log('resource')
   return request({
     url: '/resources/' + id,
     method: 'put',
-    resource
+    data: resource
   })
 }
 
@@ -67,7 +68,6 @@ function getResources(type, sort, search = '', page = 0) {
     method: 'get'
   })
 }
-
 export function getPolygen(sort, search = '', page = 0) {
   return getResources('polygen', sort, search, page)
 }
@@ -76,4 +76,15 @@ export function getPicture(sort, search = '', page = 0) {
 }
 export function getVideo(sort, search = '', page = 0) {
   return getResources('video', sort, search, page)
+}
+
+function getResourcesOne(type, id) {
+  // alert('/resources/' + id + '?expand=image,file,author&type=' + type)
+  return request({
+    url: '/resources/' + id + '?expand=image,file,author&type=' + type,
+    method: 'get'
+  })
+}
+export function getPolygenOne(id) {
+  return getResourcesOne('polygen', id)
 }

@@ -1,5 +1,5 @@
-import request from '@/utils/request'
-
+// import request from '@/utils/request'
+/*
 export function login(data) {
   return request({
     url: '/sites/login',
@@ -7,12 +7,14 @@ export function login(data) {
     data
   })
 }
+
 export function verifEmail(token) {
   return request({
     url: '/sites/verify-email?token=' + token,
     method: 'get'
   })
 }
+
 export function signup(info) {
   console.log(info)
   return request({
@@ -34,7 +36,8 @@ export function resendVerificationEmail(data) {
     method: 'post',
     data: { ResendVerificationEmailForm: data }
   })
-}
+}*/
+/*
 export function getMenu() {
   return request({
     url: '/servers/menu',
@@ -48,6 +51,7 @@ export function getInfo(token) {
     params: { token }
   })
 }
+
 export function resetPasswordToken(token) {
   return request({
     url: '/sites/password-reset-token?token=' + token,
@@ -61,9 +65,10 @@ export function resetPassword(token, data) {
     data: { ResetPasswordForm: data }
   })
 }
+
 export function logout() {
   return request({
     url: '/servers/logout',
     method: 'get'
   })
-}
+}*/

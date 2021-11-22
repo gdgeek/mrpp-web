@@ -25,3 +25,9 @@ export function sts() {
     method: 'get'
   })
 }
+export function token() {
+  return request({
+    url: '/servers/token',
+    method: 'get'
+  })
+}

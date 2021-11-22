@@ -39,7 +39,7 @@
 import Site from '@/components/Site.vue'
 
 import { mapMutations } from 'vuex'
-import { requestPasswordReset } from '@/api/user'
+import { requestPasswordReset } from '@/api/sites'
 export default {
   name: 'RequestPasswordReset',
   components: {

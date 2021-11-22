@@ -3,6 +3,7 @@
     <br>
     <el-container>
       <el-header>
+
         <el-card class="box-card">
           <el-row :gutter="0">
             <el-col :xs="16" :sm="16" :md="16" :lg="16" :xl="16">
@@ -44,8 +45,7 @@
               </el-input>
             </el-col>
           </el-row>
-        </el-card>
-      </el-header>
+        </el-card></el-header>
       <el-main>
         <el-row :gutter="10">
           <el-col
@@ -57,24 +57,9 @@
             :md="6"
             :lg="6"
             :xl="4"
-          ><el-card class="box-card">
-             <div slot="header" class="clearfix">
-               <span>模型名称：<b>{{ item.name }}</b></span>
+          >
+            <mr-p-p-card :item="item" />
 
-               <el-button type="plain" size="mini" style="float: right;" icon="el-icon-delete" circle />
-               <el-button type="plain" size="mini" style="float: right;" icon="el-icon-edit" circle />&nbsp;
-
-             </div>
-
-             <span>{{ item.description }}</span>
-             <hr>
-             <div class="bottom clearfix">
-
-               <router-link :to="'/polygen/view?id='+item.id">
-                 <el-button type="warning" size="mini">初始模型数据</el-button>
-               </router-link>
-             </div>
-           </el-card>
             <br>
           </el-col>
         </el-row>
@@ -92,7 +77,11 @@
 <script>
 import 'element-ui/lib/theme-chalk/display.css'
 import { getPolygen } from '@/api/resources'
+import MrPPCard from '@/components/MrPP/MrPPCard'
 export default {
+  components: {
+    MrPPCard
+  },
   data() {
     return {
       items: null,

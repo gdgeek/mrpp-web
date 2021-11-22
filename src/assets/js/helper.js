@@ -6,6 +6,7 @@ function toFixedVector3 (vec, n) {
   result.z = parseFloat(vec.z.toFixed(n))
   return result
 }
-export {
-  toFixedVector3
+function printVector3(vec){
+  return '(' + vec.x + ', ' + vec.y + ', ' + vec.z + ')'
 }
+export { toFixedVector3, printVector3 }

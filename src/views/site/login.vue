@@ -21,7 +21,7 @@
 
       <el-form-item class="login-button">
         <el-button style="width: 120px" type="primary" @click="submit('form')">
-          开始创造
+          进入
         </el-button>
       </el-form-item>
     </el-form>
@@ -42,7 +42,7 @@
 // @ is an alias to /src
 import Site from '@/components/Site.vue'
 import { setToken } from '@/utils/auth'
-import { login } from '@/api/user'
+import { login } from '@/api/sites'
 export default {
   name: 'Login',
   components: {

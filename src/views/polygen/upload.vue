@@ -123,6 +123,7 @@ export default {
     },
     selectFile() {
       const self = this
+
       fileOpen('.glb').then(function(file) {
         self.step('md5')
         fileMD5(file, function(p) {
@@ -132,14 +133,20 @@ export default {
           fileCos().then(cos => {
             fileHas(key, cos).then(function(has) {
               self.step('upload')
+              let type = file.type
+              if (type === '') {
+                type = file.extension
+              }
+              alert(type)
               if (has) {
                 self.step('succeed')
                 self.upload = self.progress(1)
-                self.saveFile(file.name, md5, file.type, fileUrl(key, cos))
+
+                self.saveFile(file.name, md5, type, fileUrl(key, cos))
               } else {
                 fileUpload(key, file, self.progress, cos
                 ).then(data => {
-                  self.saveFile(file.name, md5, file.type, fileUrl(key, cos))
+                  self.saveFile(file.name, md5, type, fileUrl(key, cos))
                   self.step('succeed')
                   self.upload = self.progress(1)
                 })
