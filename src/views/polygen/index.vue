@@ -3,90 +3,72 @@
     <br>
     <el-container>
       <el-header>
-
-        <el-card class="box-card">
-          <el-row :gutter="0">
-            <el-col :xs="16" :sm="16" :md="16" :lg="16" :xl="16">
-
-              <el-button-group :inline="true">
-                <router-link to="/polygen/upload">
-                  <el-button
-                    size="mini"
-                    type="primary"
-                    icon="el-icon-upload"
-                  ><span class="hidden-sm-and-down">上传模型</span></el-button>
-                </router-link>
-              </el-button-group>
-&nbsp;
-              <el-button-group :inline="true">
-                <el-button
-                  size="mini"
-                  type="info"
-                  icon="el-icon-chat-dot-square"
-                ><span class="hidden-sm-and-down">名称排序</span></el-button>
-                <el-button
-                  size="mini"
-                  type="info"
-                  icon="el-icon-time"
-                ><span class="hidden-sm-and-down">时间排序</span></el-button>
-              </el-button-group>
-            </el-col>
-            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-              <el-input
+        <mr-p-p-header :sorted="sorted" :searched="searched" @search="search" @sort="sort">
+          <el-button-group :inline="true">
+            <router-link to="/polygen/upload">
+              <el-button
                 size="mini"
-                placeholder="搜索名称"
-                class="input-with-select"
-              >
-                <el-button
-                  slot="append"
-                  icon="el-icon-search"
-                  size="mini"
-                />
-              </el-input>
-            </el-col>
-          </el-row>
-        </el-card></el-header>
+                type="primary"
+                icon="el-icon-upload"
+              ><span class="hidden-sm-and-down">上传模型</span></el-button>
+            </router-link>
+          </el-button-group>
+        </mr-p-p-header>
+      </el-header>
       <el-main>
         <el-row :gutter="10">
           <el-col
             v-for="(item, index) in items"
             :key="index"
             :data="item"
-            :xs="12"
+            :xs="24"
             :sm="12"
-            :md="6"
+            :md="8"
             :lg="6"
             :xl="4"
           >
-            <mr-p-p-card :item="item" />
+            <mr-p-p-card :item="item" @named="namedWindow" @deleted="deletedWindow" />
 
             <br>
+
           </el-col>
         </el-row>
       </el-main>
       <el-footer>
 
         <el-card class="box-card">
-          <el-pagination layout="prev, pager, next" :total="50" />
+          <el-pagination
+            :current-page="pagination.current"
+            :page-count="pagination.count"
+            :page-size="pagination.size"
+            :total="pagination.total"
+            layout="prev, pager, next, jumper"
+            background
+            @current-change="handleCurrentChange"
+          />
         </el-card>
       </el-footer>
+
     </el-container>
+    <br>
   </div>
 </template>
 
 <script>
 import 'element-ui/lib/theme-chalk/display.css'
-import { getPolygen } from '@/api/resources'
+import { getPolygen, putPolygen, deletePolygen } from '@/api/resources'
 import MrPPCard from '@/components/MrPP/MrPPCard'
+import MrPPHeader from '@/components/MrPP/MrPPHeader'
 export default {
   components: {
-    MrPPCard
+    MrPPCard,
+    MrPPHeader
   },
   data() {
     return {
       items: null,
-      sort: 'created_at',
-      search: '',
+      sorted: 'created_at',
+      searched: '',
       pagination: { current: 1, count: 1, size: 20, total: 20 }
     }
   },
@@ -95,16 +77,84 @@ export default {
     this.refresh()
   },
   methods: {
+    handleCurrentChange: function(page) {
+      this.pagination.current = page
+      this.refresh()
+      console.log(this.pagination.current)
+    },
+    namedWindow: function(item) {
+      const self = this
+      this.$prompt('请输入新名称', '修改模型名称', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        closeOnClickModal: false,
+        inputValue: item.name
+      }).then(({ value }) => {
+        self.named(item.id, value)
+        this.$message({
+          type: 'success',
+          message: '新的模型名称: ' + value
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        })
+      })
+    },
+    sort: function(value) {
+      this.sorted = value
+      this.refresh()
+    },
+    search: function(value) {
+      this.searched = value
+      this.refresh()
+    },
+    named: function(id, newValue) {
+      const self = this
+      const polygen = { name: newValue }
+      putPolygen(id, polygen).then((response) => {
+        self.refresh()
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    deletedWindow: function(item) {
+      const self = this
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        closeOnClickModal: false,
+        type: 'warning'
+      }).then(() => {
+        self.deleted(item.id)
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    deleted: function(id) {
+      const self = this
+
+      deletePolygen(id).then((response) => {
+        self.refresh()
+      }).catch(function(error) {
+        console.log(error)
+      })
+    },
     succeed: function(data) {
       console.log(data)
       this.items = data
     },
-    failed: function() {
-      console.log('failed')
-    },
     refresh() {
       const self = this
-      getPolygen(self.sort, self.search, self.pagination.current)
+      getPolygen(self.sorted, self.searched, self.pagination.current)
         .then((response) => {
           console.log(response.headers)
           self.pagination = {
@@ -115,12 +165,9 @@ export default {
           }
           if (response.data) {
             self.succeed(response.data)
-          } else {
-            self.failed('没有数据返回')
           }
         }).catch(function(error) {
           console.log(error)
-          self.failed(JSON.parse(error.message))
         })
     }
   }

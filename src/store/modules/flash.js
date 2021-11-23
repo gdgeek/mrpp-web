@@ -8,7 +8,7 @@ const state = {
 }
 
 const mutations = {
-  flashSetup(state, { title, type = 'success', description = null}) {
+  flashSetup(state, { title, type = 'success', description = null }) {
     state.main.title = title
     state.main.type = type
     state.main.description = description
