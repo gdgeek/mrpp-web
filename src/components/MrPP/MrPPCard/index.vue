@@ -15,9 +15,10 @@
       </div>
 
       <div class="clearfix">
-        <router-link :to="'/polygen/view?id='+item.id">
+        <slot name="router1">router-link插槽1</slot>
+        <!-- <router-link :to="'/polygen/view?id='+item.id">
           <el-button type="warning" size="mini">初始化模型数据</el-button>
-        </router-link>
+        </router-link> -->
         <el-button-group style="float: right;" :inline="true">
           <el-button type="plain" size="mini" icon="el-icon-delete" @click="deleted()" />
           <el-button type="plain" size="mini" icon="el-icon-edit" @click="named()" />&nbsp;
@@ -39,9 +40,10 @@
       </div>
 
       <div class="clearfix">
-        <router-link :to="'/polygen/view?id='+item.id">
+        <slot name="router2">router-link插槽2</slot>
+        <!-- <router-link :to="'/polygen/view?id='+item.id">
           <el-button type="primary" size="mini">查看模型</el-button>
-        </router-link>
+        </router-link> -->
         <el-button-group style="float: right;" :inline="true">
           <el-button type="plain" size="mini" icon="el-icon-delete" @click="deleted()" />
           <el-button type="plain" size="mini" icon="el-icon-edit" @click="named()" />&nbsp;

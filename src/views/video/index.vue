@@ -27,7 +27,14 @@
             :lg="6"
             :xl="4"
           >
-            <mr-p-p-card :item="item" @named="namedWindow" @deleted="deletedWindow" />
+            <mr-p-p-card :item="item" @named="namedWindow" @deleted="deletedWindow">
+              <router-link slot="router1" :to="'/video/view?id='+item.id">
+                <el-button type="warning" size="mini">初始视频数据</el-button>
+              </router-link>
+              <router-link slot="router2" :to="'/video/view?id='+item.id">
+                <el-button type="primary" size="mini">查看视频</el-button>
+              </router-link>
+            </mr-p-p-card>
 
             <br>
 
@@ -56,7 +63,7 @@
 
 <script>
 import 'element-ui/lib/theme-chalk/display.css'
-import { getPolygen, putPolygen, deletePolygen } from '@/api/resources'
+import { getVideo, putVideo, deleteVideo } from '@/api/resources'
 import MrPPCard from '@/components/MrPP/MrPPCard'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 export default {
@@ -112,8 +119,8 @@ export default {
     },
     named: function(id, newValue) {
       const self = this
-      const polygen = { name: newValue }
-      putPolygen(id, polygen).then((response) => {
+      const video = { name: newValue }
+      putVideo(id, video).then((response) => {
         self.refresh()
       }).catch(err => {
         console.log(err)
@@ -142,7 +149,7 @@ export default {
     deleted: function(id) {
       const self = this
 
-      deletePolygen(id).then((response) => {
+      deleteVideo(id).then((response) => {
         self.refresh()
       }).catch(function(error) {
         console.log(error)
@@ -154,7 +161,7 @@ export default {
     },
     refresh() {
       const self = this
-      getPolygen(self.sorted, self.searched, self.pagination.current)
+      getVideo(self.sorted, self.searched, self.pagination.current)
         .then((response) => {
           console.log(response.headers)
           self.pagination = {

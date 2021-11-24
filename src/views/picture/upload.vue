@@ -37,7 +37,7 @@ import SparkMD5 from 'spark-md5'
 import { fileOpen, fileMD5, fileHas, fileUrl, fileUpload, fileCos } from '../../assets/js/file.js'
 import { mapMutations } from 'vuex'
 import { postFile } from '@/api/files'
-import { postPolygen } from '@/api/resources'
+import { postPicture } from '@/api/resources'
 export default {
   name: 'RequestPasswordReset',
   data: function() {
@@ -101,13 +101,13 @@ export default {
       }
       return ret
     },
-    savePolygen(name, file) {
+    savePicture(name, file) {
       const self = this
-      // const polygen = { name, file_id: file, type: 'polygen' }
-      postPolygen(name, file).then((response) => {
+      // const picture = { name, file_id: file, type: 'picture' }
+      postPicture(name, file).then((response) => {
         console.log(response.data)
         self.save = self.progress(1)
-        self.$router.push({ path: '/polygen/view', query: { id: response.data.id }})
+        self.$router.push({ path: '/picture/view', query: { id: response.data.id }})
       }).catch(err => {
         console.log(err)
       })
@@ -116,7 +116,7 @@ export default {
       const self = this
       postFile(filename, md5, type, url).then((response) => {
         self.save = self.progress(0.5)
-        self.savePolygen(filename, response.data.id)
+        self.savePicture(filename, response.data.id)
       }).catch(err => {
         console.log(err)
       })

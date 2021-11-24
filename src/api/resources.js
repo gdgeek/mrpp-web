@@ -88,3 +88,9 @@ function getResourcesOne(type, id) {
 export function getPolygenOne(id) {
   return getResourcesOne('polygen', id)
 }
+export function getPictureOne(id) {
+  return getResourcesOne('picture', id)
+}
+export function getVideoOne(id) {
+  return getResourcesOne('video', id)
+}

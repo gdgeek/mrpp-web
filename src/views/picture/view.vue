@@ -94,7 +94,7 @@
   </div>
 </template>
 <script>
-import { getPolygenOne, putPolygen, deletePolygen } from '@/api/resources'
+import { getPictureOne, putPicture, deletePicture } from '@/api/resources'
 import { postFile } from '@/api/files'
 import { printVector3 } from '@/assets/js/helper'
 import SparkMD5 from 'spark-md5'
@@ -104,7 +104,7 @@ import 'aframe'
 
 import {} from '../../assets/js/aframe-components.js'
 export default {
-  name: 'PolygenView',
+  name: 'PictureView',
   data: function() {
     return {
       loading: true,
@@ -179,7 +179,7 @@ export default {
     self.info = { title: '获取信息', description: '从服务器下载图片数据信息' }
     self.extent = { min: 0, max: 0.1 }
 
-    getPolygenOne(self.id).then((response) => {
+    getPictureOne(self.id).then((response) => {
       self.data = response.data
       console.log(response.data)
       self.model = 'url(' + response.data.file.url + ')'
@@ -217,10 +217,10 @@ export default {
     },
     delete: function(id) {
       const self = this
-      console.log(self.api + '/resources/' + id + '?type=polygen')
+      console.log(self.api + '/resources/' + id + '?type=picture')
 
-      deletePolygen(id).then((response) => {
-        self.$router.push({ path: '/polygen/index' })
+      deletePicture(id).then((response) => {
+        self.$router.push({ path: '/picture/index' })
       }).catch(function(error) {
         console.log(error)
         self.failed(JSON.parse(error.message))
@@ -248,9 +248,9 @@ export default {
     },
     named: function(id, name) {
       const self = this
-      const polygen = { name }
-      console.log(polygen)
-      putPolygen(id, polygen).then((response) => {
+      const picture = { name }
+      console.log(picture)
+      putPicture(id, picture).then((response) => {
         self.data.name = response.data.name
       }).catch(err => {
         console.log(err)
@@ -262,15 +262,15 @@ export default {
     progress(p) {
       this.step = p
     },
-    updatePolygen(imageId, center, size) {
+    updatePicture(imageId, center, size) {
       const self = this
       self.info = { title: '预处理', description: '更新图片的相关信息' }
       self.extent = { min: 0.9, max: 1 }
       const info = JSON.stringify({ center, size })
       console.log(info)
-      const polygen = { image_id: imageId, info }
-      console.log(polygen)
-      putPolygen(this.data.id, polygen).then((response) => {
+      const picture = { image_id: imageId, info }
+      console.log(picture)
+      putPicture(this.data.id, picture).then((response) => {
         self.info = { title: '处理完成', description: '展示图片文件' }
         self.extent = { min: 0.9, max: 1 }
         console.log(response.data)
@@ -289,7 +289,7 @@ export default {
       postFile(filename, md5, type, url).then((response) => {
         self.step = 0.5
         console.log(response.data)
-        self.updatePolygen(response.data.id, center, size)
+        self.updatePicture(response.data.id, center, size)
       }).catch(err => {
         console.log(err)
       })
