@@ -58,6 +58,48 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/picture',
+    component: Layout,
+    children: [
+      {
+        path: 'upload',
+        name: 'Upload',
+        component: () => import('@/views/picture/upload')
+      },
+      {
+        path: 'index',
+        name: 'Index',
+        component: () => import('@/views/picture/index')
+      },
+      {
+        path: 'view',
+        name: 'View',
+        component: () => import('@/views/picture/view')
+      }
+    ]
+  },
+  {
+    path: '/video',
+    component: Layout,
+    children: [
+      {
+        path: 'upload',
+        name: 'Upload',
+        component: () => import('@/views/video/upload')
+      },
+      {
+        path: 'index',
+        name: 'Index',
+        component: () => import('@/views/video/index')
+      },
+      {
+        path: 'view',
+        name: 'View',
+        component: () => import('@/views/video/view')
+      }
+    ]
+  },
+  {
     path: '/rete',
     component: () => import('@/views/test/rete'),
     hidden: true
