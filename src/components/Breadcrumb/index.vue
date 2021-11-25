@@ -34,8 +34,7 @@ export default {
 
       if (!this.isDashboard(first)) {
         matched = [
-          { path: '/', meta: { title: '混合现实编程平台' }},
-          { path: '/document/index', meta: { title: '欢迎页面' }}
+          { path: '/', meta: { title: '混合现实编程平台' }}
         ].concat(matched)
       }
 

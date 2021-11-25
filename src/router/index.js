@@ -39,20 +39,24 @@ export const constantRoutes = [
   {
     path: '/polygen',
     component: Layout,
+    meta: { title: '资源管理' },
     children: [
       {
         path: 'upload',
         name: 'Upload',
+        meta: { title: '模型上传' },
         component: () => import('@/views/polygen/upload')
       },
       {
         path: 'index',
         name: 'Index',
+        meta: { title: '模型列表' },
         component: () => import('@/views/polygen/index')
       },
       {
         path: 'view',
         name: 'View',
+        meta: { title: '模型处理' },
         component: () => import('@/views/polygen/view')
       }
     ]
@@ -60,20 +64,24 @@ export const constantRoutes = [
   {
     path: '/picture',
     component: Layout,
+    meta: { title: '资源管理' },
     children: [
       {
         path: 'upload',
         name: 'Upload',
+        meta: { title: '上传图片' },
         component: () => import('@/views/picture/upload')
       },
       {
         path: 'index',
         name: 'Index',
+        meta: { title: '图片列表' },
         component: () => import('@/views/picture/index')
       },
       {
         path: 'view',
         name: 'View',
+        meta: { title: '图片处理' },
         component: () => import('@/views/picture/view')
       }
     ]
@@ -81,20 +89,24 @@ export const constantRoutes = [
   {
     path: '/video',
     component: Layout,
+    meta: { title: '资源管理' },
     children: [
       {
         path: 'upload',
         name: 'Upload',
+        meta: { title: '视频上传' },
         component: () => import('@/views/video/upload')
       },
       {
         path: 'index',
         name: 'Index',
+        meta: { title: '视频列表' },
         component: () => import('@/views/video/index')
       },
       {
         path: 'view',
         name: 'View',
+        meta: { title: '视频处理' },
         component: () => import('@/views/video/view')
       }
     ]
@@ -118,6 +130,7 @@ export const constantRoutes = [
   {
     path: '/document',
     component: Layout,
+    meta: { title: '欢迎页面' },
     children: [
       {
         path: 'index',

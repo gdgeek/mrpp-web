@@ -20,7 +20,7 @@
     <div class="module-body">
       <div class="module-hint">微信扫码，得到测试资格</div>
       <img
-        src="@/assets/qrcode.jpg"
+        src="@/assets/image/qrcode.jpg"
         class="module-qrcode"
         width="100%"
         alt="qrcode"

@@ -73,7 +73,7 @@
     <div class="signup-body">
       <div class="signup-hint">微信扫码，得到测试资格</div>
       <img
-        src="@/assets/qrcode.jpg"
+        src="@/assets/image/qrcode.jpg"
         class="signup-qrcode"
         width="100%"
         alt="qrcode"
