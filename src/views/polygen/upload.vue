@@ -39,10 +39,10 @@ import { mapMutations } from 'vuex'
 import { postFile } from '@/api/files'
 import { postPolygen } from '@/api/resources'
 export default {
-  name: 'RequestPasswordReset',
+  name: 'PolygenUpload',
   data: function() {
     return {
-      icon: 'fa fa-folder-open',
+      // icon: 'fa fa-folder-open',
       color: 'info-box bg-yellow',
       title: '选择文件',
       declared: '请选择.glb格式的模型文件进行上传操作',

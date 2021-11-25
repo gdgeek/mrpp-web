@@ -39,7 +39,7 @@ import { mapMutations } from 'vuex'
 import { postFile } from '@/api/files'
 import { postVideo } from '@/api/resources'
 export default {
-  name: 'RequestPasswordReset',
+  name: 'VideoUpload',
   data: function() {
     return {
       icon: 'fa fa-folder-open',
