@@ -16,6 +16,7 @@ AFRAME.registerComponent('target-scale', {
     this.el.addEventListener('model-loaded', this.rescale.bind(this))
   },
   rescale () {
+
     const el = this.el
     const data = this.data
     const model = el.object3D

@@ -38,8 +38,9 @@ export const constantRoutes = [
   },
   {
     path: '/polygen',
+    redirect: '/polygen/index',
     component: Layout,
-    meta: { title: '资源管理' },
+    meta: { title: '模型管理' },
     children: [
       {
         path: 'upload',
@@ -63,8 +64,9 @@ export const constantRoutes = [
   },
   {
     path: '/picture',
+    redirect: '/picture/index',
     component: Layout,
-    meta: { title: '资源管理' },
+    meta: { title: '图片管理' },
     children: [
       {
         path: 'upload',
@@ -88,8 +90,9 @@ export const constantRoutes = [
   },
   {
     path: '/video',
+    redirect: '/video/index',
     component: Layout,
-    meta: { title: '资源管理' },
+    meta: { title: '视频管理' },
     children: [
       {
         path: 'upload',

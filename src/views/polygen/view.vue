@@ -4,6 +4,7 @@
       <el-col :sm="24" class="panel-group">
         <el-card v-if="window" class="box-card" shadow="never" style="color:#dfa234;background:#fcf6ec;border-color:#fcf6ec">
           <div slot="header" class="clearfix">
+
             <b>{{ info.title }}</b>
             <el-button style="float: right; padding: 4px 4px" icon="el-icon-close" circle @click="window= false" />
           </div>
@@ -21,14 +22,8 @@
             <b id="title">  模型名称：</b> <span v-if="data">{{ data.name }}</span>
           </div>
           <div class="box-item">
-            <div v-if="!prepare" style="height: 300px; width: 100%; text-align:center">
-              <h5><font-awesome-icon icon="cog" /> 模型预处理...</h5>
-              <br><br><br>
 
-              <font-awesome-icon icon="cog" size="6x" pulse />
-            </div>
             <a-scene
-              v-show="prepare"
               id="a-scene"
               name="scene"
               background="color: #E0FFFF"
@@ -41,7 +36,7 @@
 
               <a-entity
                 target-scale="target:1;callback:infoCallback"
-                :gltf-model="model"
+                :gltf-model="polygenFile"
                 position="0 0 0"
               />
             </a-scene>
@@ -55,7 +50,6 @@
       <el-col :sm="8">
         <el-card class="box-card">
           <div slot="header">
-
             <b>模型信息</b>:
 
           </div>
@@ -112,7 +106,7 @@ export default {
       data: null,
       info: { title: '载入模型', description: '从服务器获得模型数据' },
       extent: { min: 0, max: 1 },
-      model: null,
+      polygenFile: null,
       step: 0,
       infobar: true
     }
@@ -182,7 +176,8 @@ export default {
     getPolygenOne(self.id).then((response) => {
       self.data = response.data
       console.log(response.data)
-      self.model = 'url(' + response.data.file.url + ')'
+      self.polygenFile = 'url(' + response.data.file.url + ')'
+
       if (self.prepare) {
         self.window = false
         self.info = { title: '获取模型', description: '从服务器下载模型文件' }

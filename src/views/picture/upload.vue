@@ -22,7 +22,7 @@
           </div>
           <el-divider />
 
-          <el-button type="primary" @click="selectFile()">选择图片（.jpg文件），并上传</el-button>
+          <el-button type="primary" @click="selectFile()">选择图片并上传</el-button>
         </div>
 
       </el-card>
@@ -45,7 +45,7 @@ export default {
       icon: 'fa fa-folder-open',
       color: 'info-box bg-yellow',
       title: '选择文件',
-      declared: '请选择.jpg格式的图片文件进行上传操作',
+      declared: '请选择图片文件进行上传操作',
       md5: { percentage: 0, status: '' },
       upload: { percentage: 0, status: '' },
       save: { percentage: 0, status: '' }
@@ -62,7 +62,7 @@ export default {
           self.icon = 'fa fa-folder-open'
           self.color = 'info-box bg-yellow'
           self.title = '选择文件'
-          self.declared = '请选择.jpg格式的图片文件进行上传操作'
+          self.declared = '请选择图片文件进行上传操作'
           break
         case 'md5':
           self.icon = 'fa fa-cogs'
@@ -123,8 +123,7 @@ export default {
     },
     selectFile() {
       const self = this
-
-      fileOpen('.jpg').then(function(file) {
+      fileOpen('image/gif, image/jpeg, image/png').then(function(file) {
         self.step('md5')
         fileMD5(file, function(p) {
           self.md5 = self.progress(p)
@@ -137,7 +136,6 @@ export default {
               if (type === '') {
                 type = file.extension
               }
-              alert(type)
               if (has) {
                 self.step('succeed')
                 self.upload = self.progress(1)

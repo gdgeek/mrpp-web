@@ -137,7 +137,6 @@ export default {
               if (type === '') {
                 type = file.extension
               }
-              alert(type)
               if (has) {
                 self.step('succeed')
                 self.upload = self.progress(1)

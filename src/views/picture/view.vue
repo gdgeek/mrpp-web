@@ -21,30 +21,8 @@
             <b id="title">  图片名称：</b> <span v-if="data">{{ data.name }}</span>
           </div>
           <div class="box-item">
-            <div v-if="!prepare" style="height: 300px; width: 100%; text-align:center">
-              <h5><font-awesome-icon icon="cog" /> 图片预处理...</h5>
-              <br><br><br>
 
-              <font-awesome-icon icon="cog" size="6x" pulse />
-            </div>
-            <a-scene
-              v-show="prepare"
-              id="a-scene"
-              name="scene"
-              background="color: #E0FFFF"
-              embedded=""
-              style="height: 300px; width: 100%"
-            >
-              <a-entity id="cameraWrapper" position="0 -1.6 1">
-                <a-camera />
-              </a-entity>
-
-              <a-entity
-                target-scale="target:1;callback:infoCallback"
-                :gltf-model="model"
-                position="0 0 0"
-              />
-            </a-scene>
+            <img id="image" :src="picture" value="erff" style="height:300px;">
 
           </div>
 
@@ -112,7 +90,7 @@ export default {
       data: null,
       info: { title: '载入图片', description: '从服务器获得图片数据' },
       extent: { min: 0, max: 1 },
-      model: null,
+      picture: null,
       step: 0,
       infobar: true
     }
@@ -182,7 +160,7 @@ export default {
     getPictureOne(self.id).then((response) => {
       self.data = response.data
       console.log(response.data)
-      self.model = 'url(' + response.data.file.url + ')'
+      self.picture = response.data.file.url
       if (self.prepare) {
         self.window = false
         self.info = { title: '获取图片', description: '从服务器下载图片文件' }
