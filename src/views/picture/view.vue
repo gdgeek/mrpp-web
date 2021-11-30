@@ -152,7 +152,7 @@ export default {
       const self = this
       if (size.x !== 0) {
         const info = JSON.stringify({ size })
-        if (size.x <= 512) {
+        if (size.x <= 1024) {
           const picture = { image_id: self.data.file.id, info }
           putPicture(self.data.id, picture).then((response) => {
             self.data.image_id = response.data.image_id
