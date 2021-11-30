@@ -8,10 +8,8 @@
 
           <img
             src="@/assets/image/none.png"
-            style="width:100%; height:300px"
-            alt="none"
-          >
-        </el-card>
+            style="width:100%; height:300px;object-fit: contain;"
+          ></el-card>
       </div>
 
       <div class="clearfix">

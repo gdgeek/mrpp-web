@@ -1,51 +1,17 @@
 <template>
   <div class="document-index">
     <el-row :gutter="20" style="margin-left:18px;margin-top:28px;margin-right:18px;">
-      <el-col :sm="24" class="panel-group">
-        <el-card v-if="window" class="box-card" shadow="never" style="color:#dfa234;background:#fcf6ec;border-color:#fcf6ec">
-          <div slot="header" class="clearfix">
-            <b>{{ info.title }}</b>
-            <el-button style="float: right; padding: 4px 4px" icon="el-icon-close" circle @click="window= false" />
-          </div>
-          <div>
-            {{ info.description }}<p />
-            <el-progress :text-inside="true" :stroke-width="20" :percentage="70" />
-          </div>
-        </el-card>
-        <br>
-      </el-col>
 
       <el-col :sm="16">
         <el-card class="box-card">
           <div slot="header">
-            <b id="title">  视频名称：</b> <span v-if="data">{{ data.name }}</span>
+            <b id="title">  图片名称：</b> <span v-if="data">{{ data.name }}</span>
           </div>
-          <div class="box-item">
-            <div v-if="!prepare" style="height: 300px; width: 100%; text-align:center">
-              <h5><font-awesome-icon icon="cog" /> 视频预处理...</h5>
-              <br><br><br>
-
-              <font-awesome-icon icon="cog" size="6x" pulse />
-            </div>
-            <a-scene
-              v-show="prepare"
-              id="a-scene"
-              name="scene"
-              background="color: #E0FFFF"
-              embedded=""
-              style="height: 300px; width: 100%"
-            >
-              <a-entity id="cameraWrapper" position="0 -1.6 1">
-                <a-camera />
-              </a-entity>
-
-              <a-entity
-                target-scale="target:1;callback:infoCallback"
-                :gltf-model="model"
-                position="0 0 0"
-              />
-            </a-scene>
-
+          <div class="box-item" style="text-align:center">
+            <video id="video" controls="controls" style="height:300px;width:100%">
+              <source v-if="video !== null" id="src" :src="video">
+            </video>
+            <video id="new_video" style="height:100%;width:100%" hidden @canplaythrough="dealWith()" />
           </div>
 
         </el-card>
@@ -55,16 +21,13 @@
       <el-col :sm="8">
         <el-card class="box-card">
           <div slot="header">
-
-            <b>视频信息</b>:
-
+            <b>图片信息</b>:
           </div>
           <div class="box-item">
             <el-table
               :data="tableData"
               stripe
             >
-
               <el-table-column
                 prop="item"
                 label="条目"
@@ -73,7 +36,6 @@
                 prop="text"
                 label="内容"
               />
-
             </el-table>
 
             <aside
@@ -96,34 +58,23 @@
 <script>
 import { getVideoOne, putVideo, deleteVideo } from '@/api/resources'
 import { postFile } from '@/api/files'
-import { printVector3 } from '@/assets/js/helper'
+import { printVector2 } from '@/assets/js/helper'
 import SparkMD5 from 'spark-md5'
 import { fileMD5, fileCos, fileUpload, fileHas, fileUrl } from '@/assets/js/file.js'
 
-import 'aframe'
-
-import {} from '../../assets/js/aframe-components.js'
 export default {
   name: 'VideoView',
   data: function() {
     return {
-      loading: true,
-      window: true,
       data: null,
-      info: { title: '载入视频', description: '从服务器获得视频数据' },
-      extent: { min: 0, max: 1 },
-      model: null,
-      step: 0,
-      infobar: true
+      video: null
     }
   },
   computed: {
     tableData() {
       if (this.data !== null && this.prepare) {
-        console.log('============')
-        console.log(JSON.parse(this.data.info))
         return [{
-          item: '视频名称',
+          item: '图片名称',
           text: this.data.name
         }, {
           item: '创建者',
@@ -133,10 +84,7 @@ export default {
           text: this.data.created_at
         }, {
           item: '视频尺寸',
-          text: printVector3(JSON.parse(this.data.info).size)
-        }, {
-          item: '视频中心点',
-          text: printVector3(JSON.parse(this.data.info).center)
+          text: printVector2(JSON.parse(this.data.info).size)
         }
         ]
       } else {
@@ -144,57 +92,104 @@ export default {
         ]
       }
     },
-    percentage() {
-      const self = this
-      return Math.round((((1 - self.step) * self.extent.min) + self.step * self.extent.max) * 100)
-    },
     id() {
       return this.$route.query.id
     },
     prepare() {
       return this.data != null && this.data.info !== null
-    },
-    dataInfo() {
-      if (this.prepare) {
-        return JSON.parse(this.data.info)
-      }
-      return null
-    },
-    meshSize() {
-      if (this.prepare) {
-        return this.dataInfo.size
-      }
-      return '等待更新'
-    },
-    meshCenter() {
-      if (this.prepare) {
-        return this.dataInfo.center
-      }
-      return '等待更新'
     }
   },
   created: function() {
-    window.infoCallback = this.infoCallback
     const self = this
-    self.info = { title: '获取信息', description: '从服务器下载视频数据信息' }
-    self.extent = { min: 0, max: 0.1 }
-
     getVideoOne(self.id).then((response) => {
+      //
       self.data = response.data
       console.log(response.data)
-      self.model = 'url(' + response.data.file.url + ')'
-      if (self.prepare) {
-        self.window = false
-        self.info = { title: '获取视频', description: '从服务器下载视频文件' }
-        self.extent = { min: 0.1, max: 1 }
-      } else {
-        self.info = { title: '预处理', description: '从服务器下载视频文件' }
-        self.extent = { min: 0.1, max: 0.2 }
-      }
+      self.video = response.data.file.url
+      setTimeout(() => {
+        self.init()
+      }, 0)
     })
   },
   methods: {
+    thumbnail: function(video, width, height) {
+      return new Promise((resolve, reject) => {
+        const image_type = 'image/jpeg'
+        const canvas = document.createElement('canvas')
+        canvas.width = width
+        canvas.height = height
+        // 将所截图片绘制到canvas上，并转化成图片
+        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height)
 
+        canvas.toBlob(function(blob) {
+          resolve(blob)
+        }, image_type)
+      })
+    },
+    save(file, md5, url, info) {
+      const self = this
+      postFile(file.name, md5, file.type, url).then((response) => {
+        const video = { image_id: response.data.id, info }
+        putVideo(self.data.id, video).then((response) => {
+          self.data.image_id = response.data.image_id
+          self.data.info = response.data.info
+        }).catch(err => {
+          console.log(err)
+        })
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    setup(video, size) {
+      const self = this
+      if (size.x !== 0) {
+        const info = JSON.stringify({ size })
+        self.thumbnail(video, size.x * 0.5, size.y * 0.5).then((blob) => {
+          blob.name = self.data.name + '.thumbnail'
+          blob.extension = '.jpg'
+          const file = blob
+          fileMD5(file, (p) => {}, new SparkMD5()).then(function(md5) {
+            const key = md5 + file.extension
+            fileCos().then(cos => {
+              fileHas(key, cos).then(function(has) {
+                if (has) {
+                  self.save(file, md5, fileUrl(key, cos), info)
+                } else {
+                  fileUpload(key, file, (p) => {}, cos)
+                    .then(data => {
+                      self.save(file, md5, fileUrl(key, cos), info)
+                    })
+                }
+              })
+            })
+          })
+        })
+      }
+    },
+    init: function() {
+      const video = document.getElementById('video')
+      const source = document.getElementById('src')
+
+      // 获取新的视频
+      const new_video = document.getElementById('new_video')
+      new_video.src = source.src + '?t=' + new Date()
+      new_video.crossOrigin = 'anonymous'
+      new_video.currentTime = 0.000001
+      video.addEventListener('timeupdate', function() {
+        new_video.currentTime = video.currentTime
+      }, false)
+    },
+    dealWith: function() {
+      const self = this
+      if (!self.prepare) {
+        const video = document.getElementById('video')
+        // 获取新的视频
+        const new_video = document.getElementById('new_video')
+
+        const size = { x: video.videoWidth, y: video.videoHeight }
+        self.setup(new_video, size)
+      }
+    },
     deleteWindow: function() {
       const self = this
       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -228,7 +223,7 @@ export default {
     },
     namedWindow: function() {
       const self = this
-      this.$prompt('请输入新名称', '修改视频名称', {
+      this.$prompt('请输入新名称', '修改图片名称', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         closeOnClickModal: false,
@@ -237,7 +232,7 @@ export default {
         self.named(self.data.id, value)
         this.$message({
           type: 'success',
-          message: '新的视频名称: ' + value
+          message: '新的图片名称: ' + value
         })
       }).catch(() => {
         this.$message({
@@ -254,110 +249,6 @@ export default {
         self.data.name = response.data.name
       }).catch(err => {
         console.log(err)
-      })
-    },
-    hidden() {
-      this.infobar = false
-    },
-    progress(p) {
-      this.step = p
-    },
-    updateVideo(imageId, center, size) {
-      const self = this
-      self.info = { title: '预处理', description: '更新视频的相关信息' }
-      self.extent = { min: 0.9, max: 1 }
-      const info = JSON.stringify({ center, size })
-      console.log(info)
-      const video = { image_id: imageId, info }
-      console.log(video)
-      putVideo(this.data.id, video).then((response) => {
-        self.info = { title: '处理完成', description: '展示视频文件' }
-        self.extent = { min: 0.9, max: 1 }
-        console.log(response.data)
-        this.data.image_id = response.data.image_id
-        this.data.info = response.data.info
-        console.log(this.dataInfo)
-        console.log(self.meshCenter)
-      }).catch(err => {
-        console.log(err)
-      })
-    },
-    saveFile(filename, md5, type, url, center, size) {
-      const self = this
-      self.info = { title: '预处理', description: '更新缩略图文件的相关信息' }
-      self.extent = { min: 0.8, max: 0.9 }
-      postFile(filename, md5, type, url).then((response) => {
-        self.step = 0.5
-        console.log(response.data)
-        self.updateVideo(response.data.id, center, size)
-      }).catch(err => {
-        console.log(err)
-      })
-    },
-    infoCallback(center, size) {
-      console.log(center)
-      console.log(size)
-      const self = this
-      if (self.prepare) {
-        self.info = { title: '处理完成', description: '展示视频文件' }
-        self.extent = { min: 0, max: 1 }
-        self.step = 1
-        return
-      } else {
-        self.info = { title: '预处理', description: '计算视频信息并更新' }
-        self.extent = { min: 0.2, max: 0.3 }
-        self.step = 0
-      }
-      this.screenshot().then(function(blob) {
-        blob.name = self.data.name
-        blob.extension = '.jpg'
-        const file = blob
-        self.info = { title: '预处理', description: '将渲染好的缩略图计算MD5' }
-        self.extent = { min: 0.3, max: 0.4 }
-        self.step = 0
-        fileMD5(file, self.progress, new SparkMD5()).then(function(md5) {
-          const key = md5 + file.extension
-          self.info = { title: '预处理', description: '获取储存服务器信息' }
-          self.extent = { min: 0.4, max: 0.5 }
-          self.step = 0
-          fileCos().then(cos => {
-            self.info = { title: '预处理', description: '上传缩略图文件到服务器' }
-            self.extent = { min: 0.5, max: 0.8 }
-            self.step = 0
-            fileHas(key, cos).then(function(has) {
-              self.progress(0)
-              if (has) {
-                self.progress(100)
-                self.saveFile(file.name, md5, file.type, fileUrl(key, cos), center, size)
-              } else {
-                fileUpload(key, file, self.progress, cos
-                ).then(data => {
-                  self.progress(100)
-                  self.saveFile(file.name, md5, file.type, fileUrl(key, cos), center, size)
-                })
-              }
-            })
-          })
-        })
-      })
-      console.log(center)
-      console.log(size)
-    },
-    screenshot() {
-      return new Promise((resolve, reject) => {
-        const canvas = document.querySelector('a-scene').components.screenshot.getCanvas('equirectangular')
-        const context = canvas.getContext('2d')
-        const imgData = context.getImageData(2048 + 512, 512, 1024, 1024)
-        const temp = document.createElement('canvas')
-        temp.width = 1024
-        temp.height = 1024
-        const tc = temp.getContext('2d')
-        tc.putImageData(imgData, 0, 0)
-        const type = 'image/jpeg'
-        temp.toBlob(function(blob) {
-          resolve(blob)
-        }, type)
-        console.log(type)
       })
     }
 

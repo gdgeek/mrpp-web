@@ -22,7 +22,7 @@
           </div>
           <el-divider />
 
-          <el-button type="primary" @click="selectFile()">选择视频（.glb文件），并上传</el-button>
+          <el-button type="primary" @click="selectFile()">选择视频，并上传</el-button>
         </div>
 
       </el-card>
@@ -45,7 +45,7 @@ export default {
       icon: 'fa fa-folder-open',
       color: 'info-box bg-yellow',
       title: '选择文件',
-      declared: '请选择.glb格式的视频文件进行上传操作',
+      declared: '请选择视频文件进行上传操作',
       md5: { percentage: 0, status: '' },
       upload: { percentage: 0, status: '' },
       save: { percentage: 0, status: '' }
@@ -62,7 +62,7 @@ export default {
           self.icon = 'fa fa-folder-open'
           self.color = 'info-box bg-yellow'
           self.title = '选择文件'
-          self.declared = '请选择.glb格式的视频文件进行上传操作'
+          self.declared = '请选择视频文件进行上传操作'
           break
         case 'md5':
           self.icon = 'fa fa-cogs'
@@ -124,7 +124,7 @@ export default {
     selectFile() {
       const self = this
 
-      fileOpen('.glb').then(function(file) {
+      fileOpen('video/mp4,video/ogg').then(function(file) {
         self.step('md5')
         fileMD5(file, function(p) {
           self.md5 = self.progress(p)

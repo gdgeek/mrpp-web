@@ -185,8 +185,6 @@ export default {
     dealWith: function() {
       const self = this
       if (!self.prepare) {
-        console.log(1)
-
         // alert(this.prepare)
         const image = document.getElementById('image')
         image.crossOrigin = 'anonymous'

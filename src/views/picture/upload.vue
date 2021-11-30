@@ -1,6 +1,6 @@
 <template>
   <div>
-
+    <mr-p-p-upload :title="title" :declared="declared" />
     <div class="document-index">
       <el-card class="box-card-component" style="margin-left:18px;margin-top:18px;margin-right:18px;">
         <div slot="header" class="box-card-header">
@@ -35,11 +35,15 @@
 
 import SparkMD5 from 'spark-md5'
 import { fileOpen, fileMD5, fileHas, fileUrl, fileUpload, fileCos } from '../../assets/js/file.js'
-import { mapMutations } from 'vuex'
 import { postFile } from '@/api/files'
 import { postPicture } from '@/api/resources'
+import MrPPUpload from '@/components/MrPP/MrPPUpload'
+
 export default {
   name: 'PictureUpload',
+  components: {
+    MrPPUpload
+  },
   data: function() {
     return {
       icon: 'fa fa-folder-open',
@@ -52,9 +56,6 @@ export default {
     }
   },
   methods: {
-    ...mapMutations([
-      'flashSetup'
-    ]),
     step(type) {
       const self = this
       switch (type) {
