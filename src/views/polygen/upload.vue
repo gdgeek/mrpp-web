@@ -34,7 +34,7 @@
 <script>
 
 import SparkMD5 from 'spark-md5'
-import { fileOpen, fileMD5, fileHas, fileUrl, fileUpload, fileCos } from '../../assets/js/file.js'
+import { fileOpen, fileMD5, fileHas, fileUrl, fileUpload, fileCos } from '@/assets/js/file.js'
 import { mapMutations } from 'vuex'
 import { postFile } from '@/api/files'
 import { postPolygen } from '@/api/resources'
