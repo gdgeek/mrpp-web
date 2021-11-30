@@ -1,6 +1,14 @@
 import 'aframe'
-import {toFixedVector3} from './helper.js'
+
 const AFRAME = window.AFRAME
+
+function toFixedVector3(vec, n) {
+  const result = new THREE.Vector3()
+  result.x = parseFloat(vec.x.toFixed(n))
+  result.y = parseFloat(vec.y.toFixed(n))
+  result.z = parseFloat(vec.z.toFixed(n))
+  return result
+}
 AFRAME.registerComponent('target-scale', {
   schema: {
     target: {

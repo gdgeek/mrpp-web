@@ -1,28 +1,20 @@
 <template>
   <div class="document-index">
     <el-row :gutter="20" style="margin-left:18px;margin-top:28px;margin-right:18px;">
-      <el-col :sm="24" class="panel-group">
-        <el-card v-if="window" class="box-card" shadow="never" style="color:#dfa234;background:#fcf6ec;border-color:#fcf6ec">
-          <div slot="header" class="clearfix">
-            <b>{{ info.title }}</b>
-            <el-button style="float: right; padding: 4px 4px" icon="el-icon-close" circle @click="window= false" />
-          </div>
-          <div>
-            {{ info.description }}<p />
-            <el-progress :text-inside="true" :stroke-width="20" :percentage="70" />
-          </div>
-        </el-card>
-        <br>
-      </el-col>
 
       <el-col :sm="16">
         <el-card class="box-card">
           <div slot="header">
             <b id="title">  图片名称：</b> <span v-if="data">{{ data.name }}</span>
           </div>
-          <div class="box-item">
-
-            <img id="image" :src="picture" value="erff" style="height:300px;">
+          <div class="box-item" style="text-align:center">
+            <el-image
+              id="image"
+              style="height: 300px;width:100%;"
+              :src="picture"
+              :fit="'contain'"
+              @load="dealWith()"
+            />
 
           </div>
 
@@ -74,32 +66,21 @@
 <script>
 import { getPictureOne, putPicture, deletePicture } from '@/api/resources'
 import { postFile } from '@/api/files'
-import { printVector3 } from '@/assets/js/helper'
+import { printVector2 } from '@/assets/js/helper'
 import SparkMD5 from 'spark-md5'
 import { fileMD5, fileCos, fileUpload, fileHas, fileUrl } from '@/assets/js/file.js'
 
-import 'aframe'
-
-import {} from '../../assets/js/aframe-components.js'
 export default {
   name: 'PictureView',
   data: function() {
     return {
-      loading: true,
-      window: true,
       data: null,
-      info: { title: '载入图片', description: '从服务器获得图片数据' },
-      extent: { min: 0, max: 1 },
-      picture: null,
-      step: 0,
-      infobar: true
+      picture: null
     }
   },
   computed: {
     tableData() {
       if (this.data !== null && this.prepare) {
-        console.log('============')
-        console.log(JSON.parse(this.data.info))
         return [{
           item: '图片名称',
           text: this.data.name
@@ -111,10 +92,7 @@ export default {
           text: this.data.created_at
         }, {
           item: '图片尺寸',
-          text: printVector3(JSON.parse(this.data.info).size)
-        }, {
-          item: '图片中心点',
-          text: printVector3(JSON.parse(this.data.info).center)
+          text: printVector2(JSON.parse(this.data.info).size)
         }
         ]
       } else {
@@ -122,57 +100,118 @@ export default {
         ]
       }
     },
-    percentage() {
-      const self = this
-      return Math.round((((1 - self.step) * self.extent.min) + self.step * self.extent.max) * 100)
-    },
     id() {
       return this.$route.query.id
     },
     prepare() {
       return this.data != null && this.data.info !== null
-    },
-    dataInfo() {
-      if (this.prepare) {
-        return JSON.parse(this.data.info)
-      }
-      return null
-    },
-    meshSize() {
-      if (this.prepare) {
-        return this.dataInfo.size
-      }
-      return '等待更新'
-    },
-    meshCenter() {
-      if (this.prepare) {
-        return this.dataInfo.center
-      }
-      return '等待更新'
     }
   },
   created: function() {
-    window.infoCallback = this.infoCallback
     const self = this
-    self.info = { title: '获取信息', description: '从服务器下载图片数据信息' }
-    self.extent = { min: 0, max: 0.1 }
-
     getPictureOne(self.id).then((response) => {
       self.data = response.data
       console.log(response.data)
       self.picture = response.data.file.url
-      if (self.prepare) {
-        self.window = false
-        self.info = { title: '获取图片', description: '从服务器下载图片文件' }
-        self.extent = { min: 0.1, max: 1 }
-      } else {
-        self.info = { title: '预处理', description: '从服务器下载图片文件' }
-        self.extent = { min: 0.1, max: 0.2 }
-      }
     })
   },
   methods: {
+    getImageSize: function(imageEl) {
+      var i = new Image() // 新建一个图片对象
+      i.src = imageEl.src // 将图片的src属性赋值给新建图片对象的src
+      console.log(i.src)
+      return { 'x': i.width, 'y': i.height } // 返回图片的长宽像素
+    },
+    thumbnail: function(image, width, height) {
+      return new Promise((resolve, reject) => {
+        const image_type = 'image/jpeg'
+        const canvas = document.createElement('canvas')
+        canvas.width = width
+        canvas.height = height
+        canvas.getContext('2d').drawImage(image, 0, 0, width, height)
+        canvas.toBlob(function(blob) {
+          resolve(blob)
+        }, image_type)
+      })
+    },
+    save(file, md5, url, info) {
+      const self = this
+      postFile(file.name, md5, file.type, url).then((response) => {
+        const picture = { image_id: response.data.id, info }
+        putPicture(self.data.id, picture).then((response) => {
+          self.data.image_id = response.data.image_id
+          self.data.info = response.data.info
+        }).catch(err => {
+          console.log(err)
+        })
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    setup(size, image) {
+      const self = this
+      if (size.x !== 0) {
+        const info = JSON.stringify({ size })
+        if (size.x <= 512) {
+          const picture = { image_id: self.data.file.id, info }
+          putPicture(self.data.id, picture).then((response) => {
+            self.data.image_id = response.data.image_id
+            self.data.info = response.data.info
+          })
+          return
+        }
+        self.thumbnail(image, 512, size.y * (512 / size.x)).then((blob) => {
+          blob.name = self.data.name + '.thumbnail'
+          blob.extension = '.jpg'
+          const file = blob
+          fileMD5(file, (p) => {}, new SparkMD5()).then(function(md5) {
+            const key = md5 + file.extension
+            fileCos().then(cos => {
+              fileHas(key, cos).then(function(has) {
+                if (has) {
+                  self.save(file, md5, fileUrl(key, cos), info)
+                } else {
+                  fileUpload(key, file, (p) => {}, cos)
+                    .then(data => {
+                      self.save(file, md5, fileUrl(key, cos), info)
+                    })
+                }
+              })
+            })
+          })
+        })
+      }
+    },
+    dealWith: function() {
+      const self = this
+      if (!self.prepare) {
+        console.log(1)
 
+        // alert(this.prepare)
+        const image = document.getElementById('image')
+        image.crossOrigin = 'anonymous'
+        const size = this.getImageSize(image)
+
+        console.log(size)
+        console.log(image.complete)
+        if (image.complete) {
+          const size = this.getImageSize(image)
+          console.log(size)
+          if (size.x !== 0) {
+            self.setup(size, image)
+          } else {
+            const id = setInterval(() => {
+              const size = this.getImageSize(image)
+              console.log(size)
+              if (size.x !== 0) {
+                self.setup(size, image)
+                clearInterval(id)
+              }
+            }, 100)
+          }
+        }
+      }
+    },
     deleteWindow: function() {
       const self = this
       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -232,110 +271,6 @@ export default {
         self.data.name = response.data.name
       }).catch(err => {
         console.log(err)
-      })
-    },
-    hidden() {
-      this.infobar = false
-    },
-    progress(p) {
-      this.step = p
-    },
-    updatePicture(imageId, center, size) {
-      const self = this
-      self.info = { title: '预处理', description: '更新图片的相关信息' }
-      self.extent = { min: 0.9, max: 1 }
-      const info = JSON.stringify({ center, size })
-      console.log(info)
-      const picture = { image_id: imageId, info }
-      console.log(picture)
-      putPicture(this.data.id, picture).then((response) => {
-        self.info = { title: '处理完成', description: '展示图片文件' }
-        self.extent = { min: 0.9, max: 1 }
-        console.log(response.data)
-        this.data.image_id = response.data.image_id
-        this.data.info = response.data.info
-        console.log(this.dataInfo)
-        console.log(self.meshCenter)
-      }).catch(err => {
-        console.log(err)
-      })
-    },
-    saveFile(filename, md5, type, url, center, size) {
-      const self = this
-      self.info = { title: '预处理', description: '更新缩略图文件的相关信息' }
-      self.extent = { min: 0.8, max: 0.9 }
-      postFile(filename, md5, type, url).then((response) => {
-        self.step = 0.5
-        console.log(response.data)
-        self.updatePicture(response.data.id, center, size)
-      }).catch(err => {
-        console.log(err)
-      })
-    },
-    infoCallback(center, size) {
-      console.log(center)
-      console.log(size)
-      const self = this
-      if (self.prepare) {
-        self.info = { title: '处理完成', description: '展示图片文件' }
-        self.extent = { min: 0, max: 1 }
-        self.step = 1
-        return
-      } else {
-        self.info = { title: '预处理', description: '计算图片信息并更新' }
-        self.extent = { min: 0.2, max: 0.3 }
-        self.step = 0
-      }
-      this.screenshot().then(function(blob) {
-        blob.name = self.data.name
-        blob.extension = '.jpg'
-        const file = blob
-        self.info = { title: '预处理', description: '将渲染好的缩略图计算MD5' }
-        self.extent = { min: 0.3, max: 0.4 }
-        self.step = 0
-        fileMD5(file, self.progress, new SparkMD5()).then(function(md5) {
-          const key = md5 + file.extension
-          self.info = { title: '预处理', description: '获取储存服务器信息' }
-          self.extent = { min: 0.4, max: 0.5 }
-          self.step = 0
-          fileCos().then(cos => {
-            self.info = { title: '预处理', description: '上传缩略图文件到服务器' }
-            self.extent = { min: 0.5, max: 0.8 }
-            self.step = 0
-            fileHas(key, cos).then(function(has) {
-              self.progress(0)
-              if (has) {
-                self.progress(100)
-                self.saveFile(file.name, md5, file.type, fileUrl(key, cos), center, size)
-              } else {
-                fileUpload(key, file, self.progress, cos
-                ).then(data => {
-                  self.progress(100)
-                  self.saveFile(file.name, md5, file.type, fileUrl(key, cos), center, size)
-                })
-              }
-            })
-          })
-        })
-      })
-      console.log(center)
-      console.log(size)
-    },
-    screenshot() {
-      return new Promise((resolve, reject) => {
-        const canvas = document.querySelector('a-scene').components.screenshot.getCanvas('equirectangular')
-        const context = canvas.getContext('2d')
-        const imgData = context.getImageData(2048 + 512, 512, 1024, 1024)
-        const temp = document.createElement('canvas')
-        temp.width = 1024
-        temp.height = 1024
-        const tc = temp.getContext('2d')
-        tc.putImageData(imgData, 0, 0)
-        const type = 'image/jpeg'
-        temp.toBlob(function(blob) {
-          resolve(blob)
-        }, type)
-        console.log(type)
       })
     }
 

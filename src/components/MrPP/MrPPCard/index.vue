@@ -8,7 +8,7 @@
 
           <img
             src="@/assets/image/none.png"
-            width="100%"
+            style="width:100%; height:300px"
             alt="none"
           >
         </el-card>
@@ -34,7 +34,8 @@
 
           <el-image
             :src="item.image.url"
-            fit="contcoverain"
+            style="width:100%; height:300px"
+            fit="contain"
           />
         </el-card>
       </div>
