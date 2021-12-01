@@ -2,7 +2,7 @@
   <div>
 
     <div class="document-index">
-      <el-card class="box-card-component" style="margin-left:18px;margin-top:18px;margin-right:18px;">
+      <el-card class="box-card-component" style="margin:18px 18px 0">
         <div slot="header" class="box-card-header">
 
           <h3>{{ title }}:</h3>{{ declared }}
@@ -22,7 +22,7 @@
           </div>
           <el-divider />
 
-          <el-button type="primary" @click="selectFile()">选择模型（.glb文件），并上传</el-button>
+          <el-button type="primary" :disabled="isdisabled" @click="selectFile()">选择模型（.glb文件），并上传</el-button>
         </div>
 
       </el-card>
@@ -48,7 +48,8 @@ export default {
       declared: '请选择.glb格式的模型文件进行上传操作',
       md5: { percentage: 0, status: '' },
       upload: { percentage: 0, status: '' },
-      save: { percentage: 0, status: '' }
+      save: { percentage: 0, status: '' },
+      isdisabled: false
     }
   },
   methods: {
@@ -126,6 +127,7 @@ export default {
 
       fileOpen('.glb').then(function(file) {
         self.step('md5')
+        self.isdisabled = !self.isdisabled
         fileMD5(file, function(p) {
           self.md5 = self.progress(p)
         }, new SparkMD5()).then(function(md5) {

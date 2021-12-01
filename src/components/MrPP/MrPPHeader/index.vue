@@ -46,6 +46,7 @@
             size="mini"
             placeholder="搜索名称"
             class="input-with-select"
+            @keyup.enter.native="keyDown"
           >
             <el-button
               slot="append"
@@ -96,6 +97,15 @@ export default {
     },
     sort(value) {
       this.$emit('sort', (value === this.sorted ? '-' : '') + value)
+    },
+    keyDown(e) {
+      if (e.ctrlKey && e.keyCode === 13) {
+        // 用户点击了ctrl+enter触发
+        this.textarea += '\n'
+      } else {
+        // 用户点击了enter触发
+        this.search()
+      }
     }
   }
 }

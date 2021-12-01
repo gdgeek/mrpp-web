@@ -1,6 +1,6 @@
 <template>
   <div class="document-index">
-    <el-row :gutter="20" style="margin-left:18px;margin-top:28px;margin-right:18px;">
+    <el-row :gutter="20" style="margin:28px 18px 0">
 
       <el-col :sm="16">
         <el-card class="box-card">
