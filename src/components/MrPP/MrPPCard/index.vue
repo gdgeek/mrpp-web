@@ -2,7 +2,7 @@
   <div>
     <el-card v-if="item.info === null" class="box-card">
       <div slot="header">
-        <el-card shadow="hover" :body-style="{ padding: '20px' }">
+        <el-card shadow="hover" :body-style="{ padding: '0px' }">
           <span slot="header" class="mrpp-title">
             <b class="card-title">{{ item.name }}</b>
           </span>
@@ -39,7 +39,7 @@
     </el-card>
     <el-card v-else class="box-card">
       <div slot="header">
-        <el-card shadow="hover" :body-style="{ padding: '20px' }">
+        <el-card shadow="hover" :body-style="{ padding: '0px' }">
           <span slot="header" class="mrpp-title">
             <b class="card-title">{{ item.name }}</b>
           </span>
@@ -84,7 +84,7 @@ export default {
   props: {
     item: {
       type: Object,
-      required: null
+      required: true
     }
   },
   created() {},
