@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="document-index">
-      <el-card class="box-card-component" style="margin-left:18px;margin-top:18px;margin-right:18px;">
+      <el-card class="box-card-component" style="margin:18px 18px 0">
         <div slot="header" class="box-card-header">
 
           <h3>{{ title }}:</h3>{{ declared }}
@@ -25,7 +25,7 @@
           </div>
           <el-divider />
 
-          <el-button type="primary" @click="selectFile()">选择图片并上传</el-button>
+          <el-button type="primary" @click="selectFile()">{{ subtitle }}</el-button>
         </div>
 
       </el-card>
@@ -52,6 +52,10 @@ export default {
       default: ''
     },
     declared: {
+      type: String,
+      default: ''
+    },
+    subtitle: {
       type: String,
       default: ''
     }
