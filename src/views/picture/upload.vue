@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mr-p-p-upload :title="title" :declared="declared" />
+    <mr-p-p-upload :title="title" :declared="declared" :subtitle="subtitle" />
     <div class="document-index">
       <el-card class="box-card-component" style="margin:18px 18px 0">
         <div slot="header" class="box-card-header">
@@ -22,7 +22,7 @@
           </div>
           <el-divider />
 
-          <el-button type="primary" :disabled="isdisabled" @click="selectFile()">选择图片并上传</el-button>
+          <el-button type="primary" :disabled="isdisabled" @click="selectFile()">{{ subtitle }}</el-button>
         </div>
 
       </el-card>
@@ -49,6 +49,7 @@ export default {
       icon: 'fa fa-folder-open',
       color: 'info-box bg-yellow',
       title: '选择文件',
+      subtitle: '选择图片并上传',
       declared: '请选择图片文件进行上传操作',
       md5: { percentage: 0, status: '' },
       upload: { percentage: 0, status: '' },
