@@ -1,5 +1,5 @@
 <template>
-  <Site>
+  <mr-p-p-site>
     <h2 class="resend-title">重新验证邮件</h2>
     <p class="resend-tips">请输入您的邮箱，我们会重新发送验证邮件到这里。</p>
     <el-form
@@ -29,19 +29,19 @@
       </router-link>
       <br>
     </div>
-  </Site>
+  </mr-p-p-site>
 </template>
 
 <script>
 // @ is an alias to /src
-import Site from '@/components/Site.vue'
+import MrPPSite from '@/components/MrPP/MrPPSite'
 import { mapMutations } from 'vuex'
 import { resendVerificationEmail } from '@/api/sites'
 
 export default {
   name: 'ResendVerificationEmail',
   components: {
-    Site
+    MrPPSite
   },
   data() {
     return {

@@ -21,6 +21,13 @@ export function signup(info) {
     data: { SignupForm: info }
   })
 }
+
+export function wechatQrcode() {
+  return request({
+    url: '/sites/wechat-qrcode',
+    method: 'get'
+  })
+}
 export function requestPasswordReset(data) {
   return request({
     url: '/sites/request-password-reset',

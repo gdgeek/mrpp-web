@@ -1,5 +1,5 @@
 <template>
-  <Site>
+  <mr-p-p-site>
     <div class="verify-head">
       <div>
         <p class="verify-lead">正在验证信箱</p>
@@ -22,18 +22,17 @@
         </router-link>
       </div>
     </div>
-  </Site>
+  </mr-p-p-site>
 </template>
 
 <script>
 // @ is an alias to /src
-import Site from '@/components/Site.vue'
-
+import MrPPSite from '@/components/MrPP/MrPPSite'
 import { verifEmail } from '@/api/sites'
 export default {
   name: 'VerifyEmail',
   components: {
-    Site
+    MrPPSite
   },
 
   data() {

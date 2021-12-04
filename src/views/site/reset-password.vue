@@ -1,5 +1,5 @@
 <template>
-  <Site>
+  <mr-p-p-site>
     <h2 class="reset-title">重置密码</h2>
     <p class="reset-tips">请输入您新的密码，用于重置。</p>
     <el-form
@@ -41,18 +41,18 @@
       </router-link>
       <br>
     </div>
-  </Site>
+  </mr-p-p-site>
 </template>
 
 <script>
 // @ is an alias to /src
-import Site from '@/components/Site.vue'
+import MrPPSite from '@/components/MrPP/MrPPSite'
 import { resetPasswordToken, resetPassword } from '@/api/sites'
 import { mapMutations } from 'vuex'
 export default {
   name: 'ResetPassword',
   components: {
-    Site
+    MrPPSite
   },
   methods: {
     ...mapMutations([

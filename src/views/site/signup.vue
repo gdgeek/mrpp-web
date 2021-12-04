@@ -1,5 +1,5 @@
 <template>
-  <Site>
+  <mr-p-p-site>
     <h2 class="signup-title">注册用户</h2>
     <div class="signup-head">
       <el-form
@@ -79,19 +79,19 @@
         alt="qrcode"
       >
     </div>
-  </Site>
+  </mr-p-p-site>
 </template>
 
 <script>
 // @ is an alias to /src
-import Site from '@/components/Site.vue'
+import MrPPSite from '@/components/MrPP/MrPPSite'
 import { mapMutations } from 'vuex'
 import { signup } from '@/api/sites'
 export default {
   name: 'Signup',
 
   components: {
-    Site
+    MrPPSite
   },
   data() {
     const validatePassword = (rule, value, callback) => {

@@ -1,5 +1,5 @@
 <template>
-  <Site>
+  <mr-p-p-site>
     <h2 class="login-title">登录账号</h2>
     <el-form
       ref="form"
@@ -35,18 +35,18 @@
       </router-link>
       <br>
     </div>
-  </Site>
+  </mr-p-p-site>
 </template>
 
 <script>
 // @ is an alias to /src
-import Site from '@/components/Site.vue'
+import MrPPSite from '@/components/MrPP/MrPPSite'
 import { setToken } from '@/utils/auth'
 import { login } from '@/api/sites'
 export default {
   name: 'Login',
   components: {
-    Site
+    MrPPSite
   },
   data() {
     return {

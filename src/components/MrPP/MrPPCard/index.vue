@@ -48,6 +48,7 @@
             :src="item.image.url"
             style="width: 100%; height: 300px"
             fit="contain"
+            lazy
           />
         </el-card>
       </div>

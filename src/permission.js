@@ -16,7 +16,8 @@ const whiteList = [
   '/site/signup',
   '/site/request-password-reset',
   '/site/resend-verification-email',
-  '/site/reset-password'
+  '/site/reset-password',
+  '/site/wechat'
 ] // no redirect whitelist
 
 router.beforeEach(async(to, from, next) => {

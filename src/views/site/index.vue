@@ -1,5 +1,5 @@
 <template>
-  <Site>
+  <mr-p-p-site>
     <div class="module-head">
       <h1 class="module-welcome">欢迎!</h1>
       <p class="module-text">准备好出发了么？</p>
@@ -11,8 +11,8 @@
           <el-link type="primary" :underline="false">登录账号</el-link>
         </router-link>
         <br>
-        <router-link to="/site/signup">
-          <el-link type="primary" :underline="false">注册用户</el-link>
+        <router-link to="/site/wechat">
+          <el-link type="primary" :underline="false">微信注册</el-link>
         </router-link>
       </div>
     </div>
@@ -26,16 +26,16 @@
         alt="qrcode"
       >
     </div>
-  </Site>
+  </mr-p-p-site>
 </template>
 
 <script>
 // @ is an alias to /src
-import Site from '@/components/Site.vue'
+import MrPPSite from '@/components/MrPP/MrPPSite'
 export default {
   name: 'ModuleIndex',
   components: {
-    Site
+    MrPPSite
   },
   computed: {
     alert() {

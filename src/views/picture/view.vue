@@ -13,6 +13,7 @@
               style="height: 300px;width:100%;"
               :src="picture"
               :fit="'contain'"
+              lazy
               @load="dealWith()"
             />
 
