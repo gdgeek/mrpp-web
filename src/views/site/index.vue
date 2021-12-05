@@ -3,47 +3,53 @@
     <div class="module-head">
       <h1 class="module-welcome">欢迎!</h1>
       <p class="module-text">准备好出发了么？</p>
+
+      <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+        <el-tab-pane name="login" label="账户密码登录"><mr-p-p-login>账户密码登录</mr-p-p-login></el-tab-pane>
+
+        <el-tab-pane name="qrcode" label="微信扫码（登陆/注册）"><mr-p-p-qrcode :active="qrcode">微信扫码进入</mr-p-p-qrcode></el-tab-pane>
+      </el-tabs>
       <el-alert v-if="alert.show" :title="alert.title" :type="alert.type">
         {{ alert.description }}
       </el-alert>
-      <div class="module-link">
-        <router-link to="/site/login">
-          <el-link type="primary" :underline="false">登录账号</el-link>
-        </router-link>
-        <br>
-        <router-link to="/site/wechat">
-          <el-link type="primary" :underline="false">微信注册</el-link>
-        </router-link>
-      </div>
     </div>
-    <hr>
-    <div class="module-body">
-      <div class="module-hint">微信扫码，得到测试资格</div>
-      <img
-        src="@/assets/image/qrcode.jpg"
-        class="module-qrcode"
-        width="100%"
-        alt="qrcode"
-      >
-    </div>
+
   </mr-p-p-site>
 </template>
 
 <script>
 // @ is an alias to /src
 import MrPPSite from '@/components/MrPP/MrPPSite'
+import MrPPLogin from '@/components/MrPP/MrPPLogin'
+import MrPPQrcode from '@/components/MrPP/MrPPQrcode'
 export default {
   name: 'ModuleIndex',
   components: {
-    MrPPSite
+    MrPPSite,
+    MrPPLogin,
+    MrPPQrcode
+  },
+  data() {
+    return {
+      activeName: 'login'
+
+    }
   },
   computed: {
+    qrcode() {
+      return this.activeName === 'qrcode'
+    },
     alert() {
       return this.$store.state.flash.main
     }
   },
   destroyed() {
     this.$store.commit('flashClean')
+  },
+  methods: {
+    handleClick(tab, event) {
+      console.log(this.activeName)
+    }
   }
 }
 </script>

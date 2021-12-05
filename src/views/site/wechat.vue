@@ -1,11 +1,23 @@
 <template>
-  <mr-p-p-site>{{ qrcode }}
+  <mr-p-p-site>
+    <el-card shadow="hover" :body-style="{ padding: '0px' }">
+      <span slot="header" class="mrpp-title">
+        {{ token }}
+        <b class="card-title" nowrap>微信扫码进入</b>
+      </span>
+      <el-image
+        :src="qrcode "
+        style="width: 100%; height: 400px"
+        fit="contain"
+        lazy
+      />
+    </el-card>
   </mr-p-p-site>
 </template>
 
 <script>
 
-import { wechatQrcode } from '@/api/sites'
+import { qrcode, openid } from '@/api/wechats'
 // @ is an alias to /src
 import MrPPSite from '@/components/MrPP/MrPPSite'
 export default {
@@ -16,67 +28,45 @@ export default {
 
   data() {
     return {
-      qrcode: 123
+      qrcode: '',
+      token: '',
+      interval: null
+
     }
   },
+  beforeDestroy() {
+    clearInterval(this.interval)
+  },
   created() {
-    wechatQrcode().then(response => {
+    const self = this
+    qrcode().then(response => {
       console.log(response.data.qrcode)
-      this.qrcode = response.data.qrcode
+      self.qrcode = response.data.qrcode
+      self.token = response.data.token
     })
+    self.interval = setInterval(() => {
+      self.refresh()
+    }, 1000)
     // alert(1)
+  },
+  methods: {
+    refresh() {
+      const self = this
+      openid(this.token).then((response) => {
+        console.log(response.data)
+        if (typeof (response.data) !== 'undefined') {
+          console.log(self.token)
+          console.log(response.data.token)
+          if (typeof (response.data.token) !== 'undefined' && response.data.token === self.token) {
+            if (typeof (response.data.user) !== 'undefined') {
+              this.$router.push({ path: '/site/wechat-login', query: { token: response.data.token }})
+            } else {
+              this.$router.push({ path: '/site/wechat-signup', query: { token: response.data.token }})
+            }
+          }
+        }
+      })
+    }
   }
-
 }
 </script>
-
-<style lang="scss" scoped>
-$bg: #2d3a4b;
-$dark_gray: #889aa4;
-$light_gray: #eee;
-
-.signup-title {
-  color: #444444;
-  margin: 20px 0 20px;
-  text-align: center;
-  font-weight: bold;
-}
-.signup-head {
-  padding: 0 10px 10px 10px;
-  max-width: 100%;
-}
-.signup-form {
-  margin-top: 20px;
-  height: 100%;
-  max-width: 100%;
-  padding: 10px 20px 0px 10px;
-}
-.signup-link {
-  padding: 10px 10px 10px 10px;
-}
-.signup-link a {
-  color: rgb(28, 160, 212);
-  font-size: 16px;
-}
-
-.signup-body {
-  padding-top: 14px;
-  height: 100%;
-  max-width: 100%;
-  padding: 10px 10px 20px 10px;
-}
-
-.signup-hint {
-  font-size: 14px;
-  font-weight: lighter;
-  color: #666;
-  font-weight: bold;
-}
-
-.signup-qrcode {
-  margin-top: 2px;
-  border: 1px solid;
-  border-radius: 4px;
-  border-color: rgb(213, 216, 216);
-}
-</style>

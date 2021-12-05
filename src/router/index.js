@@ -178,6 +178,16 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/site/wechat-login',
+    component: () => import('@/views/site/wechat-login'),
+    hidden: true
+  },
+  {
+    path: '/site/wechat-signup',
+    component: () => import('@/views/site/wechat-signup'),
+    hidden: true
+  },
+  {
     path: '/site/signup',
     component: () => import('@/views/site/signup'),
     hidden: true

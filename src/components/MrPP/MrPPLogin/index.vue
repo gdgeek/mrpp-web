@@ -1,6 +1,8 @@
 <template>
-  <Site>
+  <div>
+
     <h2 class="login-title">登录账号</h2>
+
     <el-form
       ref="form"
       class="login-body"
@@ -21,37 +23,24 @@
 
       <el-form-item class="login-button">
         <el-button style="width: 120px" type="primary" @click="submit('form')">
-          进入
+          登陆
         </el-button>
       </el-form-item>
     </el-form>
-    <div class="login-link">
-      <router-link to="/site/signup">
-        <el-link type="primary" :underline="false">注册用户</el-link>
-      </router-link>
-      <br>
-      <router-link to="/site/request-password-reset">
-        <el-link type="primary" :underline="false">找回密码</el-link>
-      </router-link>
-      <br>
-    </div>
-  </Site>
+
+  </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Site from '@/components/Site.vue'
 import { setToken } from '@/utils/auth'
 import { login } from '@/api/sites'
 export default {
-  name: 'Login',
+  name: 'MrPPLogin',
   components: {
-    Site
   },
   data() {
     return {
-      isShow: false,
-      title: 'test',
       form: {
         username: null,
         password: null
@@ -75,8 +64,6 @@ export default {
       setToken(data.access_token)
       this.$router.push('/')
     },
-    failed(message) {
-    },
     submit(formName) {
       const self = this
       this.$refs[formName].validate(valid => {
@@ -93,55 +80,13 @@ export default {
             })
             .catch(function(error) {
               console.log(error)
-              self.failed(error)
+              // self.failed(error)
             })
         } else {
           return false
         }
       })
-    },
-    error(msg) {
-      this.title = ''
-      if (typeof msg === 'string') {
-        this.title = msg
-      } else {
-        let i = 0
-        for (const item in msg) {
-          ++i
-          this.title += i + '.' + item + ' : ' + msg[item] + '\n'
-        }
-      }
-      this.isShow = true
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-$bg: #2d3a4b;
-$dark_gray: #889aa4;
-$light_gray: #eee;
-.login-title {
-  color: #444444;
-  margin: 20px 0 20px;
-  text-align: center;
-  font-weight: bold;
-}
-.login-body {
-  margin-top: 36px;
-  height: 100%;
-  max-width: 100%;
-  padding: 10px 40px 0px 10px;
-}
-.login-button {
-  text-align: right;
-}
-.login-link {
-  padding: 0 10px;
-  margin-bottom: 20px;
-}
-.login-link a {
-  color: rgb(28, 160, 212);
-  font-size: 16px;
-}
-</style>

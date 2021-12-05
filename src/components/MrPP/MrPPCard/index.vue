@@ -4,7 +4,7 @@
       <div slot="header">
         <el-card shadow="hover" :body-style="{ padding: '0px' }">
           <span slot="header" class="mrpp-title">
-            <b class="card-title">{{ item.name }}</b>
+            <b class="card-title" nowrap>{{ item.name }}</b>
           </span>
 
           <img
@@ -41,7 +41,7 @@
       <div slot="header">
         <el-card shadow="hover" :body-style="{ padding: '0px' }">
           <span slot="header" class="mrpp-title">
-            <b class="card-title">{{ item.name }}</b>
+            <b class="card-title" nowrap>{{ item.name }}</b>
           </span>
 
           <el-image
@@ -109,6 +109,7 @@ export default {
   color: #666;
 }
 .card-title {
+  white-space:nowrap;
   display: block;
   text-overflow: ellipsis;
   overflow: hidden;

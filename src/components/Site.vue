@@ -7,10 +7,7 @@
       <!-- box start-->
       <div class="box">
         <div class="sub-title">Mixed Reality Programming Platform</div>
-
-        <el-card shadow="hover" :body-style="{ padding: '15px' }">
-          <slot />
-        </el-card>
+        <slot />
       </div>
       <!-- box end -->
       <!-- footer start -->
@@ -21,33 +18,17 @@
             target="_blank"
             type="primary"
             :underline="false"
-          >
-            <i class="el-icon-s-flag" />
-            当前进行工作
-          </el-link>
+          ><i class="el-icon-s-flag" /> 当前进行工作 </el-link>
         </div>
         <hr>
         <div class="foot-summary linkcolor">
-          <el-link type="primary" :underline="false">
-            <i class="el-icon-picture" />
-            平台商业计划书
-          </el-link>
+          <el-link type="primary" :underline="false"><i class="el-icon-picture" /> 平台商业计划书 </el-link>
         </div>
       </div>
       <div class="foot-tips linkcolor">
-        <el-link href="https://bujiaban.com" target="_blank" :underline="false">
-          <i class="el-icon-s-home" />
-          上海不加班网络科技有限公司
-        </el-link>
+        <el-link href="https://bujiaban.com" target="_blank" :underline="false"><i class="el-icon-s-home" /> 上海不加班网络科技有限公司 </el-link>
         <br>
-        <el-link
-          href="https://beian.miit.gov.cn/"
-          target="_blank"
-          :underline="false"
-        >
-          <i class="el-icon-s-order" />
-          沪ICP备15039333号
-        </el-link>
+        <el-link href="https://beian.miit.gov.cn/" target="_blank" :underline="false"><i class="el-icon-s-order" /> 沪ICP备15039333号 </el-link>
       </div>
       <br>
       <!-- footer end -->
@@ -60,13 +41,11 @@ export default {}
 </script>
 
 <style lang="scss" scoped>
-$bg: #2d3a4b;
-$dark_gray: #889aa4;
-$light_gray: #eee;
+$bg:#2d3a4b;
+$dark_gray:#889aa4;
+$light_gray:#eee;
 
-.linkcolor a {
-  color: rgb(28, 160, 212);
-}
+.linkcolor a{ color: rgb(28, 160, 212);}
 
 .container {
   min-height: 100%;
@@ -100,6 +79,7 @@ $light_gray: #eee;
     margin: 12px auto 30px auto;
     text-align: center;
     font-weight: bold;
+
   }
   .sub-title {
     font-size: 14px;
@@ -120,17 +100,6 @@ $light_gray: #eee;
   }
   .foot-tips {
     margin: 30px 0 70px 0;
-    overflow: hidden;
-  }
-  .mrpp-title {
-    font-size: 15px;
-    padding: 0px 0px 0px 0px;
-    color: #666;
-  }
-  .card-title {
-    white-space: nowrap;
-    display: block;
-    text-overflow: ellipsis;
     overflow: hidden;
   }
 }
