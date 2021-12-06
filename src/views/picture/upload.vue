@@ -1,17 +1,14 @@
 <template>
   <div>
-    <mr-p-p-upload :title="title" :declared="declared" :subtitle="subtitle" :opentype="opentype" />
+    <mr-p-p-upload :fileType="fileType" @saveResource="savePicture" ><div>选择图片并上传</div></mr-p-p-upload>
   </div>
 </template>
 
 <script>
 
-// import SparkMD5 from 'spark-md5'
-// import { fileOpen, fileMD5, fileHas, fileUrl, fileUpload, fileCos } from '@/assets/js/file.js'
-// import { postFile } from '@/api/files'
-// import { postPicture } from '@/api/resources'
 import MrPPUpload from '@/components/MrPP/MrPPUpload'
 
+import { postPicture } from '@/api/resources'
 export default {
   name: 'PictureUpload',
   components: {
@@ -19,13 +16,24 @@ export default {
   },
   data: function() {
     return {
-      title: '选择文件',
-      subtitle: '选择图片并上传',
-      declared: '请选择图片文件进行上传操作',
-      opentype: '{image/gif, image/jpeg, image/png}'
+      fileType: '{image/gif, image/jpeg, image/png}'
     }
   },
-  methods: {
+  methods: {  
+    savePicture(name, fileId) {
+      const self = this
+      return new Promise((resolve, reject) => {
+        postPicture(name, fileId).then((response) => {
+          console.log(response.data)
+         
+          self.$router.push({ path: '/picture/view', query: { id:  response.data.id }})
+        }).catch(err => {
+          console.log(err)
+        })
+      });
+      alert(name)
+     
+    }
 
   }
 }

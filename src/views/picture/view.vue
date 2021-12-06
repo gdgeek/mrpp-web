@@ -8,7 +8,7 @@
             <b id="title">  图片名称：</b> <span v-if="data">{{ data.name }}</span>
           </div>
           <div class="box-item" style="text-align:center">
-            <el-image
+            <el-image v-if = "picture !== null"
               id="image"
               style="height: 300px;width:100%;"
               :src="picture"
@@ -16,7 +16,7 @@
               lazy
               @load="dealWith()"
             />
-
+{{picture}}
           </div>
 
         </el-card>
