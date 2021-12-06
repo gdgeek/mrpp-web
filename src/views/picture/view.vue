@@ -11,7 +11,7 @@
             <el-image v-if = "picture !== null"
               id="image"
               style="height: 300px;width:100%;"
-              :src="picture"
+              src="https://mrpp-1257979353.cos.ap-chengdu.myqcloud.com/2f3fbf3d9ed68ca1f35b3a40b17ed544.jpeg"
               :fit="'contain'"
               lazy
               @load="dealWith()"
@@ -113,7 +113,7 @@ export default {
     getPictureOne(self.id).then((response) => {
       self.data = response.data
       console.log(response.data)
-      self.picture = response.data.file.url
+      self.picture =  'https://mrpp-1257979353.cos.ap-chengdu.myqcloud.com/2f3fbf3d9ed68ca1f35b3a40b17ed544.jpeg'//response.data.file.url
     })
   },
   methods: {
