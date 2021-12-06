@@ -92,7 +92,7 @@ export default {
       }
       return ret
     },
-    /*savePicture(name, id) {
+    /* savePicture(name, id) {
 
       const self = this
       const picture = { name, file_id: file, type: 'picture' }
@@ -105,16 +105,14 @@ export default {
       })
     },*/
     saveFile(filename, md5, type, url) {
-
       const self = this
       self.step('succeed')
       self.upload = self.progress(1)
       postFile(filename, md5, type, url).then((response) => {
         self.save = self.progress(0.5)
-        self.$emit('saveResource', filename, response.data.id).then(()=>{
+        self.$emit('saveResource', filename, response.data.id).then(() => {
           self.save = self.progress(1)
         })
-       
       }).catch(err => {
         console.log(err)
       })

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mr-p-p-upload :fileType="fileType" @saveResource="savePicture" ><div>选择图片并上传</div></mr-p-p-upload>
+    <mr-p-p-upload :file-type="fileType" @saveResource="savePicture"><div>选择图片并上传</div></mr-p-p-upload>
   </div>
 </template>
 
@@ -16,23 +16,21 @@ export default {
   },
   data: function() {
     return {
-      fileType: '{image/gif, image/jpeg, image/png}'
+      fileType: 'image/gif, image/jpeg, image/png'
     }
   },
-  methods: {  
+  methods: {
     savePicture(name, fileId) {
       const self = this
       return new Promise((resolve, reject) => {
         postPicture(name, fileId).then((response) => {
           console.log(response.data)
-         
-          self.$router.push({ path: '/picture/view', query: { id:  response.data.id }})
+
+          self.$router.push({ path: '/picture/view', query: { id: response.data.id }})
         }).catch(err => {
           console.log(err)
         })
-      });
-      alert(name)
-     
+      })
     }
 
   }
