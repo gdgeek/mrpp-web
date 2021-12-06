@@ -21,6 +21,7 @@ export function signup(info) {
     data: { SignupForm: info }
   })
 }
+
 export function requestPasswordReset(data) {
   return request({
     url: '/sites/request-password-reset',

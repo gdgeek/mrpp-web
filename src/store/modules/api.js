@@ -1,7 +1,5 @@
 import Vue from 'vue'
 const state = {
-  url: 'http://api.tmrpp.com',
-  temp: 'http://tmrpp.com',
   document: 'https://hololens2.cn/wp-json/wp/v2/',
   access_token: null
 }

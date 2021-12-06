@@ -8,6 +8,7 @@ const getDefaultState = () => {
     token: getToken(),
     name: '',
     avatar: '',
+    wxOpenid: '',
     menu: []
   }
 }
@@ -29,6 +30,9 @@ const mutations = {
   },
   SET_MENU: (state, menu) => {
     state.menu = menu
+  },
+  SET_WXOPENID: (state, wxOpenid) => {
+    state.wxOpenid = wxOpenid
   }
 }
 

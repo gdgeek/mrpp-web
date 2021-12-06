@@ -1,5 +1,5 @@
 <template>
-  <Site>
+  <mr-p-p-site>
     <h2 class="request-title">找回密码</h2>
     <p class="request-tips">
       请输入您注册时候的邮箱，一个重置密码的链接将被发送到那里。
@@ -31,19 +31,19 @@
       </router-link>
       <br>
     </div>
-  </Site>
+  </mr-p-p-site>
 </template>
 
 <script>
 // @ is an alias to /src
-import Site from '@/components/Site.vue'
+import MrPPSite from '@/components/MrPP/MrPPSite'
 
 import { mapMutations } from 'vuex'
 import { requestPasswordReset } from '@/api/sites'
 export default {
   name: 'RequestPasswordReset',
   components: {
-    Site
+    MrPPSite
   },
   data() {
     return {

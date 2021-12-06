@@ -1,5 +1,5 @@
 <template>
-  <Site>
+  <mr-p-p-site>
     <div class="logout-head">
       <h1 class="logout-welcome"> 正在登出</h1>
       <p class="logout-text">向服务器注销此次登陆</p>
@@ -7,16 +7,16 @@
         <p class="logout-lead" />
       </div>
     </div>
-  </Site>
+  </mr-p-p-site>
 </template>
 
 <script>
 // @ is an alias to /src
-import Site from '@/components/Site.vue'
+import MrPPSite from '@/components/MrPP/MrPPSite'
 export default {
   name: 'Logout',
   components: {
-    Site
+    MrPPSite
   },
   created: function() {
     this.logout()
