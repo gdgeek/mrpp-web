@@ -55,8 +55,8 @@ export default {
       default: ''
     },
     opentype: {
-      type: Object,
-      default: () => {}
+      type: String,
+      default: '*'
     }
   },
   data: function() {
@@ -129,6 +129,7 @@ export default {
     },
     saveFile(filename, md5, type, url) {
       const self = this
+      self.$emit('sendMessage')
       postFile(filename, md5, type, url).then((response) => {
         self.save = self.progress(0.5)
         self.savePicture(filename, response.data.id)

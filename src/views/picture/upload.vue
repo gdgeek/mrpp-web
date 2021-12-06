@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mr-p-p-upload :title="title" :declared="declared" :subtitle="subtitle" :opentype="opentype" />
+    <mr-p-p-upload :title="title" :declared="declared" :subtitle="subtitle" :opentype="opentype" @sendMessage="sendMessage" />
   </div>
 </template>
 
@@ -26,7 +26,9 @@ export default {
     }
   },
   methods: {
-
+    sendMessage() {
+      alert('11112233112')
+    }
   }
 }
 </script>
