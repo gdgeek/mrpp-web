@@ -1,20 +1,6 @@
 <template>
   <div class="document-index">
     <el-row :gutter="20" style="margin:28px 18px 0">
-      <el-col :sm="24" class="panel-group">
-        <el-card v-if="window" class="box-card" shadow="never" style="color:#dfa234;background:#fcf6ec;border-color:#fcf6ec">
-          <div slot="header" class="clearfix">
-
-            <b>{{ info.title }}</b>
-            <el-button style="float: right; padding: 4px 4px" icon="el-icon-close" circle @click="window= false" />
-          </div>
-          <div>
-            {{ info.description }}<p />
-            <el-progress :text-inside="true" :stroke-width="20" :percentage="70" />
-          </div>
-        </el-card>
-        <br>
-      </el-col>
 
       <el-col :sm="16">
         <el-card class="box-card">
@@ -25,6 +11,9 @@
 
             <a-scene
               id="a-scene"
+              v-loading="expire"
+              element-loading-text="正在预处理"
+              element-loading-background="rgba(0, 0, 0, 0.8)"
               name="scene"
               background="color: #E0FFFF"
               embedded=""
@@ -36,7 +25,7 @@
 
               <a-entity
                 target-scale="target:1;callback:infoCallback"
-                :gltf-model="polygenFile"
+                :gltf-model="file"
                 position="0 0 0"
               />
             </a-scene>
@@ -48,7 +37,12 @@
       </el-col>
 
       <el-col :sm="8">
-        <el-card class="box-card">
+        <el-card
+          v-loading="expire"
+          class="box-card"
+          element-loading-text="正在预处理"
+          element-loading-background="rgba(0, 0, 0, 0.8)"
+        >
           <div slot="header">
             <b>模型信息</b>:
 
@@ -96,25 +90,19 @@ import { fileMD5, fileCos, fileUpload, fileHas, fileUrl } from '@/assets/js/file
 
 import 'aframe'
 
-import {} from '../../assets/js/aframe-components.js'
+import {} from '@/assets/js/aframe-components.js'
 export default {
   name: 'PolygenView',
   data: function() {
     return {
-      loading: true,
-      window: true,
       data: null,
-      info: { title: '载入模型', description: '从服务器获得模型数据' },
-      extent: { min: 0, max: 1 },
-      polygenFile: null,
-      step: 0,
-      infobar: true
+      expire: false,
+      file: null
     }
   },
   computed: {
     tableData() {
       if (this.data !== null && this.prepare) {
-        console.log('============')
         console.log(JSON.parse(this.data.info))
         return [{
           item: '模型名称',
@@ -170,22 +158,10 @@ export default {
   created: function() {
     window.infoCallback = this.infoCallback
     const self = this
-    self.info = { title: '获取信息', description: '从服务器下载模型数据信息' }
-    self.extent = { min: 0, max: 0.1 }
-
+    self.expire = true
     getPolygenOne(self.id).then((response) => {
       self.data = response.data
-      console.log(response.data)
-      self.polygenFile = 'url(' + response.data.file.url + ')'
-
-      if (self.prepare) {
-        self.window = false
-        self.info = { title: '获取模型', description: '从服务器下载模型文件' }
-        self.extent = { min: 0.1, max: 1 }
-      } else {
-        self.info = { title: '预处理', description: '从服务器下载模型文件' }
-        self.extent = { min: 0.1, max: 0.2 }
-      }
+      self.file = 'url(' + response.data.file.url + ')'
     })
   },
   methods: {
@@ -251,42 +227,24 @@ export default {
         console.log(err)
       })
     },
-    hidden() {
-      this.infobar = false
-    },
-    progress(p) {
-      this.step = p
-    },
     updatePolygen(imageId, center, size) {
       const self = this
-      self.info = { title: '预处理', description: '更新模型的相关信息' }
-      self.extent = { min: 0.9, max: 1 }
       const info = JSON.stringify({ center, size })
-      console.log(info)
       const polygen = { image_id: imageId, info }
-      console.log(polygen)
       putPolygen(this.data.id, polygen).then((response) => {
-        self.info = { title: '处理完成', description: '展示模型文件' }
-        self.extent = { min: 0.9, max: 1 }
         console.log(response.data)
         this.data.image_id = response.data.image_id
         this.data.info = response.data.info
         console.log(this.dataInfo)
         console.log(self.meshCenter)
-      }).catch(err => {
-        console.log(err)
+        self.expire = false
       })
     },
     saveFile(filename, md5, type, url, center, size) {
       const self = this
-      self.info = { title: '预处理', description: '更新缩略图文件的相关信息' }
-      self.extent = { min: 0.8, max: 0.9 }
       postFile(filename, md5, type, url).then((response) => {
-        self.step = 0.5
         console.log(response.data)
         self.updatePolygen(response.data.id, center, size)
-      }).catch(err => {
-        console.log(err)
       })
     },
     infoCallback(center, size) {
@@ -294,40 +252,24 @@ export default {
       console.log(size)
       const self = this
       if (self.prepare) {
-        self.info = { title: '处理完成', description: '展示模型文件' }
-        self.extent = { min: 0, max: 1 }
-        self.step = 1
+        self.expire = false
         return
-      } else {
-        self.info = { title: '预处理', description: '计算模型信息并更新' }
-        self.extent = { min: 0.2, max: 0.3 }
-        self.step = 0
       }
       this.screenshot().then(function(blob) {
         blob.name = self.data.name
         blob.extension = '.jpg'
         const file = blob
-        self.info = { title: '预处理', description: '将渲染好的缩略图计算MD5' }
-        self.extent = { min: 0.3, max: 0.4 }
-        self.step = 0
-        fileMD5(file, self.progress, new SparkMD5()).then(function(md5) {
+
+        fileMD5(file, (p) => {}, new SparkMD5()).then(function(md5) {
           const key = md5 + file.extension
-          self.info = { title: '预处理', description: '获取储存服务器信息' }
-          self.extent = { min: 0.4, max: 0.5 }
-          self.step = 0
+
           fileCos().then(cos => {
-            self.info = { title: '预处理', description: '上传缩略图文件到服务器' }
-            self.extent = { min: 0.5, max: 0.8 }
-            self.step = 0
             fileHas(key, cos).then(function(has) {
-              self.progress(0)
               if (has) {
-                self.progress(100)
                 self.saveFile(file.name, md5, file.type, fileUrl(key, cos), center, size)
               } else {
-                fileUpload(key, file, self.progress, cos
+                fileUpload(key, file, (p) => {}, cos
                 ).then(data => {
-                  self.progress(100)
                   self.saveFile(file.name, md5, file.type, fileUrl(key, cos), center, size)
                 })
               }
@@ -335,8 +277,6 @@ export default {
           })
         })
       })
-      console.log(center)
-      console.log(size)
     },
     screenshot() {
       return new Promise((resolve, reject) => {

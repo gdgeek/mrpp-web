@@ -1,8 +1,15 @@
 <template>
+
   <div>
 
     <h2 class="login-title">微信扫码（登陆/注册）</h2>
-    <div v-if="active">
+    <div
+      v-if="active"
+      v-loading="expire"
+      element-loading-text="二维码过期(点击刷新)"
+      element-loading-background="rgba(0, 0, 0, 0.8)"
+      @click="reload()"
+    >
       <el-image
         :src="qrcode "
         style="width: 100%; height: 300px"
@@ -31,7 +38,8 @@ export default {
     return {
       qrcode: null,
       token: null,
-      interval: null
+      interval: null,
+      expire: false
     }
   },
   watch: {
@@ -50,19 +58,34 @@ export default {
   beforeDestroy() {
     this.disable()
   },
+
   methods: {
-    init() {
+    load() {
       const self = this
       qrcode().then(response => {
         console.log(response.data.qrcode)
         self.qrcode = response.data.qrcode
         self.token = response.data.token
+        setTimeout(() => { self.expire = true }, response.data.lifetime * 1000)
+        self.expire = false
       })
+    },
+    reload() {
+      const self = this
+      if (self.expire) {
+        self.load()
+      }
+    },
+    init() {
+      const self = this
+      self.load()
     },
     refresh() {
       const self = this
+      if (self.expire) {
+        return
+      }
       openid(this.token).then((response) => {
-        console.log(response.data)
         if (typeof (response.data) !== 'undefined') {
           console.log(self.token)
           console.log(response.data.token)
