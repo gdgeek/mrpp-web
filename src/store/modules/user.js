@@ -8,6 +8,7 @@ const getDefaultState = () => {
     token: getToken(),
     name: '',
     avatar: '',
+    nickname: '',
     wxOpenid: '',
     menu: []
   }
@@ -27,6 +28,9 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_NICKNAME: (state, nickname) => {
+    state.nickname = nickname
   },
   SET_MENU: (state, menu) => {
     state.menu = menu
@@ -92,16 +96,15 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfo(state.token)
         .then(response => {
+          console.log('===============!!')
           const data = response.data
+          console.log(data)
           if (!data) {
             return reject('Verification failed, please Login again.')
           }
-          const { username } = data
-          commit('SET_NAME', username)
-          commit(
-            'SET_AVATAR',
-            'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
-          )
+          commit('SET_NAME', data.username)
+          commit('SET_NICKNAME', data.nickname)
+          commit('SET_AVATAR', data.avatar)
           // commit('SET_AVATAR', '@/assert/qrcode.jpg')
           resolve(data)
         })

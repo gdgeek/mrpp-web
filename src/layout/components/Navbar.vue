@@ -5,11 +5,19 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
+
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <div class="right-menu-item">
+            {{ nickname }}
+          </div>
+          <el-avatar :src="avatar" shape="square">
+            <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png">
+          </el-avatar>
           <i class="el-icon-caret-bottom" />
+
         </div>
+
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <router-link to="/">
             <el-dropdown-item>
@@ -44,7 +52,8 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar'
+      'avatar',
+      'nickname'
     ])
   },
   methods: {
@@ -113,11 +122,8 @@ export default {
 
     .avatar-container {
       margin-right: 30px;
-
       .avatar-wrapper {
-        margin-top: 5px;
         position: relative;
-
         .user-avatar {
           cursor: pointer;
           width: 40px;
