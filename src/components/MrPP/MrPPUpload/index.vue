@@ -92,18 +92,7 @@ export default {
       }
       return ret
     },
-    /* savePicture(name, id) {
 
-      const self = this
-      const picture = { name, file_id: file, type: 'picture' }
-      postPicture(name, id).then((response) => {
-        console.log(response.data)
-        self.save = self.progress(1)
-        self.$router.push({ path: '/picture/view', query: { id: response.data.id }})
-      }).catch(err => {
-        console.log(err)
-      })
-    },*/
     saveFile(filename, md5, type, url) {
       const self = this
       self.step('succeed')
@@ -136,7 +125,9 @@ export default {
               if (has) {
                 self.saveFile(file.name, md5, type, fileUrl(key, cos))
               } else {
-                fileUpload(key, file, self.progress, cos
+                fileUpload(key, file, function(p) {
+                  self.upload = self.progress(p)
+                }, cos
                 ).then(data => {
                   self.saveFile(file.name, md5, type, fileUrl(key, cos))
                 })
