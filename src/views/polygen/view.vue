@@ -96,8 +96,8 @@ export default {
   data: function() {
     return {
       data: null,
-      expire: false,
-      file: null
+      file: null,
+      expire: false
     }
   },
   computed: {

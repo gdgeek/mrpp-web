@@ -10,8 +10,11 @@
           <div class="box-item" style="text-align:center">
             <el-image
               id="image"
+              v-loading="expire"
+              element-loading-text="正在预处理"
+              element-loading-background="rgba(0, 0, 0, 0.8)"
               style="height: 300px;width:100%;"
-              :src="picture"
+              :src="file"
               :fit="'contain'"
               @load="dealWith()"
             />
@@ -23,7 +26,12 @@
       </el-col>
 
       <el-col :sm="8">
-        <el-card class="box-card">
+        <el-card
+          v-loading="expire"
+          class="box-card"
+          element-loading-text="正在预处理"
+          element-loading-background="rgba(0, 0, 0, 0.8)"
+        >
           <div slot="header">
 
             <b>图片信息</b>:
@@ -75,7 +83,8 @@ export default {
   data: function() {
     return {
       data: null,
-      picture: null
+      file: null,
+      expire: false
     }
   },
   computed: {
@@ -109,10 +118,10 @@ export default {
   },
   created: function() {
     const self = this
+    self.expire = true
     getPictureOne(self.id).then((response) => {
       self.data = response.data
-      console.log(response.data)
-      self.picture = response.data.file.url
+      self.file = response.data.file.url
     })
   },
   methods: {
@@ -141,6 +150,7 @@ export default {
         putPicture(self.data.id, picture).then((response) => {
           self.data.image_id = response.data.image_id
           self.data.info = response.data.info
+          self.expire = false
         }).catch(err => {
           console.log(err)
         })
@@ -157,6 +167,7 @@ export default {
           putPicture(self.data.id, picture).then((response) => {
             self.data.image_id = response.data.image_id
             self.data.info = response.data.info
+            self.expire = false
           })
           return
         }
@@ -186,7 +197,6 @@ export default {
       const self = this
       if (!self.prepare) {
         console.log(1)
-
         // alert(this.prepare)
         const image = document.getElementById('image')
         image.crossOrigin = 'anonymous'
@@ -210,6 +220,8 @@ export default {
             }, 100)
           }
         }
+      } else {
+        self.expire = false
       }
     },
     deleteWindow: function() {

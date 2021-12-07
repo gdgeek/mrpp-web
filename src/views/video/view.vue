@@ -7,9 +7,20 @@
           <div slot="header">
             <b id="title">  图片名称：</b> <span v-if="data">{{ data.name }}</span>
           </div>
-          <div class="box-item" style="text-align:center">
-            <video id="video" controls="controls" style="height:300px;width:100%">
-              <source v-if="video !== null" id="src" :src="video">
+          <div
+            v-loading="expire"
+            class="box-item"
+            style="text-align:center"
+            element-loading-text="正在预处理"
+            element-loading-background="rgba(0, 0, 0, 0.8)"
+          >
+            <video
+              id="video"
+
+              controls="controls"
+              style="height:300px;width:100%"
+            >
+              <source v-if="file !== null" id="src" :src="file">
             </video>
             <video id="new_video" style="height:100%;width:100%" hidden @canplaythrough="dealWith()" />
           </div>
@@ -19,7 +30,12 @@
       </el-col>
 
       <el-col :sm="8">
-        <el-card class="box-card">
+        <el-card
+          v-loading="expire"
+          class="box-card"
+          element-loading-text="正在预处理"
+          element-loading-background="rgba(0, 0, 0, 0.8)"
+        >
           <div slot="header">
             <b>图片信息</b>:
           </div>
@@ -67,7 +83,8 @@ export default {
   data: function() {
     return {
       data: null,
-      video: null
+      file: null,
+      expire: true
     }
   },
   computed: {
@@ -101,11 +118,12 @@ export default {
   },
   created: function() {
     const self = this
+    self.expire = true
     getVideoOne(self.id).then((response) => {
       //
       self.data = response.data
       console.log(response.data)
-      self.video = response.data.file.url
+      self.file = response.data.file.url
       setTimeout(() => {
         self.init()
       }, 0)
@@ -133,6 +151,7 @@ export default {
         putVideo(self.data.id, video).then((response) => {
           self.data.image_id = response.data.image_id
           self.data.info = response.data.info
+          self.expire = false
         }).catch(err => {
           console.log(err)
         })
@@ -185,9 +204,10 @@ export default {
         const video = document.getElementById('video')
         // 获取新的视频
         const new_video = document.getElementById('new_video')
-
         const size = { x: video.videoWidth, y: video.videoHeight }
         self.setup(new_video, size)
+      } else {
+        self.expire = false
       }
     },
     deleteWindow: function() {
