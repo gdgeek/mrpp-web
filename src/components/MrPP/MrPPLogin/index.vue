@@ -37,8 +37,6 @@ import { setToken } from '@/utils/auth'
 import { login } from '@/api/sites'
 export default {
   name: 'MrPPLogin',
-  components: {
-  },
   data() {
     return {
       form: {
@@ -57,13 +55,7 @@ export default {
       }
     }
   },
-  computed: {},
-
   methods: {
-    succeed(data) {
-      setToken(data.access_token)
-      this.$router.push('/')
-    },
     submit(formName) {
       const self = this
       this.$refs[formName].validate(valid => {
@@ -75,12 +67,9 @@ export default {
             .then(response => {
               console.log(response)
               if (response.data) {
-                self.succeed(response.data)
+                setToken(response.data.access_token)
+                this.$router.push('/')
               }
-            })
-            .catch(function(error) {
-              console.log(error)
-              // self.failed(error)
             })
         } else {
           return false

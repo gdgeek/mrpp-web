@@ -19,3 +19,10 @@ export function qrcode() {
     method: 'get'
   })
 }
+export function signup(data) {
+  return request({
+    url: '/wechats/signup',
+    method: 'post',
+    data
+  })
+}

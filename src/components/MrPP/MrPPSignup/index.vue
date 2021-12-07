@@ -41,18 +41,15 @@
           </el-button-group>
         </el-form-item>
       </el-form>
-
     </div>
-  </div></template>
+  </div>
+</template>
 
 <script>
-// @ is an alias to /src
-import { signup } from '@/api/sites'
+import { signup } from '@/api/wechats'
+import { setToken } from '@/utils/auth'
 export default {
   name: 'MrPPSignup',
-
-  components: {
-  },
   data() {
     const validatePassword = (rule, value, callback) => {
       if (value === '') {
@@ -97,40 +94,28 @@ export default {
       }
     }
   },
+  computed: {
+    token() {
+      return this.$route.query.token
+    }
+  },
   methods: {
-    open() {
-      this.isShow = !this.isShow
-    },
     submit(formName) {
       const self = this
       this.$refs[formName].validate(valid => {
         if (valid) {
-          signup(self.form)
-            .then(data => {
-              self.flashSetup({
-                title: '注册成功',
-                description: '感谢您的注册。请检查您的收件箱中的验证邮件。'
-              })
-              self.$router.push({ path: '/site' })
-            })
-            .catch(error => {
-              console.log(error)
-            })
+          signup({
+            username: self.form.username,
+            password: self.form.password,
+            token: self.token
+          }).then(response => {
+            setToken(response.data.access_token)
+            this.$router.push('/')
+          })
+        } else {
+          return false
         }
       })
-    },
-    error(msg) {
-      this.title = ''
-      if (typeof msg === 'string') {
-        this.title = msg
-      } else {
-        let i = 0
-        for (const item in msg) {
-          ++i
-          this.title += i + '.' + item + ' : ' + msg[item] + '\n'
-        }
-      }
-      this.isShow = true
     },
     resetForm(formName) {
       this.$refs[formName].resetFields()
