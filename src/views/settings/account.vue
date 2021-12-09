@@ -3,51 +3,66 @@
     <el-card class="box-card">
       <div slot="header">
         <h2>账号设置</h2>
-        <p>用户：32154465455</p>
-        <p>昵称：修改中</p>
+        <p>用户：id54465455</p>
+        <p>昵称：欢乐豆子</p>
       </div>
-      <el-form
-        ref="form"
-        :model="form"
-        label-width="80px"
-      >
+
+      <el-form ref="form" :model="form" label-width="80px">
         <h4>绑定设置</h4>
         <el-row :gutter="20">
-          <el-col :span="8" style="width: 320px" :offset="4">
-            <div>
-              <p>绑定手机：13739****54</p>
-              <el-button style="width: 40%" type="primary">编辑</el-button>
-            </div>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="8" style="width: 320px" :offset="4">
-            <div>
-              <p>绑定邮箱：13739****54</p>
-              <el-button style="width: 40%" type="primary">编辑</el-button>
-            </div>
+          <el-col :span="8" style="width: 320px" :offset="3">
+            <el-form-item label="绑定手机" prop="pass">
+              <el-input placeholder="13342453697" :disabled="true" />
+            </el-form-item>
+            <el-form-item>
+              <el-button style="width: 60%" type="primary" @click="onSubmit">
+                编辑
+              </el-button>
+            </el-form-item>
+            <el-form-item label="绑定邮箱" prop="checkPass">
+              <el-input placeholder="teseaccount@126.com" :disabled="true" />
+            </el-form-item>
+            <el-form-item>
+              <el-button style="width: 60%" type="primary" @click="onSubmit">
+                编辑
+              </el-button>
+            </el-form-item>
           </el-col>
         </el-row>
         <el-divider />
 
         <h4>密码设置</h4>
         <el-row :gutter="20">
-          <el-col :span="8" style="width: 320px" :offset="4">
-            <div>
-              <p>修改密码</p>
-              <el-button style="width: 40%" type="primary">确定</el-button>
-            </div>
+          <el-col :span="8" style="width: 320px" :offset="3">
+            <el-form-item label="新的密码" prop="pass">
+              <el-input
+                v-model="ruleForm.pass"
+                type="password"
+                autocomplete="off"
+              />
+            </el-form-item>
+            <el-form-item label="确认密码" prop="checkPass">
+              <el-input
+                v-model="ruleForm.checkPass"
+                type="password"
+                autocomplete="off"
+              />
+            </el-form-item>
+            <el-form-item>
+              <el-button style="width: 60%" type="primary" @click="onSubmit">
+                确定
+              </el-button>
+            </el-form-item>
           </el-col>
         </el-row>
         <el-divider />
 
         <h4>消息提醒</h4>
         <el-row :gutter="20">
-          <el-col :span="8" style="width: 320px" :offset="4">
-            <div>
-              <p>重要事件发生时，我将会收到邮件提醒</p>
-              <el-button style="width: 40%" type="primary">编辑</el-button>
-            </div>
+          <el-col :span="8" style="width: 320px" :offset="3">
+            <el-form-item label="关闭消息">
+              <el-switch v-model="delivery" />
+            </el-form-item>
           </el-col>
         </el-row>
       </el-form>
@@ -62,9 +77,13 @@
 <script>
 export default {
   name: 'Account',
-  data: function() {
+  data() {
     return {
-      textarea: ''
+      delivery: false,
+      ruleForm: {
+        pass: '',
+        checkPass: ''
+      }
     }
   }
 }
@@ -77,7 +96,6 @@ export default {
 }
 .el-row {
   max-width: 100%;
-  margin-bottom: 3%;
 }
 // .user-icon{
 //  display: block;
