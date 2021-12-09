@@ -1,88 +1,90 @@
 <template>
   <div>
-    <el-col :span="24">
-      <el-card class="box-card">
-        <div slot="header" class="clearfix">
-          <h4>你的账户</h4>
-          <p><i class="el-icon-picture" />上传用户头像</p>
-        </div>
-        <div style="position:relative;">
-          <h4>基本信息</h4>
-          <el-form ref="form" :inline="true" :model="form" label-width="80px">
-            <el-form-item label="昵称">
-              <el-input placeholder="昵称" />
-            </el-form-item>
-            <el-form-item label="性别">
-              <el-input placeholder="性别" />
-            </el-form-item>
-            <br>
-            <el-form-item label="居住地">
-              <el-input placeholder="居住地" />
-            </el-form-item>
-            <el-form-item label="行业">
-              <el-input placeholder="行业" />
-            </el-form-item>
-            <br>
-            <el-form-item label="个人简介">
-              <el-input type="textarea" />
-            </el-form-item>
-            <br>
-            <el-form-item size="large">
-              <el-button type="primary" @click="onSubmit">确定</el-button>
-              <el-button>取消</el-button>
-            </el-form-item>
-          </el-form>
-
-          <el-divider />
-          <h4>密码与安全</h4>
-          <div>手机号：1321***3432</div>
-          <div>修改密码：input</div>
-          <div><span>邮箱绑定、</span><span>微信绑定</span></div>
-
-          <el-divider />
-          <h4>隐私</h4>
-
-          <el-divider />
-          <h4>偏好</h4>
-
-        </div>
-
-        <el-divider />
+    <el-card class="box-card">
+      <div slot="header">
+        <h2>账号设置</h2>
+        <p>用户：32154465455</p>
+        <p>昵称：修改中</p>
+      </div>
+      <el-form
+        ref="form"
+        :model="form"
+        label-width="80px"
+      >
+        <h4>绑定设置</h4>
+        <el-row :gutter="20">
+          <el-col :span="8" style="width: 320px" :offset="4">
+            <div>
+              <p>绑定手机：13739****54</p>
+              <el-button style="width: 40%" type="primary">编辑</el-button>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="8" style="width: 320px" :offset="4">
+            <div>
+              <p>绑定邮箱：13739****54</p>
+              <el-button style="width: 40%" type="primary">编辑</el-button>
+            </div>
+          </el-col>
+        </el-row>
         <el-divider />
 
-      </el-card>
-    </el-col>
+        <h4>密码设置</h4>
+        <el-row :gutter="20">
+          <el-col :span="8" style="width: 320px" :offset="4">
+            <div>
+              <p>修改密码</p>
+              <el-button style="width: 40%" type="primary">确定</el-button>
+            </div>
+          </el-col>
+        </el-row>
+        <el-divider />
+
+        <h4>消息提醒</h4>
+        <el-row :gutter="20">
+          <el-col :span="8" style="width: 320px" :offset="4">
+            <div>
+              <p>重要事件发生时，我将会收到邮件提醒</p>
+              <el-button style="width: 40%" type="primary">编辑</el-button>
+            </div>
+          </el-col>
+        </el-row>
+      </el-form>
+    </el-card>
+    <!-- <el-button /> -->
   </div>
+
+  <!-- <el-divider />
+        <el-divider /> -->
 </template>
 
 <script>
-
 export default {
   name: 'Account',
   data: function() {
     return {
+      textarea: ''
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .text {
-    font-size: 14px;
-  }
-
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
-  }
-  .clearfix:after {
-    clear: both
-  }
-
-  .box-card {
-    margin: 24px 30px 0 30px;
-    padding: 0 30px;
-    /* width: 480px; */
-  }
+.box-card {
+  margin: 1.6% 1.6% 0.6%;
+  padding: 4% 1%;
+}
+.el-row {
+  max-width: 100%;
+  margin-bottom: 3%;
+}
+// .user-icon{
+//  display: block;
+//  width: 120px;
+//  height: 120px;
+//  background: url(logo.jpg)no-repeat;
+//  background-size:100%;
+//  border-radius: 50%;
+// }
 </style>
