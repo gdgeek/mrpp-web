@@ -37,6 +37,32 @@ export const constantRoutes = [
     component: Layout
   },
   {
+    path: '/settings',
+    component: Layout,
+    meta: { title: '个人中心' },
+    redirect: '/settings/user',
+    children: [
+      {
+        path: 'user',
+        name: 'User',
+        component: () => import('@/views/settings/user')
+      }
+    ]
+  },
+  {
+    path: '/settings',
+    component: Layout,
+    meta: { title: '账号设置' },
+    redirect: '/settings/account',
+    children: [
+      {
+        path: 'account',
+        name: 'Account',
+        component: () => import('@/views/settings/account')
+      }
+    ]
+  },
+  {
     path: '/polygen',
     redirect: '/polygen/index',
     component: Layout,

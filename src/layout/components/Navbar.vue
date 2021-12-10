@@ -19,17 +19,36 @@
         </div>
 
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
+          <router-link to="/settings/user">
+            <el-dropdown-item>
+              个人中心
+            </el-dropdown-item>
+          </router-link>
+
+          <router-link to="/settings/account">
+            <el-dropdown-item>
+              账号设置
+            </el-dropdown-item>
+          </router-link>
+
           <router-link to="/">
+            <el-dropdown-item>
+              帮助支持
+            </el-dropdown-item>
+          </router-link>
+          <!-- <router-link to="/">
             <el-dropdown-item>
               Home
             </el-dropdown-item>
-          </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
+          </router-link> -->
+
+          <!-- <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
             <el-dropdown-item>Github</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
+          </a> -->
+
+          <!-- <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
             <el-dropdown-item>Docs</el-dropdown-item>
-          </a>
+          </a> -->
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">登出</span>
           </el-dropdown-item>
