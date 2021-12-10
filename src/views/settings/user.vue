@@ -4,9 +4,7 @@
       <div slot="header">
         <a class="header-icon" href="" />
         <p>用户：test33593245</p>
-        <p>
-          <i class="el-icon-picture">编辑用户头像</i>
-        </p>
+        <br>
       </div>
 
       <h4>个人资料</h4>
@@ -20,7 +18,7 @@
           <el-row>
             <el-col :span="12" style="width: 520px" :offset="1">
               <el-form-item>
-                <table class="shiyixia">
+                <table class="form-table">
                   <tr><td> 性别:</td><td> {{ radio1 }} </td></tr>
                   <tr><td> 昵称: </td><td> {{ form.name }} </td></tr>
                   <tr><td> 行业: </td><td> {{ form.industry }} </td></tr>
@@ -50,7 +48,8 @@
       <el-dialog title="修改个人资料" :visible.sync="dialogFormVisible">
         <el-form :model="form" label-width="80px">
           <el-row>
-            <el-col :span="12" :offset="2">
+            <el-col :span="12" :offset="3">
+
               <el-form-item label="性别">
                 <el-radio-group v-model="radio1">
                   <el-radio-button label="男" />
@@ -79,9 +78,9 @@
               <el-form-item>
                 <el-button type="primary" style="width: 60%" @click="dialogFormVisible = false">保存</el-button>
               </el-form-item>
+
             </el-col>
           </el-row>
-
         </el-form>
       </el-dialog>
       <!-- 弹窗结束 -->
@@ -114,7 +113,7 @@ export default {
   margin: 1.6% 1.6% 0.6%;
   padding: 4% 1%;
 }
-.shiyixia td{
+.form-table td{
   font-size: 16px;
   font-weight:500;
   width: 100px;
