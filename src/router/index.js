@@ -120,7 +120,7 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/home',
+    path: 'home',
     component: Layout,
     children: [
       {
@@ -129,6 +129,34 @@ export const constantRoutes = [
         component: () => import('@/views/jump')
       }
     ]
+  },
+
+  {
+    path: '/verse',
+    redirect: '/verse/index',
+    component: Layout,
+    meta: { title: '小宇宙管理' },
+    children: [
+      {
+        path: 'index',
+        name: 'Index',
+        meta: { title: '列表' },
+        component: () => import('@/views/verse/index')
+      },
+
+      {
+        path: 'edit',
+        name: 'Edit',
+        meta: { title: '编辑' },
+        component: () => import('@/views/verse/edit')
+      }
+    ]
+  },
+  {
+    path: '/project/index',
+    redirect: '/verse/index',
+    component: Layout,
+    meta: { title: '小宇宙列表' }
   },
   {
     path: '/document',
@@ -145,57 +173,22 @@ export const constantRoutes = [
   {
     path: '/site',
     component: () => import('@/views/site/index'),
-    hidden: true
-  },
-  {
-    path: '/site/request-password-reset',
-    component: () => import('@/views/site/request-password-reset'),
-    hidden: true
-  },
-  {
-    path: '/site/resend-verification-email',
-    component: () => import('@/views/site/resend-verification-email'),
-    hidden: true
-  },
-  {
-    path: '/site/reset-password',
-    component: () => import('@/views/site/reset-password'),
-    hidden: true
-  },
-  {
-    path: '/site/login',
-    component: () => import('@/views/site/login'),
-    hidden: true
-  },
-  {
-    path: '/site/logout',
-    component: () => import('@/views/site/logout'),
-    hidden: true
-  },
-  {
-    path: '/site/wechat',
-    component: () => import('@/views/site/wechat'),
-    hidden: true
-  },
-  {
-    path: '/site/wechat-login',
-    component: () => import('@/views/site/wechat-login'),
-    hidden: true
-  },
-  {
-    path: '/site/wechat-signup',
-    component: () => import('@/views/site/wechat-signup'),
-    hidden: true
-  },
-  {
-    path: '/site/signup',
-    component: () => import('@/views/site/signup'),
-    hidden: true
-  },
-  {
-    path: '/site/verify-email',
-    component: () => import('@/views/site/verify-email'),
-    hidden: true
+    hidden: true,
+    children: [
+      {
+        path: 'index',
+        name: 'Index',
+        component: () => import('@/views/document/index')
+      },
+      {
+        path: '/site/wechat-signup',
+        component: () => import('@/views/site/wechat-signup')
+      },
+      {
+        path: '/site/logout',
+        component: () => import('@/views/site/logout')
+      }
+    ]
   },
   {
     path: '/404',
@@ -321,22 +314,5 @@ const createRouter = () =>
   })
 
 const router = createRouter()
-
-// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
-export function resetRouter() {
-  const newRouter = createRouter()
-  router.matcher = newRouter.matcher // reset router
-}
-const ttt = () =>
-  new Router({
-    mode: 'history', // require service support
-    scrollBehavior: () => ({ y: 0 }),
-    routes: []
-  })
-
-export function importRouter() {
-  const newRouter = ttt()
-  router.matcher = newRouter.matcher // reset router
-}
 
 export default router

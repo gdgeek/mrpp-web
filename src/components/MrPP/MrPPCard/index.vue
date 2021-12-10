@@ -1,5 +1,19 @@
 <template>
   <div>
+    <waterfall :line-gap="200" :watch="items">
+      <!-- each component is wrapped by a waterfall slot -->
+      <waterfall-slot
+        v-for="(item, index) in items"
+        :key="item.id"
+        :width="item.width"
+        :height="item.height"
+        :order="index"
+      >
+        <!--
+      your component
+    -->
+      </waterfall-slot>
+    </waterfall>
     <el-card v-if="item.info === null" class="box-card">
       <div slot="header">
         <el-card shadow="hover" :body-style="{ padding: '0px' }">
@@ -80,8 +94,14 @@
 </template>
 
 <script>
+import Waterfall from 'vue-waterfall/lib/waterfall'
+import WaterfallSlot from 'vue-waterfall/lib/waterfall-slot'
 export default {
   name: 'MrPPCard',
+  components: {
+    Waterfall,
+    WaterfallSlot
+  },
   props: {
     item: {
       type: Object,

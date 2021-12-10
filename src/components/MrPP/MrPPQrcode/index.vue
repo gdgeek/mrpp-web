@@ -63,7 +63,7 @@ export default {
     load() {
       const self = this
       qrcode().then(response => {
-        console.log(response.data.qrcode)
+        console.log(response.data)
         self.qrcode = response.data.qrcode
         self.token = response.data.token
         setTimeout(() => { self.expire = true }, response.data.lifetime * 1000)
