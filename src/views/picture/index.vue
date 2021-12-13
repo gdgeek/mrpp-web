@@ -28,11 +28,11 @@
             :xl="4"
           >
             <mr-p-p-card :item="item" @named="namedWindow" @deleted="deletedWindow">
-              <router-link slot="router1" :to="'/picture/view?id='+item.id">
-                <el-button type="warning" size="mini">初始化图片数据</el-button>
-              </router-link>
-              <router-link slot="router2" :to="'/picture/view?id='+item.id">
-                <el-button type="primary" size="mini">查看图片</el-button>
+
+              <router-link slot="enter" :to="'/picture/view?id='+item.id">
+                <el-button v-if="item.info === null || item.image === null" type="warning" size="mini">初始化图片数据</el-button>
+                <el-button v-else type="primary" size="mini">查看图片</el-button>
+
               </router-link>
             </mr-p-p-card>
 
@@ -74,7 +74,7 @@ export default {
   data() {
     return {
       items: null,
-      sorted: 'created_at',
+      sorted: '-created_at',
       searched: '',
       pagination: { current: 1, count: 1, size: 20, total: 20 }
     }

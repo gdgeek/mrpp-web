@@ -14,18 +14,27 @@ export function getVerse(id) {
   })
 }
 
-export function getVerses() {
+export function getVerses(sort, search = '', page = 0) {
+  let url = 'v1/verses?expand=image,author&sort=' + sort
+
+  if (search !== '') {
+    url += '&VerseSearch[name]=' + search
+  }
+  if (page > 1) {
+    url += '&page=' + page
+  }
+
   return request({
-    url: 'v1/verses',
+    url,
     method: 'get'
   })
 }
 
-export function putVerse(data) {
+export function putVerse(id, data) {
   return request({
-    url: 'v1/verses',
+    url: 'v1/verses/' + id,
     method: 'put',
-    data: data
+    data
   })
 }
 export function deleteVerse(id) {

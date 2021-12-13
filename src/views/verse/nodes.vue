@@ -29,10 +29,10 @@
             :xl="4"
           >
             <mr-p-p-card :item="item" @named="namedWindow" @deleted="deletedWindow">
-              <router-link slot="router1" :to="'/polygen/view?id='+item.id">
+              <router-link slot="enter" :to="'/polygen/view?id='+item.id">
                 <el-button type="warning" size="mini">初始化模型数据</el-button>
               </router-link>
-              <router-link slot="router2" :to="'/polygen/view?id='+item.id">
+              <router-link slot="enter" :to="'/polygen/view?id='+item.id">
                 <el-button type="primary" size="mini">编辑工程</el-button>
               </router-link>
             </mr-p-p-card>
@@ -74,7 +74,7 @@ export default {
   data() {
     return {
       items: null,
-      sorted: 'created_at',
+      sorted: '-created_at',
       searched: '',
       pagination: { current: 1, count: 1, size: 20, total: 20 }
     }

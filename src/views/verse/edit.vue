@@ -1,15 +1,18 @@
 <template>
   <div class="verse-index">
-    <br>
     <el-container>
-      <el-header>
+
+      <el-main>
         <el-card class="box-card">
-          12
+          <div v-if="data !== null" slot="header" class="clearfix">
+            项目名称：{{ data.name }}
+            <el-button-group style="float: right">
+              <el-button type="primary" size="mini" @click="arrange()"><font-awesome-icon icon="project-diagram" />  整理 </el-button>
+              <el-button type="primary" size="mini" @click="save()"><font-awesome-icon icon="save" />  保存 </el-button>
+            </el-button-group>
+          </div>
+          <Rete ref="rete" class="rete" />
         </el-card>
-      </el-header>
-      <el-main style="width:100%">
-        <el-card class="box-card">
-          <Rete class="rete" /> </el-card>
       </el-main>
     </el-container>
 
@@ -19,10 +22,37 @@
 <script>
 import Rete from '../../components/Rete.vue'
 
+import { getVerse } from '@/api/v1/verse'
 export default {
   name: 'App',
   components: {
     Rete
+  },
+  data() {
+    return {
+      data: null
+    }
+  },
+  computed: {
+    id() {
+      return this.$route.query.id
+    }
+  },
+  created() {
+    const self = this
+    getVerse(this.id).then(response => {
+      console.log(response)
+      self.data = response.data
+    })
+  },
+  methods: {
+    save() {
+      const self = this
+      this.$refs.rete.$emit('save', self.id)
+    },
+    arrange() {
+      this.$refs.rete.$emit('arrange')
+    }
   }
 }
 </script>

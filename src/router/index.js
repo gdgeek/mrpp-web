@@ -161,7 +161,7 @@ export const constantRoutes = [
     path: '/verse',
     redirect: '/verse/index',
     component: Layout,
-    meta: { title: '小宇宙管理' },
+    meta: { title: '宇宙管理' },
     children: [
       {
         path: 'index',
@@ -182,7 +182,7 @@ export const constantRoutes = [
     path: '/project/index',
     redirect: '/verse/index',
     component: Layout,
-    meta: { title: '小宇宙列表' }
+    meta: { title: '宇宙列表' }
   },
   {
     path: '/document',

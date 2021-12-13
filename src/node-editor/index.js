@@ -2,50 +2,56 @@ import Rete from 'rete'
 import VueRenderPlugin from 'rete-vue-render-plugin'
 import ConnectionPlugin from 'rete-connection-plugin'
 import AreaPlugin from 'rete-area-plugin'
+import AutoArrangePlugin from 'rete-auto-arrange-plugin'
 import ContextMenuPlugin from 'rete-context-menu-plugin'
-import { NumComponent } from './components/numComponent'
-import { AddComponent } from './components/addComponent'
+import Store from '@/assets/js/rete/store'
+import Limit from '@/assets/js/rete/limit'
+import { Component } from './components/Component'
+import { VerseComponent } from './components/verseComponent'
 
-export default async function(container) {
-  var components = [new NumComponent(), new AddComponent()]
+import { Meta } from './type'
+let editor_ = null
+let engine_ = null
+export const arrange = function() {
+  // editor_.arrange(node, editor_.nodes)
+  editor_.trigger('arrange', editor_.nodes)
+}
+export const toJson = function() {
+  const json = editor_.toJSON()
+  return json
+}
+export const init = async function(container) {
+//  MetaType a
+  const types = [Meta]
+  const verseComponent = new VerseComponent()
 
-  var editor = new Rete.NodeEditor('demo@0.1.0', container)
-  editor.use(ConnectionPlugin)
-  editor.use(VueRenderPlugin)
-  editor.use(ContextMenuPlugin)
-  editor.use(AreaPlugin)
+  editor_ = new Rete.NodeEditor('MrPP@0.1.0', container)
+  editor_.use(ConnectionPlugin)
+  editor_.use(VueRenderPlugin)
+  editor_.use(ContextMenuPlugin)
+  editor_.use(AutoArrangePlugin, { margin: { x: 50, y: 50 }, depth: 110 })
+  editor_.use(AreaPlugin)
+  editor_.use(Store)
+  editor_.use(Limit, [{ name: 'Verse', max: 1, min: 1 }])
 
-  var engine = new Rete.Engine('demo@0.1.0')
-
-  components.map((c) => {
-    editor.register(c)
-    engine.register(c)
+  engine_ = new Rete.Engine('MrPP@0.1.0')
+  types.forEach(type => {
+    editor_.register(new Component(type))
   })
+  editor_.register(verseComponent)
 
-  var n1 = await components[0].createNode({ num: 22 })
-  var n2 = await components[0].createNode({ num: 33 })
-  var add = await components[1].createNode()
-
-  n1.position = [80, 200]
-  n2.position = [80, 400]
-  add.position = [500, 240]
-
-  editor.addNode(n1)
-  editor.addNode(n2)
-  editor.addNode(add)
-
-  editor.connect(n1.outputs.get('num'), add.inputs.get('num'))
-  editor.connect(n2.outputs.get('num'), add.inputs.get('num2'))
-
-  editor.on(
+  const verse = await verseComponent.createNode()
+  verse.position = [0, 0]
+  editor_.addNode(verse)
+  editor_.on(
     'process nodecreated noderemoved connectioncreated connectionremoved',
     async() => {
-      await engine.abort()
-      await engine.process(editor.toJSON())
+      await engine_.abort()
+      await engine_.process(editor_.toJSON())
     }
   )
 
-  editor.view.resize()
-  AreaPlugin.zoomAt(editor)
-  editor.trigger('process')
+  editor_.view.resize()
+  AreaPlugin.zoomAt(editor_)
+  editor_.trigger('process')
 }
