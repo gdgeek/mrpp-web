@@ -38,11 +38,54 @@
         <el-col :xs="16" :sm="16" :md="10" :lg="6" :xl="6">
           <el-form label-width="100px">
             <el-form-item label="账户密码">
-              <el-button type="warning">修改密码</el-button>
+              <el-button type="warning" @click="dialogPasswordVisible = true">修改密码</el-button>
             </el-form-item>
           </el-form>
         </el-col>
       </el-row>
+      <!-- 修改密码弹窗 -->
+      <el-dialog title="修改密码" :visible.sync="dialogPasswordVisible" @close="resetForm(passwordForm)">
+        <el-form ref="passwordForm" :model="passwordForm" :rules="passwordRules" label-width="80px">
+          <el-row>
+            <el-col :span="12" :offset="5">
+              <el-form-item label="旧的密码" prop="password">
+                <el-input
+                  v-model="passwordForm.oldPassword"
+                  type="password"
+                  autocomplete="off"
+                />
+              </el-form-item>
+
+              <el-form-item label="新的密码" prop="password">
+                <el-input
+                  v-model="passwordForm.password"
+                  type="password"
+                  autocomplete="off"
+                />
+              </el-form-item>
+
+              <el-form-item label="确认密码" prop="checkPassword">
+                <el-input
+                  v-model="passwordForm.checkPassword"
+                  type="password"
+                  autocomplete="off"
+                />
+              </el-form-item>
+
+              <el-form-item>
+                <el-button
+                  style="width: 50%"
+                  type="primary"
+                  @click="dialogPasswordVisible = false"
+                >
+                  确认修改
+                </el-button>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+      </el-dialog>
+      <!-- 修改密码弹窗结束 -->
 
     </el-card>
 
