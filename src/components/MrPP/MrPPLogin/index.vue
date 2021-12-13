@@ -18,6 +18,7 @@
           v-model="form.password"
           type="password"
           suffix-icon="el-icon-lock"
+          @keyup.enter.native="submit('form')"
         />
       </el-form-item>
 
