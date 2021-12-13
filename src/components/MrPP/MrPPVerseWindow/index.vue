@@ -66,8 +66,6 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$emit('submit', self.form, self.item)
-          // const json = { description: self.form.desc }
-        //  const data = { name: self.form.name, info: JSON.stringify(json) }
         } else {
           console.log('error submit!!')
           return false

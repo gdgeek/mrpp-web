@@ -31,3 +31,19 @@ export function token() {
     method: 'get'
   })
 }
+
+export function bindEmail(email) {
+  return request({
+    url: '/servers/bindEmail',
+    method: 'post',
+    data: { email }
+  })
+}
+
+export function changePassword(oldPass, newPass) {
+  return request({
+    url: '/servers/changePassword',
+    method: 'post',
+    data: { oldPass, newPass }
+  })
+}

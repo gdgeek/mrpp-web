@@ -27,7 +27,7 @@
                 placeholder="绑定邮箱"
               ><el-button
                 slot="append"
-                @click="postEmail"
+                @click="postEmail('emailForm')"
               >绑定</el-button></el-input>
             </el-form-item>
           </el-form>
@@ -38,17 +38,20 @@
         <el-col :xs="16" :sm="16" :md="10" :lg="6" :xl="6">
           <el-form label-width="100px">
             <el-form-item label="账户密码">
-              <el-button type="warning" @click="dialogPasswordVisible = true">修改密码</el-button>
+              <el-button-group>
+                <el-button type="warning" @click="dialogPasswordVisible = true">修改密码</el-button>
+                <el-button disabled type="warning" @click="dialogPasswordVisible = true">找回密码</el-button>
+              </el-button-group>
             </el-form-item>
           </el-form>
         </el-col>
       </el-row>
       <!-- 修改密码弹窗 -->
-      <el-dialog title="修改密码" :visible.sync="dialogPasswordVisible" @close="resetForm(passwordForm)">
+      <el-dialog title="修改密码" :visible.sync="dialogPasswordVisible" @close="resetForm('passwordForm')">
         <el-form ref="passwordForm" :model="passwordForm" :rules="passwordRules" label-width="80px">
           <el-row>
             <el-col :span="12" :offset="5">
-              <el-form-item label="旧的密码" prop="password">
+              <el-form-item label="旧的密码" prop="oldPassword">
                 <el-input
                   v-model="passwordForm.oldPassword"
                   type="password"
@@ -76,7 +79,7 @@
                 <el-button
                   style="width: 50%"
                   type="primary"
-                  @click="dialogPasswordVisible = false"
+                  @click="changePassword('passwordForm')"
                 >
                   确认修改
                 </el-button>
@@ -93,13 +96,13 @@
 </template>
 
 <script>
+
+import { bindEmail, changePassword } from '@/api/servers'
 export default {
   name: 'Account',
   data() {
     return {
       emailForm: {
-        age: '',
-
         email: null
       },
       delivery: false,
@@ -110,13 +113,11 @@ export default {
         password: null,
         checkPassword: null
       },
-      emailRules: {
-        checkEmail: [
-          { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-          { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
-        ]
-      },
       passwordRules: {
+        oldPassword: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 6, message: '密码长度应该大于6', trigger: 'blur' }
+        ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
           { min: 6, message: '密码长度应该大于6', trigger: 'blur' }
@@ -132,8 +133,39 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields()
     },
-    postEmail() {
-      alert(this.emailForm.email)
+    changePassword(formName) {
+      const self = this
+      self.dialogPasswordVisible = false
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('woprd')
+          changePassword(self.passwordForm.oldPassword, self.passwordForm.password).then((response) => {
+            self.$message({
+              message: '密码修改成功',
+              type: 'success'
+            })
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    postEmail(formName) {
+      const self = this
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          bindEmail(self.emailForm.email).then((response) => {
+            self.$message({
+              message: '请到' + self.emailForm.email + '查收绑定邮件',
+              type: 'warning'
+            })
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     }
   }
 }

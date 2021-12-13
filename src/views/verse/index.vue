@@ -120,25 +120,7 @@ export default {
           value: '内容说明：' + info.description
         })
       }
-
       return table
-    },
-    createForm(formName) {
-      const self = this
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          const json = { description: self.form.desc }
-          const data = { name: self.form.name, info: JSON.stringify(json) }
-          postVerse(data).then((response) => {
-            console.log(response.data.id)
-            self.refresh()
-            // self.$router.push({ path: '/verse/edit', query: { id: response.data.id }})
-          })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
     },
     submitChange(form, item) {
       const self = this
@@ -156,23 +138,6 @@ export default {
       postVerse(data).then((response) => {
         console.log(response.data.id)
         self.$router.push({ path: '/verse/edit', query: { id: response.data.id }})
-      })
-    },
-
-    changeForm(id, formName) {
-      const self = this
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          const json = { description: self.form.desc }
-          const data = { name: self.form.name, info: JSON.stringify(json) }
-          putVerse(id, data).then((response) => {
-            console.log(response.data.id)
-            self.$router.push({ path: '/verse/edit', query: { id: response.data.id }})
-          })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
       })
     },
     handleCurrentChange: function(page) {
