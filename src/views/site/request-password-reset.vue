@@ -4,6 +4,7 @@
     <p class="request-tips">
       请输入您注册时候的邮箱，一个重置密码的链接将被发送到那里。
     </p>
+
     <el-form
       ref="form"
       class="request-body"
@@ -47,6 +48,7 @@ export default {
   },
   data() {
     return {
+
       form: {
         email: null
       },
