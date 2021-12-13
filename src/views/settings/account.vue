@@ -42,13 +42,13 @@
         <!-- 安全设置结束-->
 
         <!-- 邮箱验证弹窗 -->
-        <el-dialog title="绑定邮箱" :visible.sync="dialogEmailVisible" @close="resetForm(emailForm)">
-          <el-form ref="emailForm" :model="emailForm" :rules="emailRules" label-width="80px">
+        <el-dialog title="绑定邮箱" :visible.sync="dialogEmailVisible">
+          <el-form ref="emailForm" :model="emailForm" label-width="80px">
             <el-row>
               <el-col :span="12" :offset="5">
                 <el-form-item label="邮箱地址" prop="checkEmail">
                   <el-input
-                    v-model="emailForm.checkEmail"
+                    v-model="emailForm.checkEmal"
                     type="email"
                     autocomplete="off"
                   />
@@ -70,13 +70,13 @@
         <!-- 邮箱验证弹窗结束 -->
 
         <!-- 修改密码弹窗 -->
-        <el-dialog title="修改密码" :visible.sync="dialogPasswordVisible" @close="resetForm(passwordForm)">
+        <el-dialog title="修改密码" :visible.sync="dialogPasswordVisible">
           <el-form ref="passwordForm" :model="passwordForm" :rules="passwordRules" label-width="80px">
             <el-row>
               <el-col :span="12" :offset="5">
                 <el-form-item label="旧的密码" prop="password">
                   <el-input
-                    v-model="passwordForm.oldPassword"
+                    v-model="passwordForm.oldpassword"
                     type="password"
                     autocomplete="off"
                   />
@@ -129,15 +129,9 @@ export default {
         checkEmal: ''
       },
       passwordForm: {
-        oldPassword: null,
+        oldpassword: null,
         password: null,
         checkPassword: null
-      },
-      emailRules: {
-        checkEmail: [
-          { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-          { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
-        ]
       },
       passwordRules: {
         password: [
@@ -150,14 +144,6 @@ export default {
         ]
       }
     }
-  },
-  methods: {
-    resetForm(formName) {
-      this.$refs[formName].resetFields()
-    }
-    // resetForm(formName) {
-    //   this.$refs[formName].resetFields()
-    // }
   }
 }
 </script>

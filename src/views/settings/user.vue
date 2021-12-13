@@ -20,7 +20,7 @@
               <el-form-item>
                 <table class="form-table">
                   <tr><td> 性别:</td><td> {{ form.radio1 }} </td></tr>
-                  <tr><td> 昵称: </td><td> {{ form.username }} </td></tr>
+                  <tr><td> 昵称: </td><td> {{ form.name }} </td></tr>
                   <tr><td> 行业: </td><td> {{ form.industry }} </td></tr>
                   <tr><td> 居住地: </td><td> {{ form.address }} </td></tr>
                   <tr><td>个人简介：</td></tr>
@@ -45,8 +45,8 @@
         <!-- 表格结束 -->
       </div>
       <!-- 修改信息弹窗 -->
-      <el-dialog title="修改个人资料" :visible.sync="dialogFormVisible" @close="resetForm">
-        <el-form ref="addForm" :model="addForm" :rules="rules" label-width="80px">
+      <el-dialog title="修改个人资料" :visible.sync="dialogFormVisible">
+        <el-form ref="addForm" :model="addForm" label-width="80px">
           <el-row>
             <el-col :span="12" :offset="3">
 
@@ -56,13 +56,13 @@
                   <el-radio-button label="女" />
                 </el-radio-group>
               </el-form-item>
-              <el-form-item label="昵称" prop="username">
-                <el-input v-model="addForm.username" placeholder="昵称" autocomplete="off" />
+              <el-form-item label="昵称">
+                <el-input v-model="addForm.name" placeholder="昵称" autocomplete="off" />
               </el-form-item>
-              <el-form-item label="行业" prop="industry">
+              <el-form-item label="行业">
                 <el-input v-model="addForm.industry" placeholder="所在行业" />
               </el-form-item>
-              <el-form-item label="居住地" prop="address">
+              <el-form-item label="居住地">
                 <el-input v-model="addForm.address" placeholder="居住地" />
               </el-form-item>
               <br>
@@ -97,7 +97,7 @@ export default {
       form: {
         radio1: '男',
         radio2: '女',
-        username: '',
+        name: '',
         address: '',
         industry: '',
         textarea: ''
@@ -105,30 +105,11 @@ export default {
       addForm: {
         radio1: '男',
         radio2: '女',
-        username: null,
-        industry: '',
+        name: '',
         address: '',
+        industry: '',
         textarea: ''
-      },
-      rules: {
-        username: [
-          { required: true, message: '请输入用户名称', trigger: 'blur' },
-          { min: 2, message: '昵称长度应该大于2', trigger: 'blur' }
-        ],
-        industry: [
-          { required: true, message: '请输入所在行业', trigger: 'blur' },
-          { min: 2, message: '行业长度应该大于2', trigger: 'blur' }
-        ],
-        address: [
-          { required: true, message: '请输入居住地', trigger: 'blur' },
-          { min: 2, message: '居住地长度应该大于2', trigger: 'blur' }
-        ]
       }
-    }
-  },
-  methods: {
-    resetForm() {
-      this.$refs.addForm.resetFields()
     }
   }
 }
