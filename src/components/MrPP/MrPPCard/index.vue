@@ -1,20 +1,7 @@
 <template>
   <div>
-    <waterfall :line-gap="200" :watch="items">
-      <!-- each component is wrapped by a waterfall slot -->
-      <waterfall-slot
-        v-for="(item, index) in items"
-        :key="item.id"
-        :width="item.width"
-        :height="item.height"
-        :order="index"
-      >
-        <!--
-      your component
-    -->
-      </waterfall-slot>
-    </waterfall>
-    <el-card v-if="item.info === null" class="box-card">
+
+    <el-card class="box-card">
       <div slot="header">
         <el-card shadow="hover" :body-style="{ padding: '0px' }">
           <span slot="header" class="mrpp-title">
@@ -22,56 +9,25 @@
           </span>
 
           <img
+            v-if="item.image === null"
             src="@/assets/image/none.png"
             style="width: 100%; height: 300px; object-fit: contain"
           >
-        </el-card>
-      </div>
-
-      <div class="clearfix">
-        <slot name="router1">router-link插槽1</slot>
-        <!-- <router-link :to="'/polygen/view?id='+item.id">
-          <el-button type="warning" size="mini">初始化模型数据</el-button>
-        </router-link> -->
-        <el-button-group style="float: right" :inline="true">
-          <el-button
-            type="plain"
-            size="mini"
-            icon="el-icon-delete"
-            @click="deleted()"
-          />
-          <el-button
-            type="plain"
-            size="mini"
-            icon="el-icon-edit"
-            @click="named()"
-          />
-          &nbsp;
-        </el-button-group>
-      </div>
-      <div class="bottom clearfix" />
-    </el-card>
-    <el-card v-else class="box-card">
-      <div slot="header">
-        <el-card shadow="hover" :body-style="{ padding: '0px' }">
-          <span slot="header" class="mrpp-title">
-            <b class="card-title" nowrap>{{ item.name }}</b>
-          </span>
-
           <el-image
-            :src="item.image.url"
+            v-else
             style="width: 100%; height: 300px"
             fit="contain"
+            :src="item.image.url"
             lazy
           />
         </el-card>
-      </div>
 
+        <slot name="info" />
+
+      </div>
       <div class="clearfix">
-        <slot name="router2">router-link插槽2</slot>
-        <!-- <router-link :to="'/polygen/view?id='+item.id">
-          <el-button type="primary" size="mini">查看模型</el-button>
-        </router-link> -->
+        <slot name="enter">入口</slot>
+
         <el-button-group style="float: right" :inline="true">
           <el-button
             type="plain"
@@ -94,14 +50,8 @@
 </template>
 
 <script>
-import Waterfall from 'vue-waterfall/lib/waterfall'
-import WaterfallSlot from 'vue-waterfall/lib/waterfall-slot'
 export default {
   name: 'MrPPCard',
-  components: {
-    Waterfall,
-    WaterfallSlot
-  },
   props: {
     item: {
       type: Object,

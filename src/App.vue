@@ -14,7 +14,7 @@ export default {
     const self = this
     setInterval(function() {
       self.heartbeat()
-    }, 2000000 + Math.floor(Math.random() * 300000))
+    }, 180000)
   },
 
   methods: {

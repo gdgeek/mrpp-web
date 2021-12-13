@@ -1,0 +1,78 @@
+/*!
+ * rete-vue-render-plugin v0.5.1
+ * (c) 2021 Vitaliy Stoliarov
+ * Released under the MIT license.
+ */
+
+Object.defineProperty(exports, '__esModule', { value: true })
+
+
+function install(editor, options) {
+  console.log(options)
+  
+  _editor = editor
+
+  editor.on('noderemove', component => {
+
+    let limit = null
+    options.forEach(item => {
+      if(item.name === component.name){
+        limit = item
+      }
+    })
+    if (limit === null || typeof limit.min === 'undefined') {
+      return true
+    } 
+   
+    let count = 0
+    editor.nodes.forEach(function (e) {
+      if(e.name ===  component.name){
+        ++count
+      }
+    })
+    if (count <= limit.min){
+      alert(
+        '禁止删除' +
+          component.name +
+          '模块(至少' +
+          limit.min +
+          '个)'
+      )
+      return false
+    }
+    return true
+     
+  })
+
+  editor.on('nodecreate', component => {
+     let limit = null
+     options.forEach(item => {
+       if (item.name === component.name) {
+         limit = item
+       }
+     })
+     if (limit === null || typeof limit.min === 'undefined') {
+       return true
+     }
+
+     let count = 0
+     editor.nodes.forEach(function (e) {
+       if (e.name === component.name) {
+         ++count
+       }
+     })
+     if (count >= limit.min) {
+       alert('禁止创建' + component.name + '模块(至多' + limit.min + '个)')
+       return false
+     }
+     return true
+  })
+  
+}
+var index = {
+  name: 'rete-locked',
+  install: install
+}
+
+exports.default = index
+//# sourceMappingURL=vue-render-plugin.common.js.map

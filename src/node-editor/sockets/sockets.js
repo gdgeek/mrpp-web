@@ -1,5 +1,7 @@
 import Rete from 'rete'
 
 var NumSocket = new Rete.Socket('Number')
-export { NumSocket }
+
+var MetaSocket = new Rete.Socket('Meta')
+export { NumSocket, MetaSocket }
 

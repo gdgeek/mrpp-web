@@ -1,24 +1,8 @@
 <template>
   <div class="verse-index">
-    <el-dialog
-      title="创建小宇宙"
-      :visible.sync="dialogVisible"
-      width="70%"
-    >
-      <el-form ref="form" :rules="rules" :model="form" label-width="80px">
-        <el-form-item prop="name" label="名称">
-          <el-input v-model="form.name" />
-        </el-form-item>
+    <mr-p-p-verse-window ref="createdDialog" dialog-title="创建宇宙" dialog-submit="创 建" @submit="(form, item) =>submitCreate(form)" />
+    <mr-p-p-verse-window ref="changedDialog" dialog-title="修改数据" dialog-submit="修 改" @submit="submitChange" />
 
-        <el-form-item label="内容说明">
-          <el-input v-model="form.desc" type="textarea" />
-        </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitForm('form')">创 建</el-button>
-      </span>
-    </el-dialog>
     <br>
     <el-container>
       <el-header>
@@ -28,8 +12,8 @@
               size="mini"
               type="primary"
               icon="el-icon-office-building"
-              @click="dialogVisible = true"
-            ><span class="hidden-sm-and-down">创建小宇宙</span></el-button>
+              @click="createWindow()"
+            ><span class="hidden-sm-and-down">创建宇宙</span></el-button>
 
           </el-button-group>
         </mr-p-p-header>
@@ -46,13 +30,25 @@
             :lg="6"
             :xl="4"
           >
-            <mr-p-p-card :item="item" @named="namedWindow" @deleted="deletedWindow">
-              <router-link slot="router1" :to="'/verse/edit?id='+item.id">
-                <el-button type="warning" size="mini">初始化</el-button>
+            <mr-p-p-card :item="item" @named="changedWindow" @deleted="deletedWindow">
+              <el-table
+                v-if="item.info !== null"
+                slot="info"
+                :data="infoTable(item)"
+                stripe
+                style="width: 100%"
+                size="mini"
+              >
+
+                <el-table-column
+                  prop="value"
+                  label=""
+                />
+              </el-table>
+
+              <router-link slot="enter" :to="'/verse/edit?id='+item.id">
+                <el-button type="primary" size="mini">编辑</el-button>
               </router-link>
-              <router-link slot="router2" :to="'/verse/edit?id='+item.id">
-                <el-button type="primary" size="mini">编辑/el-button>
-                </el-button></router-link>
             </mr-p-p-card>
             <br>
 
@@ -84,37 +80,50 @@ import 'element-ui/lib/theme-chalk/display.css'
 import { getVerses, postVerse, putVerse, deleteVerse } from '@/api/v1/verse'
 import MrPPCard from '@/components/MrPP/MrPPCard'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
+import MrPPVerseWindow from '@/components/MrPP/MrPPVerseWindow'
 export default {
   components: {
     MrPPCard,
-    MrPPHeader
+    MrPPHeader,
+    MrPPVerseWindow
   },
   data() {
     return {
-      form: {
-        name: '',
-        desc: ''
-      },
-      rules: {
-        name: [
-          { required: true, message: '请输入活动名称', trigger: 'blur' },
-          { min: 3, max: 64, message: '长度在 3 到 64 个字符', trigger: 'blur' }
-        ]
-      },
       dialogVisible: false,
       items: null,
-      sorted: 'created_at',
+      sorted: '-created_at',
       searched: '',
       pagination: { current: 1, count: 1, size: 20, total: 20 }
     }
   },
-
+  computed: {
+    dialogTitle() {
+      return ''
+    }
+  },
   created: function() {
     this.refresh()
   },
 
   methods: {
-    submitForm(formName) {
+    createWindow() {
+      this.$refs.createdDialog.$emit('show')
+    },
+    changedDialog(item) {
+      this.$refs.changedDialog.$emit('show', item)
+    },
+    infoTable(item) {
+      const table = []
+      const info = JSON.parse(item.info)
+      if (info !== null) {
+        table.push({
+          value: '内容说明：' + info.description
+        })
+      }
+
+      return table
+    },
+    createForm(formName) {
       const self = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -122,6 +131,43 @@ export default {
           const data = { name: self.form.name, info: JSON.stringify(json) }
           postVerse(data).then((response) => {
             console.log(response.data.id)
+            self.refresh()
+            // self.$router.push({ path: '/verse/edit', query: { id: response.data.id }})
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    submitChange(form, item) {
+      const self = this
+      const json = { description: form.desc }
+      const data = { name: form.name, info: JSON.stringify(json) }
+      putVerse(item.id, data).then((response) => {
+        self.refresh()
+        this.$refs.changedDialog.$emit('hide')
+      })
+    },
+    submitCreate(form) {
+      const self = this
+      const json = { description: form.desc }
+      const data = { name: form.name, info: JSON.stringify(json) }
+      postVerse(data).then((response) => {
+        console.log(response.data.id)
+        self.$router.push({ path: '/verse/edit', query: { id: response.data.id }})
+      })
+    },
+
+    changeForm(id, formName) {
+      const self = this
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          const json = { description: self.form.desc }
+          const data = { name: self.form.name, info: JSON.stringify(json) }
+          putVerse(id, data).then((response) => {
+            console.log(response.data.id)
+            self.$router.push({ path: '/verse/edit', query: { id: response.data.id }})
           })
         } else {
           console.log('error submit!!')
@@ -134,25 +180,8 @@ export default {
       this.refresh()
       console.log(this.pagination.current)
     },
-    namedWindow: function(item) {
-      const self = this
-      this.$prompt('请输入新名称', '修改宇宙名称', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        closeOnClickModal: false,
-        inputValue: item.name
-      }).then(({ value }) => {
-        self.named(item.id, value)
-        this.$message({
-          type: 'success',
-          message: '新的宇宙名称: ' + value
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
-        })
-      })
+    changedWindow: function(item) {
+      this.$refs.changedDialog.$emit('show', item)
     },
     sort: function(value) {
       this.sorted = value
@@ -215,6 +244,7 @@ export default {
             size: parseInt(response.headers['x-pagination-per-page']),
             total: parseInt(response.headers['x-pagination-total-count'])
           }
+
           if (response.data) {
             self.succeed(response.data)
           }
