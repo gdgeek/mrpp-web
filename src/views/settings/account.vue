@@ -79,7 +79,7 @@
                 <el-button
                   style="width: 100%"
                   type="primary"
-                  @click="changePassword('passwordForm')"
+                  @click="resetPassword('passwordForm')"
                 >
                   确认修改
                 </el-button>
@@ -97,7 +97,7 @@
 
 <script>
 
-import { bindEmail, changePassword } from '@/api/servers'
+import { bindEmail, resetPassword } from '@/api/servers'
 export default {
   name: 'Account',
   data() {
@@ -133,13 +133,12 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields()
     },
-    changePassword(formName) {
+    resetPassword(formName) {
       const self = this
       self.dialogPasswordVisible = false
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('woprd')
-          changePassword(self.passwordForm.oldPassword, self.passwordForm.password).then((response) => {
+          resetPassword(self.passwordForm.oldPassword, self.passwordForm.password).then((response) => {
             self.$message({
               message: '密码修改成功',
               type: 'success'

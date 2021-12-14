@@ -332,6 +332,23 @@ export const constantRoutes = [
   { path: '*', redirect: '/404', hidden: true }
 ]
 
+// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+export function resetRouter() {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
+}
+const theRouter = () =>
+  new Router({
+    mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }),
+    routes: []
+  })
+
+export function importRouter() {
+  const newRouter = theRouter()
+  router.matcher = newRouter.matcher // reset router
+}
+
 const createRouter = () =>
   new Router({
     // mode: 'history', // require service support
