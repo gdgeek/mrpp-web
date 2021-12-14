@@ -47,7 +47,7 @@
         </el-col>
       </el-row>
       <!-- 修改密码弹窗 -->
-      <el-dialog title="修改密码" :visible.sync="dialogPasswordVisible" style="min-width:560px" @close="resetForm('passwordForm')">
+      <el-dialog title="修改密码" :visible.sync="dialogPasswordVisible" :close-on-click-modal="false" style="min-width:560px" @close="resetForm('passwordForm')">
         <el-form ref="passwordForm" :model="passwordForm" :rules="passwordRules" label-width="80px">
           <el-row :gutter="24">
             <el-col :xs="20" :sm="20" :md="14" :lg="14" :xl="14" :offset="4">
@@ -101,9 +101,20 @@ import { bindEmail, resetPassword } from '@/api/servers'
 export default {
   name: 'Account',
   data() {
+    const oldPassword = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('旧密码不能为空'))
+      } else if (value === this.passwordForm.password) {
+        callback(new Error('新密码不能和旧密码一致!'))
+      } else {
+        callback()
+      }
+    }
     const validatePassword = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'))
+      } else if (value === this.passwordForm.oldPassword) {
+        callback(new Error('新密码不能和旧密码一致!'))
       } else {
         if (this.passwordForm.checkPassword !== '') {
           this.$refs.passwordForm.validateField('checkPassword')
@@ -134,8 +145,9 @@ export default {
       },
       passwordRules: {
         oldPassword: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 6, message: '密码长度应该大于6', trigger: 'blur' }
+          { required: true, message: '请输入旧密码', trigger: 'blur' },
+          { min: 6, message: '密码长度应该大于6', trigger: 'blur' },
+          { validator: oldPassword, trigger: 'blur' }
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
