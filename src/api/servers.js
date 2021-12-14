@@ -40,10 +40,10 @@ export function bindEmail(email) {
   })
 }
 
-export function changePassword(oldPass, newPass) {
+export function resetPassword(oldPassword, password) {
   return request({
-    url: '/servers/changePassword',
+    url: '/servers/reset-password',
     method: 'post',
-    data: { oldPass, newPass }
+    data: { oldPassword, password }
   })
 }

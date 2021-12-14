@@ -116,11 +116,18 @@ const actions = {
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
-      logout(state.token)
+      logout()
         .then(() => {
+          alert(1)
           removeToken() // must remove  token  first
+
+          alert(2)
           resetRouter()
+
+          alert(3)
           commit('RESET_STATE')
+
+          alert(4)
           resolve()
         })
         .catch(error => {
