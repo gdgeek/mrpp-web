@@ -10,7 +10,7 @@
 
         <el-col :xs="16" :sm="16" :md="12" :lg="10" :xl="10">
 
-          <el-form ref="emailForm" :model="emailForm" label-width="100px">
+          <el-form ref="emailForm" :model="emailForm" label-width="100px" style="min-width:300px">
 
             <el-form-item
               label="邮箱"
@@ -36,7 +36,7 @@
       <br>
       <el-row :gutter="24">
         <el-col :xs="16" :sm="16" :md="10" :lg="6" :xl="6">
-          <el-form label-width="100px">
+          <el-form label-width="100px" style="min-width:300px">
             <el-form-item label="账户密码">
               <el-button-group>
                 <el-button type="warning" @click="dialogPasswordVisible = true">修改密码</el-button>
@@ -47,10 +47,10 @@
         </el-col>
       </el-row>
       <!-- 修改密码弹窗 -->
-      <el-dialog title="修改密码" :visible.sync="dialogPasswordVisible" @close="resetForm('passwordForm')">
+      <el-dialog title="修改密码" :visible.sync="dialogPasswordVisible" style="min-width:560px" @close="resetForm('passwordForm')">
         <el-form ref="passwordForm" :model="passwordForm" :rules="passwordRules" label-width="80px">
-          <el-row>
-            <el-col :span="12" :offset="5">
+          <el-row :gutter="24">
+            <el-col :xs="20" :sm="20" :md="14" :lg="14" :xl="14" offset="4">
               <el-form-item label="旧的密码" prop="oldPassword">
                 <el-input
                   v-model="passwordForm.oldPassword"
@@ -77,7 +77,7 @@
 
               <el-form-item>
                 <el-button
-                  style="width: 50%"
+                  style="width: 100%"
                   type="primary"
                   @click="changePassword('passwordForm')"
                 >
@@ -175,11 +175,5 @@ export default {
 .box-card {
   margin: 1.6% 1.6% 0.6%;
   padding: 0% 1%;
-}
-.el-row {
-  max-width: 100%;
-}
-.shiyixia {
-  margin-right: 10%;
 }
 </style>
