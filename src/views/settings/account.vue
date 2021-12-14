@@ -155,14 +155,16 @@ export default {
     },
     resetPassword(formName) {
       const self = this
-      self.dialogPasswordVisible = false
       this.$refs[formName].validate((valid) => {
         if (valid) {
           resetPassword(self.passwordForm.oldPassword, self.passwordForm.password).then((response) => {
+            self.dialogPasswordVisible = false
             self.$message({
               message: '密码修改成功',
               type: 'success'
             })
+          }).catch((message) => {
+            // self.dialogPasswordVisible = false
           })
         } else {
           console.log('error submit!!')

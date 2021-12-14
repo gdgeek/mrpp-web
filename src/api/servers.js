@@ -42,7 +42,7 @@ export function bindEmail(email) {
 
 export function resetPassword(oldPassword, password) {
   return request({
-    url: '/servers/bind-email',
+    url: '/servers/reset-password',
     method: 'post',
     data: { oldPassword, password }
   })
