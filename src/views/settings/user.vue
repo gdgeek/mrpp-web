@@ -12,7 +12,7 @@
       </div>
       <!-- 用户头像和昵称开始 -->
       <el-row :gutter="24">
-        <el-col :xs="16" :sm="16" :md="12" :lg="10" :xl="10" offset="3">
+        <el-col :xs="16" :sm="16" :md="12" :lg="10" :xl="10" :offset="3">
           <el-form ref="form" :model="form" :rules="rules" label-width="80px">
             <el-form-item label="昵称" prop="username">
               <el-input
@@ -45,7 +45,7 @@
 
       <!-- 用户基本信息开始 -->
       <el-row :gutter="24">
-        <el-col :xs="16" :sm="16" :md="12" :lg="10" :xl="10" offset="3">
+        <el-col :xs="16" :sm="16" :md="12" :lg="10" :xl="10" :offset="3">
           <el-form
             ref="addForm"
             :model="addForm"

@@ -50,7 +50,7 @@
       <el-dialog title="修改密码" :visible.sync="dialogPasswordVisible" style="min-width:560px" @close="resetForm('passwordForm')">
         <el-form ref="passwordForm" :model="passwordForm" :rules="passwordRules" label-width="80px">
           <el-row :gutter="24">
-            <el-col :xs="20" :sm="20" :md="14" :lg="14" :xl="14" offset="4">
+            <el-col :xs="20" :sm="20" :md="14" :lg="14" :xl="14" :offset="4">
               <el-form-item label="旧的密码" prop="oldPassword">
                 <el-input
                   v-model="passwordForm.oldPassword"
