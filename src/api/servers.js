@@ -34,7 +34,7 @@ export function token() {
 
 export function bindEmail(email) {
   return request({
-    url: '/servers/bindEmail',
+    url: '/servers/bind-email',
     method: 'post',
     data: { email }
   })
@@ -42,7 +42,7 @@ export function bindEmail(email) {
 
 export function resetPassword(oldPassword, password) {
   return request({
-    url: '/servers/reset-password',
+    url: '/servers/bind-email',
     method: 'post',
     data: { oldPassword, password }
   })
