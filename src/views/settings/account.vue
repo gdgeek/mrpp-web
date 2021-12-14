@@ -101,6 +101,25 @@ import { bindEmail, resetPassword } from '@/api/servers'
 export default {
   name: 'Account',
   data() {
+    const validatePassword = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入密码'))
+      } else {
+        if (this.passwordForm.checkPassword !== '') {
+          this.$refs.passwordForm.validateField('checkPassword')
+        }
+        callback()
+      }
+    }
+    const checkPassword = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'))
+      } else if (value !== this.passwordForm.password) {
+        callback(new Error('两次输入密码不一致!'))
+      } else {
+        callback()
+      }
+    }
     return {
       emailForm: {
         email: null
@@ -120,11 +139,12 @@ export default {
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 6, message: '密码长度应该大于6', trigger: 'blur' }
+          { min: 6, message: '密码长度应该大于6', trigger: 'blur' },
+          { validator: validatePassword, trigger: 'blur' }
         ],
         checkPassword: [
           { required: true, message: '请输入校验密码', trigger: 'blur' },
-          { min: 6, message: '密码长度应该大于6', trigger: 'blur' }
+          { validator: checkPassword, trigger: 'blur' }
         ]
       }
     }
