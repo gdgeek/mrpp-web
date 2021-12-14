@@ -2,13 +2,13 @@
   <div>
     <el-card class="box-card">
       <div class="box-title">
-        <h3>个人中心</h3>
-        <small>用户头像、昵称、基本信息修改</small>
+        <h3 class="font-color">个人中心</h3>
+        <small>用户昵称、头像、基本信息修改</small>
       </div>
       <el-divider />
       <div class="box-title">
-        <h3>用户展示</h3>
-        <small>让其它用户和MrPP社区更容易认识您。</small>
+        <h3 class="font-color">用户昵称</h3>
+        <small>让MrPP社区的其它用户更容易认识您。</small>
       </div>
       <!-- 用户头像和昵称开始 -->
       <el-row :gutter="24">
@@ -27,10 +27,10 @@
               <img class="user-icon" href="" style="float: left">
               <div style="float: left">
                 <el-button type="primary">
-                  上传
                   <i class="el-icon-upload el-icon--right" />
+                  上传
                 </el-button>
-                <p class="user-explain">最大文件尺寸 1 MB。JPG、GIF 或 PNG。</p>
+                <p class="user-explain">最大尺寸 1 MB。JPG、GIF 或 PNG。</p>
               </div>
             </el-form-item>
           </el-form>
@@ -39,8 +39,8 @@
       <!-- 用户头像和昵称结束 -->
       <el-divider />
       <div class="box-title">
-        <h3>基本信息</h3>
-        <small>请填写你的基本信息，以获得更有乐趣的个性化学习和体验。</small>
+        <h3 class="font-color">基本信息</h3>
+        <small>请填写你的基本信息，以获得更有乐趣的个性化交互和体验。</small>
       </div>
 
       <!-- 用户基本信息开始 -->
@@ -54,8 +54,8 @@
           >
             <el-form-item label="性别">
               <el-radio-group v-model="addForm.radio1">
-                <el-radio-button label="男" />
-                <el-radio-button label="女" />
+                <el-radio-button label="男"><i class="el-icon-male  el-icon--left" />男</el-radio-button>
+                <el-radio-button label="女"><i class="el-icon-female el-icon--left" />女</el-radio-button>
               </el-radio-group>
             </el-form-item>
 
@@ -77,7 +77,7 @@
             <el-form-item>
               <el-button
                 type="primary"
-                style="width: 100%"
+                style="width: 150px"
                 @click="dialogFormVisible = false"
               >
                 保存
@@ -138,8 +138,10 @@ export default {
 }
 .box-title {
   margin-bottom: 36px;
-  line-height: 14px;
+  line-height: 10px;
+  padding: 2px 0;
   margin-left: 1%;
+  color: #4d4f52;
 }
 .user-icon {
   display: block;
