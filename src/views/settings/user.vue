@@ -1,89 +1,93 @@
 <template>
   <div>
     <el-card class="box-card">
-      <div slot="header">
-        <a class="header-icon" href="" />
-        <p>用户：test33593245</p>
-        <br>
+      <div class="box-title">
+        <h3 class="font-color">个人中心</h3>
+        <small>用户昵称、头像、基本信息修改</small>
       </div>
-
-      <h4>个人资料</h4>
-      <div>
-        <!-- 信息表格开始 -->
-        <el-form
-          ref="form"
-          :model="form"
-          label-width="80px"
-        >
-          <el-row>
-            <el-col :span="12" style="width: 520px" :offset="1">
-              <el-form-item>
-                <table class="form-table">
-                  <tr><td> 性别:</td><td> {{ form.radio1 }} </td></tr>
-                  <tr><td> 昵称: </td><td> {{ form.username }} </td></tr>
-                  <tr><td> 行业: </td><td> {{ form.industry }} </td></tr>
-                  <tr><td> 居住地: </td><td> {{ form.address }} </td></tr>
-                  <tr><td>个人简介：</td></tr>
-                </table>
-                <div>
-                  <el-input
-                    v-model="form.textarea"
-                    style="width: 60%"
-                    type="textarea"
-                    :autosize="{ minRows: 4, maxRows: 10 }"
-                    :disabled="true"
-                  />
-                </div>
-                <br>
-                <el-button style="width: 32%" type="primary" @click="dialogFormVisible = true">
-                  修改信息
+      <el-divider />
+      <div class="box-title">
+        <h3 class="font-color">用户昵称</h3>
+        <small>让MrPP社区的其它用户更容易认识您。</small>
+      </div>
+      <!-- 用户头像和昵称开始 -->
+      <el-row :gutter="24">
+        <el-col :xs="16" :sm="16" :md="12" :lg="10" :xl="10" offset="3">
+          <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+            <el-form-item label="昵称" prop="username">
+              <el-input
+                v-model="form.username"
+                placeholder="昵称"
+                autocomplete="off"
+              >
+                <el-button slot="append">确定</el-button>
+              </el-input>
+            </el-form-item>
+            <el-form-item label="头像">
+              <img class="user-icon" href="" style="float: left">
+              <div style="float: left">
+                <el-button type="primary">
+                  <i class="el-icon-upload el-icon--right" />
+                  上传
                 </el-button>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
-        <!-- 表格结束 -->
+                <p class="user-explain">最大尺寸 1 MB。JPG、GIF 或 PNG。</p>
+              </div>
+            </el-form-item>
+          </el-form>
+        </el-col>
+      </el-row>
+      <!-- 用户头像和昵称结束 -->
+      <el-divider />
+      <div class="box-title">
+        <h3 class="font-color">基本信息</h3>
+        <small>请填写你的基本信息，以获得更有乐趣的个性化交互和体验。</small>
       </div>
-      <!-- 修改信息弹窗 -->
-      <el-dialog title="修改个人资料" :visible.sync="dialogFormVisible" @close="resetForm">
-        <el-form ref="addForm" :model="addForm" :rules="rules" label-width="80px">
-          <el-row>
-            <el-col :span="12" :offset="3">
 
-              <el-form-item label="性别">
-                <el-radio-group v-model="addForm.radio1">
-                  <el-radio-button label="男" />
-                  <el-radio-button label="女" />
-                </el-radio-group>
-              </el-form-item>
-              <el-form-item label="昵称" prop="username">
-                <el-input v-model="addForm.username" placeholder="昵称" autocomplete="off" />
-              </el-form-item>
-              <el-form-item label="行业" prop="industry">
-                <el-input v-model="addForm.industry" placeholder="所在行业" />
-              </el-form-item>
-              <el-form-item label="居住地" prop="address">
-                <el-input v-model="addForm.address" placeholder="居住地" />
-              </el-form-item>
-              <br>
-              <el-form-item label="个人简介">
-                <el-input
-                  v-model="addForm.textarea"
-                  style="width: 140%"
-                  type="textarea"
-                  :autosize="{ minRows: 4, maxRows: 10 }"
-                  placeholder="个人的简介"
-                />
-              </el-form-item>
-              <el-form-item>
-                <el-button type="primary" style="width: 60%" @click="dialogFormVisible = false">保存</el-button>
-              </el-form-item>
+      <!-- 用户基本信息开始 -->
+      <el-row :gutter="24">
+        <el-col :xs="16" :sm="16" :md="12" :lg="10" :xl="10" offset="3">
+          <el-form
+            ref="addForm"
+            :model="addForm"
+            :rules="rules"
+            label-width="80px"
+          >
+            <el-form-item label="性别">
+              <el-radio-group v-model="addForm.radio1">
+                <el-radio-button label="男"><i class="el-icon-male  el-icon--left" />男</el-radio-button>
+                <el-radio-button label="女"><i class="el-icon-female el-icon--left" />女</el-radio-button>
+              </el-radio-group>
+            </el-form-item>
 
-            </el-col>
-          </el-row>
-        </el-form>
-      </el-dialog>
-      <!-- 修改信息弹窗结束 -->
+            <el-form-item label="行业" prop="industry">
+              <el-input v-model="addForm.industry" placeholder="所在行业" />
+            </el-form-item>
+            <el-form-item label="居住地" prop="address">
+              <el-input v-model="addForm.address" placeholder="居住地" />
+            </el-form-item>
+            <el-form-item label="个人简介">
+              <el-input
+                v-model="addForm.textarea"
+                style="width: 100%"
+                type="textarea"
+                :autosize="{ minRows: 4, maxRows: 10 }"
+                placeholder="个人的简介"
+              />
+            </el-form-item>
+            <el-form-item>
+              <el-button
+                type="primary"
+                style="width: 150px"
+                @click="dialogFormVisible = false"
+              >
+                保存
+              </el-button>
+            </el-form-item>
+          </el-form>
+        </el-col>
+      </el-row>
+      <!-- 用户基本信息结束 -->
+
     </el-card>
   </div>
 </template>
@@ -95,17 +99,11 @@ export default {
     return {
       dialogFormVisible: false,
       form: {
-        radio1: '男',
-        radio2: '女',
-        username: '',
-        address: '',
-        industry: '',
-        textarea: ''
+        username: ''
       },
       addForm: {
         radio1: '男',
         radio2: '女',
-        username: null,
         industry: '',
         address: '',
         textarea: ''
@@ -137,19 +135,28 @@ export default {
 <style lang="scss" scoped>
 .box-card {
   margin: 1.6% 1.6% 0.6%;
-  padding: 4% 1%;
 }
-.form-table td{
-  font-size: 16px;
-  font-weight:500;
-  width: 100px;
+.box-title {
+  margin-bottom: 36px;
+  line-height: 10px;
+  padding: 2px 0;
+  margin-left: 1%;
+  color: #4d4f52;
 }
-.header-icon {
+.user-icon {
   display: block;
-  width: 120px;
-  height: 120px;
+  margin-right: 12px;
+  width: 130px;
+  height: 130px;
   background: url(logo.jpg) no-repeat;
   background-size: 100%;
-  border-radius: 50%;
+  border-radius: 5%;
+}
+.user-explain {
+  font-size: 12px;
+  line-height: 20px;
+}
+.font-color{
+  font-weight:500;
 }
 </style>
