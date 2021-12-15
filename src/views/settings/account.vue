@@ -11,8 +11,8 @@
         <el-col :xs="16" :sm="16" :md="12" :lg="10" :xl="10">
 
           <el-form ref="emailForm" :model="emailForm" label-width="100px" style="min-width:300px">
-
             <el-form-item
+              v-if=" typeof(info.email) === 'undefined' || info.email === null || !info.emailBind"
               label="邮箱"
               prop="email"
               :rules="[
@@ -26,9 +26,20 @@
                 type="email"
                 placeholder="绑定邮箱"
               ><el-button
+                v-if="!info.bindEmail"
                 slot="append"
                 @click="postEmail('emailForm')"
-              >绑定</el-button></el-input>
+              ><div v-if=" null === info.email">绑定</div><div v-else>重新绑定</div></el-button></el-input>
+
+            </el-form-item>
+
+            <el-form-item
+              v-else
+              v-model="emailForm.email"
+              label="邮箱"
+              prop="email"
+            ><el-tag> {{ info.email }}</el-tag>
+
             </el-form-item>
           </el-form>
         </el-col>
@@ -97,9 +108,15 @@
 
 <script>
 
+import { mapGetters } from 'vuex'
 import { bindEmail, resetPassword } from '@/api/servers'
 export default {
   name: 'Account',
+  computed: {
+    ...mapGetters([
+      'info'
+    ])
+  },
   data() {
     const validatePassword = (rule, value, callback) => {
       if (value === '') {
@@ -148,6 +165,9 @@ export default {
         ]
       }
     }
+  },
+  created() {
+    this.emailForm.email = this.info.email
   },
   methods: {
     resetForm(formName) {

@@ -9,9 +9,9 @@
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <div class="right-menu-item">
-            {{ nickname }}
+            {{ info.nickname }}
           </div>
-          <el-avatar :src="avatar" shape="square">
+          <el-avatar :src="info.avatar" shape="square">
             <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png">
           </el-avatar>
           <i class="el-icon-caret-bottom" />
@@ -71,8 +71,7 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar',
-      'nickname'
+      'info'
     ])
   },
   methods: {

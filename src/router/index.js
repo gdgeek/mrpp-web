@@ -199,23 +199,29 @@ export const constantRoutes = [
   {
     path: '/site',
     component: () => import('@/views/site/index'),
-    hidden: true,
-    children: [
-      {
-        path: 'index',
-        name: 'Index',
-        component: () => import('@/views/document/index')
-      },
-      {
-        path: '/site/wechat-signup',
-        component: () => import('@/views/site/wechat-signup')
-      },
-      {
-        path: '/site/logout',
-        component: () => import('@/views/site/logout')
-      }
-    ]
+    hidden: true
   },
+  {
+    path: '/site/index',
+    component: () => import('@/views/site/index'),
+    hidden: true
+  },
+  {
+    path: '/site/wechat-signup',
+    component: () => import('@/views/site/wechat-signup'),
+    hidden: true
+  },
+  {
+    path: '/site/logout',
+    component: () => import('@/views/site/logout'),
+    hidden: true
+  },
+  {
+    path: '/site/binded-email',
+    component: () => import('@/views/site/binded-email'),
+    hidden: true
+  },
+
   {
     path: '/404',
     component: () => import('@/views/404'),

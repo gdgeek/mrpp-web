@@ -49,3 +49,9 @@ export function resetPassword(token, data) {
     data: { ResetPasswordForm: data }
   })
 }
+export function bindedEmail(token) {
+  return request({
+    url: '/sites/binded-email?token=' + token,
+    method: 'get'
+  })
+}

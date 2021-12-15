@@ -10,6 +10,7 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = [
   '/site',
+  '/site/binded-email',
   '/site/index',
   '/site/verify-email',
   '/site/login',
