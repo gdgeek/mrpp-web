@@ -20,6 +20,12 @@ export const toJson = function() {
   const json = editor_.toJSON()
   return json
 }
+/*
+async function compile() {
+  await engine_.abort()
+  await engine_.process(editor_.toJSON())
+}
+*/
 export const init = async function(container) {
 //  MetaType a
   const types = [Meta]
@@ -39,10 +45,11 @@ export const init = async function(container) {
     editor_.register(new Component(type))
   })
   editor_.register(verseComponent)
-
+  /*
   const verse = await verseComponent.createNode()
   verse.position = [0, 0]
   editor_.addNode(verse)
+  */
   editor_.on(
     'process nodecreated noderemoved connectioncreated connectionremoved',
     async() => {
@@ -54,4 +61,9 @@ export const init = async function(container) {
   editor_.view.resize()
   AreaPlugin.zoomAt(editor_)
   editor_.trigger('process')
+}
+export const fromJson = function(data) {
+  // alert(data)
+  // const obj = JSON.parse(data)
+  editor_.fromJSON(data)
 }

@@ -3,8 +3,8 @@
 </template>
 
 <script>
-import { init, toJson, arrange } from '@/node-editor'
-import { postVerseRete, putVerseRete } from '@/api/v1/verseRete'
+import { init, toJson, fromJson, arrange } from '@/node-editor'
+import { postVerseRete } from '@/api/v1/verseRete'
 export default {
   data() {
     return {
@@ -13,15 +13,14 @@ export default {
   },
   mounted() {
     const self = this
-    init(this.$refs.rete)
-    this.$nextTick(function() {
-      this.$on('save', self.save)
-      this.$on('arrange', self.arrange)
-    })
+    init(self.$refs.rete)
   },
   methods: {
     arrange() {
       arrange()
+    },
+    load(data) {
+      fromJson(JSON.parse(data))
     },
     save(verseId) {
       const json = toJson()

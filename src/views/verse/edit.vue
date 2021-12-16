@@ -41,17 +41,28 @@ export default {
   created() {
     const self = this
     getVerse(this.id).then(response => {
+      console.log('==================')
       console.log(response)
       self.data = response.data
+      if (self.data.retes != null && self.data.retes.length > 0) {
+        self.load(response.data.retes[0].data)
+      } else {
+        self.data.retes = [self.createRete()]
+      }
     })
   },
   methods: {
+    createRete() {
+
+    },
+    load(data) {
+      this.$refs.rete.load(data)// $emit('load', data)
+    },
     save() {
-      const self = this
-      this.$refs.rete.$emit('save', self.id)
+      this.$refs.rete.save(self.id)// .$emit('save', self.id)
     },
     arrange() {
-      this.$refs.rete.$emit('arrange')
+      this.$refs.rete.arrange()// .$emit('arrange')
     }
   }
 }
