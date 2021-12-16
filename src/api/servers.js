@@ -6,7 +6,7 @@ export function getMenu() {
     method: 'get'
   })
 }
-export function getInfo(token) {
+export function getData(token) {
   return request({
     url: '/servers/user',
     method: 'get',

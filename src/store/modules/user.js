@@ -1,5 +1,5 @@
 import { login, signup } from '@/api/sites'
-import { getInfo, getMenu, logout } from '@/api/servers'
+import { getData, getMenu, logout } from '@/api/servers'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -7,7 +7,7 @@ const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    info: null,
+    data: null,
     wxOpenid: '',
     menu: []
   }
@@ -26,8 +26,8 @@ const mutations = {
     state.name = name
   },
 
-  SET_INFO: (state, info) => {
-    state.info = info
+  SET_DATA: (state, data) => {
+    state.data = data
   },
 
   SET_MENU: (state, menu) => {
@@ -89,16 +89,18 @@ const actions = {
     })
   },
   // get user info
-  getInfo({ commit, state }) {
+  getData({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token)
+      getData(state.token)
         .then(response => {
           const data = response.data
           if (!data) {
             return reject('Verification failed, please Login again.')
           }
           commit('SET_NAME', data.username)
-          commit('SET_INFO', data.info)
+          console.log('==================')
+          console.log(data)
+          commit('SET_DATA', data.data)
           resolve(data)
         })
         .catch(error => {

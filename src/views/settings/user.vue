@@ -13,14 +13,14 @@
       <!-- 用户头像和昵称开始 -->
       <el-row :gutter="24">
         <el-col :xs="16" :sm="16" :md="12" :lg="10" :xl="10" :offset="3">
-          <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-            <el-form-item label="昵称" prop="username">
+          <el-form ref="nicknameForm" :model="nicknameForm" :rules="nicknameRules" label-width="80px">
+            <el-form-item label="昵称" prop="nickname">
               <el-input
-                v-model="form.username"
+                v-model="nicknameForm.nickname"
                 placeholder="昵称"
                 autocomplete="off"
               >
-                <el-button slot="suffix" style="margin-right:-5px">确定</el-button>
+                <el-button slot="suffix" style="margin-right:-5px" @click="submitNickname">确定</el-button>
               </el-input>
             </el-form-item>
             <el-form-item label="头像">
@@ -57,27 +57,27 @@
       <el-row :gutter="24">
         <el-col :xs="16" :sm="16" :md="12" :lg="10" :xl="10" :offset="3">
           <el-form
-            ref="addForm"
-            :model="addForm"
-            :rules="rules"
+            ref="infoForm"
+            :model="infoForm"
+            :rules="infoRules"
             label-width="80px"
           >
             <el-form-item label="性别">
-              <el-radio-group v-model="addForm.radio1">
-                <el-radio-button label="男"><i class="el-icon-male  el-icon--left" />男</el-radio-button>
-                <el-radio-button label="女"><i class="el-icon-female el-icon--left" />女</el-radio-button>
+              <el-radio-group v-model="infoForm.sex">
+                <el-radio-button label="man"><i class="el-icon-male  el-icon--left" />男</el-radio-button>
+                <el-radio-button label="woman"><i class="el-icon-female el-icon--left" />女</el-radio-button>
               </el-radio-group>
             </el-form-item>
 
             <el-form-item label="行业" prop="industry">
-              <el-input v-model="addForm.industry" placeholder="所在行业" />
+              <el-input v-model="infoForm.industry" placeholder="所在行业" />
             </el-form-item>
-            <el-form-item label="居住地" prop="address">
-              <el-input v-model="addForm.address" placeholder="居住地" />
-            </el-form-item>
+            <!-- <el-form-item label="居住地" prop="address">
+              <el-input v-model="infoForm.address" placeholder="居住地" />
+            </el-form-item> -->
             <el-form-item label="个人简介">
               <el-input
-                v-model="addForm.textarea"
+                v-model="infoForm.textarea"
                 style="width: 100%"
                 type="textarea"
                 :autosize="{ minRows: 4, maxRows: 10 }"
@@ -88,6 +88,7 @@
               <el-button
                 type="primary"
                 style="width: 150px"
+                @click="saveInfo()"
               >
                 保存
               </el-button>
@@ -102,38 +103,88 @@
 </template>
 
 <script>
+
+import { mapGetters } from 'vuex'
+import { putUserData } from '@/api/v1/user'
 export default {
   name: 'User',
+  computed: {
+    ...mapGetters([
+      'userData'
+    ])
+  },
   data: function() {
     return {
       imageUrl: '',
-      form: {
-        username: ''
+      nicknameForm: {
+        nickname: ''
       },
-      addForm: {
-        radio1: '男',
-        radio2: '女',
+      nicknameRules: {
+        nickname: [
+          { required: true, message: '请输入用户昵称', trigger: 'blur' },
+          { min: 2, message: '昵称长度应该大于2', trigger: 'blur' }
+        ]
+      },
+      infoForm: {
+        sex: 'man',
         industry: '',
-        address: '',
+        // address: '',
         textarea: ''
       },
-      rules: {
-        username: [
-          { required: true, message: '请输入用户名称', trigger: 'blur' },
-          { min: 2, message: '昵称长度应该大于2', trigger: 'blur' }
-        ],
+      infoRules: {
         industry: [
           { required: true, message: '请输入所在行业', trigger: 'blur' },
           { min: 2, message: '行业长度应该大于2', trigger: 'blur' }
-        ],
-        address: [
-          { required: true, message: '请输入居住地', trigger: 'blur' },
-          { min: 2, message: '居住地长度应该大于2', trigger: 'blur' }
         ]
+
+      }
+    }
+  },
+  created() {
+    const self = this
+    self.nicknameForm.nickname = self.userData.nickname
+    const info = JSON.parse(self.userData.info)
+
+    if (info !== null) {
+      if (typeof info.sex !== 'undefined') {
+        self.infoForm.sex = info.sex
+      }
+
+      if (typeof info.industry !== 'undefined') {
+        self.infoForm.industry = info.industry
+      }
+      if (typeof info.textarea !== 'undefined') {
+        self.infoForm.textarea = info.textarea
       }
     }
   },
   methods: {
+    submitNickname() {
+      const self = this
+      this.$refs.nicknameForm.validate((valid) => {
+        if (valid) {
+          putUserData({ nickname: self.nicknameForm.nickname }).then(response => {
+            console.log(response.data)
+            self.refreshUserdata(response.data)
+          })
+        }
+      })
+    },
+    refreshUserdata(data) {
+      console.log(data.data)
+      // this.$store.commit('SET_DATA', data.data)
+    },
+    saveInfo() {
+      const self = this
+      this.$refs.infoForm.validate((valid) => {
+        if (valid) {
+          putUserData({ info: JSON.stringify(self.infoForm) }).then(response => {
+            console.log(response.data)
+            self.refreshUserdata(response.data)
+          })
+        }
+      })
+    },
     resetForm() {
       this.$refs.addForm.resetFields()
     },
@@ -143,7 +194,6 @@ export default {
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg'
       const isLt2M = file.size / 1024 / 1024 < 2
-
       if (!isJPG) {
         this.$message.error('上传头像图片只能是 JPG 格式!')
       }

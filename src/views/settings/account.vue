@@ -12,7 +12,7 @@
 
           <el-form ref="emailForm" :model="emailForm" label-width="100px" style="min-width:300px">
             <el-form-item
-              v-if=" typeof(info.email) === 'undefined' || info.email === null || !info.emailBind"
+              v-if=" typeof(userData.email) === 'undefined' || userData.email === null || !userData.emailBind"
               label="邮箱"
               prop="email"
               :rules="[
@@ -26,10 +26,10 @@
                 type="email"
                 placeholder="绑定邮箱"
               ><el-button
-                v-if="!info.bindEmail"
+                v-if="!userData.bindEmail"
                 slot="append"
                 @click="postEmail('emailForm')"
-              ><div v-if=" null === info.email">绑定</div><div v-else>重新绑定</div></el-button></el-input>
+              ><div v-if=" null === userData.email">绑定</div><div v-else>重新绑定</div></el-button></el-input>
 
             </el-form-item>
 
@@ -38,7 +38,7 @@
               v-model="emailForm.email"
               label="邮箱"
               prop="email"
-            ><el-tag> {{ info.email }}</el-tag>
+            ><el-tag> {{ userData.email }}</el-tag>
 
             </el-form-item>
           </el-form>
@@ -114,7 +114,7 @@ export default {
   name: 'Account',
   computed: {
     ...mapGetters([
-      'info'
+      'userData'
     ])
   },
   data() {
@@ -178,8 +178,8 @@ export default {
       }
     }
   },
-  created() {
-    this.emailForm.email = this.info.email
+  mounted() {
+    this.emailForm.email = this.userData.email
   },
   methods: {
     resetForm(formName) {
