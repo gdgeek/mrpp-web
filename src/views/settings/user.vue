@@ -20,17 +20,27 @@
                 placeholder="昵称"
                 autocomplete="off"
               >
-                <el-button slot="append">确定</el-button>
+                <el-button slot="suffix" style="margin-right:-5px">确定</el-button>
               </el-input>
             </el-form-item>
             <el-form-item label="头像">
-              <img class="user-icon" href="" style="float: left">
+              <el-upload
+                class="avatar-uploader"
+                action="https://jsonplaceholder.typicode.com/posts/"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload"
+                style="float: left"
+              >
+                <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                <i v-else class="el-icon-plus avatar-uploader-icon" />
+              </el-upload>
               <div style="float: left">
                 <el-button type="primary">
                   <i class="el-icon-upload el-icon--right" />
                   上传
                 </el-button>
-                <p class="user-explain">最大尺寸 1 MB。JPG、GIF 或 PNG。</p>
+                <p class="user-explain">最大尺寸 1 MB。JPG、GIF、PNG。</p>
               </div>
             </el-form-item>
           </el-form>
@@ -78,7 +88,6 @@
               <el-button
                 type="primary"
                 style="width: 150px"
-                @click="dialogFormVisible = false"
               >
                 保存
               </el-button>
@@ -97,7 +106,7 @@ export default {
   name: 'User',
   data: function() {
     return {
-      dialogFormVisible: false,
+      imageUrl: '',
       form: {
         username: ''
       },
@@ -127,6 +136,21 @@ export default {
   methods: {
     resetForm() {
       this.$refs.addForm.resetFields()
+    },
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw)
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+      }
+      return isJPG && isLt2M
     }
   }
 }
@@ -143,20 +167,47 @@ export default {
   margin-left: 1%;
   color: #4d4f52;
 }
-.user-icon {
-  display: block;
-  margin-right: 12px;
-  width: 130px;
-  height: 130px;
-  background: url(logo.jpg) no-repeat;
-  background-size: 100%;
-  border-radius: 5%;
+.font-color{
+  font-weight:500;
 }
 .user-explain {
   font-size: 12px;
   line-height: 20px;
 }
-.font-color{
-  font-weight:500;
+
+.avatar-uploader {
+  margin: 0 12px 12px 0;
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
+.avatar-uploader:hover {
+  border-color: #409EFF;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 132px;
+  height: 132px;
+  line-height: 132px;
+  text-align: center;
+}
+.avatar {
+  width: 132px;
+  height: 132px;
+  display: block;
+
+}
+// .user-icon {
+//   display: block;
+//   margin-right: 12px;
+//   width: 130px;
+//   height: 130px;
+//   background: url(logo.jpg) no-repeat;
+//   background-size: 100%;
+//   border-radius: 5%;
+// }
+
 </style>
