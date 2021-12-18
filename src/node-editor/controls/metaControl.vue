@@ -1,35 +1,47 @@
 <template>
   <div>
-
-    <el-button size="mini" round @click="editMeta(1)">编辑{{ data.key }}</el-button>
-    <!-- <input type="number" :readonly="readonly" :value="value" @input="change($event)" @dblclick.stop="" @pointerdown.stop="" @pointermove.stop=""> -->
+    <el-form ref="value" :model="value" size="mini" label-width="40px">
+      <el-form-item class="el-form-item" label="名称">
+        <el-input v-model="value.name" :readonly="data.readonly" />
+      </el-form-item>
+      <el-form-item class="el-form-item" hidden label="id">
+        <el-input v-model.number="value.id" />
+      </el-form-item>
+      <el-form-item>
+        <el-button @click="editor(value.id)">编辑</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 
 </template>
 
 <script>
 export default {
-  props: ['data', 'readonly', 'emitter', 'ikey', 'getData', 'putData'],
+  props: ['data', 'root', 'emitter', 'getData', 'putData'],
 
   data() {
     return {
-      value: 0
+      value: {
+        name: '名称',
+        id: 0
+      }
     }
   },
   mounted() {
-    this.value = this.getData(this.ikey)
+    this.value = this.getData(this.data.key)
   },
 
   methods: {
-    editMeta(id) {
-      this.$router.push({ path: '/meta/node', query: { id }})
+    editor(id) {
+      this.root.$router.push({ path: '/verse/meta/editor', query: { id }})
+      // alert(this.root)
     },
     change(e) {
       this.value = +e.target.value
       this.update()
     },
     update() {
-      if (this.ikey) { this.putData(this.ikey, this.value) }
+      if (this.data) { this.putData(this.data.key, this.value) }
       this.emitter.trigger('process')
     }
   }
@@ -37,5 +49,8 @@ export default {
 </script>
 
 <style>
+.el-form-item{
+    margin-top:-10px;
+}
 </style>
 

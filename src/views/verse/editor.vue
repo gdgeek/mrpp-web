@@ -11,7 +11,7 @@
               <el-button type="primary" size="mini" @click="save()"><font-awesome-icon icon="save" />  保存 </el-button>
             </el-button-group>
           </div>
-          <Rete ref="rete" class="rete" />
+          <rete-verse ref="rete" class="rete" :verse-id="id" />
         </el-card>
       </el-main>
     </el-container>
@@ -20,13 +20,13 @@
 </template>
 
 <script>
-import Rete from '../../components/Rete.vue'
+import ReteVerse from '@/components/Rete/ReteVerse.vue'
 
 import { getVerse } from '@/api/v1/verse'
 export default {
-  name: 'App',
+  name: 'VerseEditor',
   components: {
-    Rete
+    ReteVerse
   },
   data() {
     return {
@@ -41,25 +41,24 @@ export default {
   created() {
     const self = this
     getVerse(this.id).then(response => {
-      console.log('==================')
-      console.log(response)
       self.data = response.data
-      if (self.data.retes != null && self.data.retes.length > 0) {
-        self.load(response.data.retes[0].data)
+      if (self.data.verseRetes != null && self.data.verseRetes.length > 0) {
+        self.load(response.data.verseRetes[0].data)
       } else {
-        self.data.retes = [self.createRete()]
+        self.data.verseRetes = [self.createRete(self.data.id)]
       }
     })
   },
   methods: {
-    createRete() {
-
+    createRete(verseId) {
+      this.$refs.rete.createRete(verseId)// $emit('load', data)
     },
     load(data) {
       this.$refs.rete.load(data)// $emit('load', data)
     },
     save() {
-      this.$refs.rete.save(self.id)// .$emit('save', self.id)
+      const self = this
+      this.$refs.rete.save(self.data.verseRetes[0].id, self.id)// .$emit('save', self.id)
     },
     arrange() {
       this.$refs.rete.arrange()// .$emit('arrange')

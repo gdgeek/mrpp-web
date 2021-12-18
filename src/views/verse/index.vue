@@ -46,7 +46,7 @@
                 />
               </el-table>
 
-              <router-link slot="enter" :to="'/verse/edit?id='+item.id">
+              <router-link slot="enter" :to="'/verse/editor?id='+item.id">
                 <el-button type="primary" size="mini">编辑</el-button>
               </router-link>
             </mr-p-p-card>
@@ -137,7 +137,7 @@ export default {
       const data = { name: form.name, info: JSON.stringify(json) }
       postVerse(data).then((response) => {
         console.log(response.data.id)
-        self.$router.push({ path: '/verse/edit', query: { id: response.data.id }})
+        self.$router.push({ path: '/verse/editor', query: { id: response.data.id }})
       })
     },
     handleCurrentChange: function(page) {

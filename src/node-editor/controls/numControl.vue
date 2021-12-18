@@ -1,10 +1,10 @@
 <template>
-  <input type="number" :readonly="readonly" :value="value" @input="change($event)" @dblclick.stop="" @pointerdown.stop="" @pointermove.stop="">
+  <input type="number" :readonly="data.readonly" :value="value" @input="change($event)" @dblclick.stop="" @pointerdown.stop="" @pointermove.stop="">
 </template>
 
 <script>
 export default {
-  props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
+  props: ['data', 'emitter', 'root', 'getData', 'putData'],
 
   data() {
     return {
@@ -12,7 +12,7 @@ export default {
     }
   },
   mounted() {
-    this.value = this.getData(this.ikey)
+    this.value = this.getData(this.data.key)
   },
 
   methods: {
@@ -21,7 +21,7 @@ export default {
       this.update()
     },
     update() {
-      if (this.ikey) { this.putData(this.ikey, this.value) }
+      if (this.data) { this.putData(this.data.key, this.value) }
       this.emitter.trigger('process')
     }
   }

@@ -3,9 +3,15 @@
 </template>
 
 <script>
-import { init, toJson, fromJson, arrange } from '@/node-editor'
-import { postVerseRete } from '@/api/v1/verseRete'
+import { initVerse, toJson, fromJson, arrange } from '@/node-editor/verse'
+import { postVerseRete, putVerseRete } from '@/api/v1/verseRete'
 export default {
+  props: {
+    verseId: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       visible: true
@@ -13,20 +19,32 @@ export default {
   },
   mounted() {
     const self = this
-    init(self.$refs.rete)
+    initVerse(self.$refs.rete, self.verseId, self)
   },
   methods: {
+    createRete() {
+      const self = this
+      const json = toJson()
+      postVerseRete({
+        verse_id: self.verseId,
+        data: JSON.stringify(json)
+      }).then(response => {
+        console.log(response)
+      })
+    },
     arrange() {
       arrange()
     },
     load(data) {
       fromJson(JSON.parse(data))
     },
-    save(verseId) {
+    save(id) {
+      const self = this
       const json = toJson()
 
-      postVerseRete({
-        verse_id: verseId,
+      putVerseRete(id, {
+        id,
+        verse_id: self.verseId,
         data: JSON.stringify(json)
       }).then(response => {
         console.log(response)

@@ -36,11 +36,8 @@
                 <i v-else class="el-icon-plus avatar-uploader-icon" />
               </el-upload>
               <div style="float: left">
-                <el-button type="primary">
-                  <i class="el-icon-upload el-icon--right" />
-                  上传
-                </el-button>
-                <p class="user-explain">最大尺寸 1 MB。JPG、GIF、PNG。</p>
+
+                <p class="user-explain">最大尺寸 2 MB。JPG、GIF、PNG。</p>
               </div>
             </el-form-item>
           </el-form>

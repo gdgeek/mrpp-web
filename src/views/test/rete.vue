@@ -1,14 +1,14 @@
 <template>
   <div id="app">
-    <Rete />
+    <rete />
   </div>
 </template>
 
 <script>
-import Rete from '../../components/Rete.vue'
+import Rete from '@/components/Rete/ReteVerse.vue'
 
 export default {
-  name: 'App',
+  name: 'ReteTest',
   components: {
     Rete
   }

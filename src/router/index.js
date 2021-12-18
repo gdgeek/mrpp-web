@@ -171,10 +171,16 @@ export const constantRoutes = [
       },
 
       {
-        path: 'edit',
-        name: 'Edit',
-        meta: { title: '编辑' },
-        component: () => import('@/views/verse/edit')
+        path: 'editor',
+        name: 'Editor',
+        meta: { title: '宇宙编辑' },
+        component: () => import('@/views/verse/editor')
+      },
+      {
+        path: 'meta/editor',
+        name: 'MetaEditor',
+        meta: { title: '单元编辑' },
+        component: () => import('@/views/verse/meta/editor')
       }
     ]
   },

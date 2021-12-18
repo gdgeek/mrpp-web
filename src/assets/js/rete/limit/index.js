@@ -4,14 +4,9 @@
  * Released under the MIT license.
  */
 
-Object.defineProperty(exports, '__esModule', { value: true })
-
 
 function install(editor, options) {
-  console.log(options)
-  
-  _editor = editor
-
+ 
   editor.on('noderemove', component => {
 
     let limit = null
@@ -69,10 +64,8 @@ function install(editor, options) {
   })
   
 }
-var index = {
-  name: 'rete-locked',
+export default  {
+  name: 'rete-limit',
   install: install
 }
 
-exports.default = index
-//# sourceMappingURL=vue-render-plugin.common.js.map

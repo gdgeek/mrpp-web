@@ -9,7 +9,7 @@ export function postVerse(data) {
 
 export function getVerse(id) {
   return request({
-    url: 'v1/verses/' + id + '?expand=retes',
+    url: 'v1/verses/' + id + '?expand=metas,verseRetes',
     method: 'get'
   })
 }
