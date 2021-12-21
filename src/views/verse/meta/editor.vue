@@ -24,6 +24,7 @@ import ReteMeta from '@/components/Rete/ReteMeta.vue'
 
 import { mapState, mapMutations } from 'vuex'
 import { getMeta } from '@/api/v1/meta'
+import { getPolygen, getPicture, getVideo } from '@/api/resources'
 export default {
   name: 'MetaEditor',
   components: {
@@ -44,6 +45,18 @@ export default {
   },
   created() {
     const self = this
+    getPolygen().then(response => {
+      console.log(response.data)
+      // self.putPolygen(response.data)
+    })
+    getPicture().then(response => {
+      // self.putPolygen(response.data)
+      console.log(response.data)
+    })
+    getVideo().then(response => {
+      console.log(response.data)
+      // self.putPolygen(response.data)
+    })
     getMeta(this.id).then(response => {
       self.meta = response.data
       self.putMetaName(response.data.name)
@@ -56,7 +69,8 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'putMetaName'
+      'putMetaName',
+      'putPolygens'
     ]),
     createRete(verseId) {
       this.$refs.rete.createRete(verseId)// $emit('load', data)

@@ -12,7 +12,7 @@ var PolygenType = {
     {
       type: 'transform',
       key: 'transfrom',
-      readonly: true
+      readonly: false
     },
     {
       type: 'bool',
