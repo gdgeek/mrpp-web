@@ -6,6 +6,8 @@ import StringControl from './stringControl.vue'
 import MetaNameControl from './metaNameControl.vue'
 import BoolControl from './boolControl.vue'
 import PolygenControl from './polygenControl.vue'
+import VideoControl from './videoControl.vue'
+import PictureControl from './pictureControl.vue'
 
 export class Control extends Rete.Control {
   constructor(emitter, data, root) {
@@ -31,6 +33,12 @@ export class Control extends Rete.Control {
         break
       case 'polygen':
         this.component = PolygenControl
+        break
+      case 'video':
+        this.component = VideoControl
+        break
+      case 'picture':
+        this.component = PictureControl
         break
       default:
         this.component = VueNumControl

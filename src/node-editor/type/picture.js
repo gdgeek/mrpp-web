@@ -1,7 +1,7 @@
 import { EntitySocket, ComponentSocket } from '@/node-editor/sockets/sockets'
 
-var PolygenType = {
-  title: 'Polygen',
+var PictureType = {
+  title: 'Picture',
   controls: [
     {
       type: 'string',
@@ -21,9 +21,10 @@ var PolygenType = {
       readonly: false
     },
     {
-      type: 'polygen',
-      key: 'polygen',
-      readonly: true
+      type: 'picture',
+      key: 'picture',
+      title: '图片',
+      readonly: false
     }
   ],
   inputs: [
@@ -49,4 +50,4 @@ var PolygenType = {
     }
   ]
 }
-export default PolygenType
+export default PictureType

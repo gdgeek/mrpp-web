@@ -1,7 +1,7 @@
 <template>
 
   <el-form size="mini" :inline="true">
-    <el-form-item class="tranform-item" :label="data.title">
+    <el-form-item :inline="true" class="tranform-item" :label="data.title">
       <el-checkbox v-model="value" size="mini" label="是否打开" border />
     </el-form-item>
   </el-form>

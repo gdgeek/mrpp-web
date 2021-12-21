@@ -35,7 +35,6 @@ export default {
   },
   mounted() {
     const value = this.getData(this.data.key)
-
     if (typeof value !== 'undefined') {
       this.value = value
     }

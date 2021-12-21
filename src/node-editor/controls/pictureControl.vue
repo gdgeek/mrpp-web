@@ -36,12 +36,12 @@ export default {
     }
   },
   watch: {
-    'root.$store.state.resource.polygenList': function() {
-      this.setList(this.root.$store.state.resource.polygenList)
+    'root.$store.state.resource.pictureList': function() {
+      this.setList(this.root.$store.state.resource.pictureList)
     }
   },
   mounted() {
-    this.setList(this.root.$store.state.resource.polygenList)
+    this.setList(this.root.$store.state.resource.pictureList)
     const value = this.getData(this.data.key)
     if (typeof value !== 'undefined') {
       this.value = value

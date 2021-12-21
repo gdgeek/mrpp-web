@@ -43,7 +43,6 @@ export default {
   mounted() {
     const value = this.getData(this.data.key)
     if (typeof value !== 'undefined') {
-      alert(value)
       this.value = value
     }
   },

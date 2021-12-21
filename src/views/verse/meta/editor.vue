@@ -37,7 +37,10 @@ export default {
   },
   computed: {
     ...mapState({
-      metaName: state => state.meta.name
+      metaName: state => state.meta.name,
+      pictureList: state => state.resource.pictureList,
+      videoList: state => state.resource.videoList,
+      polygenList: state => state.resource.polygenList
     }),
     id() {
       return this.$route.query.id
@@ -47,16 +50,22 @@ export default {
     const self = this
     getPolygen().then(response => {
       console.log(response.data)
-      // self.putPolygen(response.data)
+      self.setPolygenList(response.data)
+      console.log(self.polygenList)
     })
+
     getPicture().then(response => {
-      // self.putPolygen(response.data)
       console.log(response.data)
+      self.setPictureList(response.data)
+      console.log(self.pictureList)
     })
+
     getVideo().then(response => {
       console.log(response.data)
-      // self.putPolygen(response.data)
+      self.setVideoList(response.data)
+      console.log(self.videoList)
     })
+
     getMeta(this.id).then(response => {
       self.meta = response.data
       self.putMetaName(response.data.name)
@@ -70,7 +79,10 @@ export default {
   methods: {
     ...mapMutations([
       'putMetaName',
-      'putPolygens'
+      'setPolygenList',
+      'setPictureList',
+      'setVideoList'
+
     ]),
     createRete(verseId) {
       this.$refs.rete.createRete(verseId)// $emit('load', data)
