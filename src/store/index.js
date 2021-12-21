@@ -6,6 +6,14 @@ import modules from './modules'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
+  state: {
+    nickname: ''
+  },
+  mutations: {
+    setNickname(state, val) {
+      state.nickname = val
+    }
+  },
   modules,
   getters
 })

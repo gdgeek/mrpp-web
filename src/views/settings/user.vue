@@ -172,6 +172,7 @@ export default {
     },
     refreshUserdata(data) {
       console.log(data.data)
+      this.$store.commit('setNickname', this.nicknameForm.nickname)
       // this.$store.commit('SET_DATA', data.data)
     },
     saveInfo() {
