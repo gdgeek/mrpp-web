@@ -6,6 +6,12 @@
 import { initMeta, fromJson, arrange } from '@/node-editor/meta'
 // import { postMetaRete, putMetaRete } from '@/api/v1/metaRete'
 export default {
+  props: {
+    metaId: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       visible: true
@@ -13,7 +19,7 @@ export default {
   },
   mounted() {
     const self = this
-    initMeta(self.$refs.rete, self)
+    initMeta(self.$refs.rete, self.metaId, self)
   },
   methods: {
     createRete() {

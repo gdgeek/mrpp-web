@@ -1,6 +1,11 @@
 import Rete from 'rete'
 import VueNumControl from './numControl.vue'
 import MetaControl from './metaControl.vue'
+import TransformControl from './transformControl.vue'
+import StringControl from './stringControl.vue'
+import MetaNameControl from './metaNameControl.vue'
+import BoolControl from './boolControl.vue'
+import PolygenControl from './polygenControl.vue'
 
 export class Control extends Rete.Control {
   constructor(emitter, data, root) {
@@ -11,6 +16,21 @@ export class Control extends Rete.Control {
         break
       case 'num':
         this.component = VueNumControl
+        break
+      case 'transform':
+        this.component = TransformControl
+        break
+      case 'string':
+        this.component = StringControl
+        break
+      case 'meta-name':
+        this.component = MetaNameControl
+        break
+      case 'bool':
+        this.component = BoolControl
+        break
+      case 'polygen':
+        this.component = PolygenControl
         break
       default:
         this.component = VueNumControl

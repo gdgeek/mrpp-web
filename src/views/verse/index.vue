@@ -82,6 +82,7 @@ import MrPPCard from '@/components/MrPP/MrPPCard'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 import MrPPVerseWindow from '@/components/MrPP/MrPPVerseWindow'
 export default {
+  name: 'VerseEditor',
   components: {
     MrPPCard,
     MrPPHeader,

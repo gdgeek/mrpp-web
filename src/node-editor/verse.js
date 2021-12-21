@@ -4,15 +4,14 @@ import ConnectionPlugin from 'rete-connection-plugin'
 import AreaPlugin from 'rete-area-plugin'
 import AutoArrangePlugin from 'rete-auto-arrange-plugin'
 import ContextMenuPlugin from 'rete-context-menu-plugin'
-import LimitPlugin from '@/assets/js/rete/limit'
-import MetaPlugin from '@/assets/js/rete/meta'
+import LimitPlugin from '@/node-editor/plugins/limit'
+import MetaPlugin from '@/node-editor/plugins/meta'
 import { Component } from './components/Component'
 
-import { Meta, Verse } from './type'
+import { Meta, Verse } from './type/verseEditor'
 let editor_ = null
 let engine_ = null
 export const arrange = function() {
-  // editor_.arrange(node, editor_.nodes)
   editor_.trigger('arrange', editor_.nodes)
 }
 export const toJson = function() {
@@ -32,7 +31,6 @@ export const initVerse = async function(container, verseId, root) {
   editor_.use(AreaPlugin)
   editor_.use(LimitPlugin, [{ name: 'Verse', max: 1, min: 1 }])
   editor_.use(MetaPlugin, { verseId })
-  // setInterval(() => { alert(editor_.silent) }, 1000)
   engine_ = new Rete.Engine('MrPP@0.1.0')
   types.forEach(type => {
     editor_.register(new Component(type, root))

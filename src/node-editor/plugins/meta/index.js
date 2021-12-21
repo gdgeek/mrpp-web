@@ -4,43 +4,39 @@
  * Released under the MIT license.
  */
 import { postMeta, deleteMeta } from '@/api/v1/meta'
-var randomWords = require('random-words');
+var randomWords = require('random-words')
 function install(editor, options) {
-
   editor.on('noderemove', component => {
-
     if (component.name !== 'Meta' || editor.silent) {
       return true
     }
-    const data = component.data['meta'];
-    if (data !== null && data.id !== -1){
-        deleteMeta(data.id).then(()=>{
-          console.log('delete ok')
-        })
-    } else{
-      return false;
+    const data = component.data['meta']
+    if (data !== null && data.id !== -1) {
+      deleteMeta(data.id).then(() => {
+        console.log('delete ok')
+      })
+    } else {
+      return false
     }
     return true
   })
 
   editor.on('nodecreate', component => {
-
     const meta = component.controls.get('meta')
     if (component.name !== 'Meta' || editor.silent) {
       return true
     }
-   
     component.data['meta'] = { name: '初始化...', id: -1 }
     postMeta({
       verse_id: options.verseId,
       name: randomWords()
-    }).then(response =>{
-      if(meta !== null){
-        const data = response.data;
-        meta.setValue({name:data.name, id:data.id})
+    }).then(response => {
+      if (meta !== null) {
+        const data = response.data
+        meta.setValue({ name: data.name, id: data.id })
       }
     })
-    
+
     return true
   })
 }

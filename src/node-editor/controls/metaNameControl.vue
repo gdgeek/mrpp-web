@@ -1,7 +1,7 @@
 <template>
   <el-form :inline="true" size="mini">
     <el-form-item class="el-form-item" :inline="true" :label="data.title">
-      <el-input v-model="value" :readonly="readonly" />
+      <el-input v-model="metaName" :readonly="true" />
     </el-form-item>
   </el-form>
 </template>
@@ -10,39 +10,31 @@
 export default {
   props: ['data', 'root', 'emitter', 'getData', 'putData'],
 
-  data() {
-    return {
-      value_: ''
-    }
-  },
   computed: {
-    readonly() {
-      if (typeof this.value.readonly !== 'undefined') {
-        return this.value.readonly
-      }
-      return this.data.readonly
-    },
-    value: {
+
+    metaName: {
       get() {
-        return this.value_
+        return this.root.$store.state.meta.name
       },
       set(value) {
-        this.value_ = value
+        this.root.$store.commit('putMetaName', value)
         this.refresh()
       }
     }
-
   },
   mounted() {
     const value = this.getData(this.data.key)
-
     if (typeof value !== 'undefined') {
       this.value = value
     }
+    this.refresh()
   },
+
   methods: {
     refresh() {
-      if (this.data) { this.putData(this.data.key, this.value) }
+      if (this.data) {
+        this.putData(this.data.key, this.value)
+      }
       this.emitter.trigger('process')
     }
   }

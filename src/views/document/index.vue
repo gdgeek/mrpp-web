@@ -33,7 +33,7 @@ export default {
   },
   computed: {
     ...mapState({
-      document: state => state.api.document
+      document: state => state.document.index
     })
   },
   created: function() {

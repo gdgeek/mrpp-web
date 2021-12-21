@@ -4,14 +4,14 @@
 
       <el-main>
         <el-card class="box-card">
-          <div v-if="data !== null" slot="header" class="clearfix">
-            元数据名称：{{ data.name }}
+          <div v-if="meta !== null" slot="header" class="clearfix">
+            元数据名称：{{ metaName }}
             <el-button-group style="float: right">
               <el-button type="primary" size="mini" @click="arrange()"><font-awesome-icon icon="project-diagram" />  整理 </el-button>
               <el-button type="primary" size="mini" @click="save()"><font-awesome-icon icon="save" />  保存 </el-button>
             </el-button-group>
           </div>
-          <rete-meta ref="rete" class="rete" :verse-id="id" />
+          <rete-meta ref="rete" class="rete" :meta-id="id" />
         </el-card>
       </el-main>
     </el-container>
@@ -22,6 +22,7 @@
 <script>
 import ReteMeta from '@/components/Rete/ReteMeta.vue'
 
+import { mapState, mapMutations } from 'vuex'
 import { getMeta } from '@/api/v1/meta'
 export default {
   name: 'MetaEditor',
@@ -30,10 +31,13 @@ export default {
   },
   data() {
     return {
-      data: null
+      meta: null
     }
   },
   computed: {
+    ...mapState({
+      metaName: state => state.meta.name
+    }),
     id() {
       return this.$route.query.id
     }
@@ -41,8 +45,9 @@ export default {
   created() {
     const self = this
     getMeta(this.id).then(response => {
-      self.data = response.data
-      if (self.data.metaRetes != null && self.data.metaRetes.length > 0) {
+      self.meta = response.data
+      self.putMetaName(response.data.name)
+      if (self.meta.metaRetes != null && self.meta.metaRetes.length > 0) {
         // self.load(response.data.verseRetes[0].data)
       } else {
         // self.data.verseRetes = [self.createRete(self.data.id)]
@@ -50,6 +55,9 @@ export default {
     })
   },
   methods: {
+    ...mapMutations([
+      'putMetaName'
+    ]),
     createRete(verseId) {
       this.$refs.rete.createRete(verseId)// $emit('load', data)
     },
