@@ -9,7 +9,8 @@
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <div class="right-menu-item">
-            {{ userData.nickname }}
+            {{ $store.state.nickname }}
+            <!-- {{ userData.nickname }} -->
           </div>
           <el-avatar :src="userData.avatar" shape="square">
             <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png">
