@@ -30,7 +30,12 @@ export default {
     }
   },
   mounted() {
-    this.value = this.getData(this.data.key)
+    const value = this.getData(this.data.key)
+    if (typeof value !== 'undefined') {
+      this.value = value
+    } else if (typeof this.data.default !== 'undefined') {
+      this.value = this.data.default
+    }
   },
 
   methods: {

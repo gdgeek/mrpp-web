@@ -2,6 +2,7 @@ import { EntitySocket, ComponentSocket } from '@/node-editor/sockets/sockets'
 
 var PolygenType = {
   title: 'Polygen',
+  allocate: ['实体'],
   controls: [
     {
       type: 'string',

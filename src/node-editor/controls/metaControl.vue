@@ -28,18 +28,20 @@ export default {
     }
   },
   mounted() {
-    this.value = this.getData(this.data.key)
+    const value = this.getData(this.data.key)
+    if (typeof value !== 'undefined') {
+      this.value = value
+    } else if (typeof this.data.default !== 'undefined') {
+      this.value = this.data.default
+    }
+    this.refresh()
   },
 
   methods: {
     editor(id) {
       this.root.$router.push({ path: '/verse/meta/editor', query: { id }})
-      // alert(this.root)
     },
-    change(e) {
-      this.value = +e.target.value
-      this.update()
-    },
+
     update() {
       if (this.data) { this.putData(this.data.key, this.value) }
       this.emitter.trigger('process')

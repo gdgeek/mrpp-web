@@ -2,6 +2,7 @@ import { EntitySocket, ComponentSocket } from '@/node-editor/sockets/sockets'
 
 var EntityType = {
   title: 'Entity',
+  allocate: ['实体'],
   controls: [
     {
       type: 'string',

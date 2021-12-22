@@ -8,6 +8,7 @@ import BoolControl from './boolControl.vue'
 import PolygenControl from './polygenControl.vue'
 import VideoControl from './videoControl.vue'
 import PictureControl from './pictureControl.vue'
+import Vector3Control from './vector3Control.vue'
 
 export class Control extends Rete.Control {
   constructor(emitter, data, root) {
@@ -39,6 +40,9 @@ export class Control extends Rete.Control {
         break
       case 'picture':
         this.component = PictureControl
+        break
+      case 'vector3':
+        this.component = Vector3Control
         break
       default:
         this.component = VueNumControl

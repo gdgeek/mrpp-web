@@ -36,19 +36,16 @@ export default {
     }
   },
   watch: {
-    'root.$store.state.resource.polygenList': function() {
-      this.setList(this.root.$store.state.resource.polygenList)
+    'root.$store.state.resource.videoList': function() {
+      this.setList(this.root.$store.state.resource.videoList)
     }
   },
   mounted() {
-    this.setList(this.root.$store.state.resource.polygenList)
+    this.setList(this.root.$store.state.resource.videoList)
     const value = this.getData(this.data.key)
     if (typeof value !== 'undefined') {
       this.value = value
-    } else if (typeof this.data.default !== 'undefined') {
-      this.value = this.data.default
     }
-    this.refresh()
   },
   methods: {
     setList(list) {

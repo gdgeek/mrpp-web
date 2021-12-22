@@ -9,7 +9,16 @@ import RandomStringPlugin from '@/node-editor/plugins/randomString'
 
 import { Component } from './components/Component'
 
-import { MetaRoot, Polygen, Picture, Video, Entity } from './type/metaEditor'
+import {
+  MetaRoot,
+  Polygen,
+  Picture,
+  Video,
+  Entity,
+  Transparent,
+  Rotate,
+  LockedScale
+} from './type/metaEditor'
 let editor_ = null
 let engine_ = null
 export const arrange = function() {
@@ -21,13 +30,35 @@ export const toJson = function() {
 }
 
 export const initMeta = async function(container, metaId, root) {
-  const types = [MetaRoot, Entity, Polygen, Picture, Video]
+  const types = [
+    MetaRoot,
+    Entity,
+    Polygen,
+    Picture,
+    Video,
+    Transparent,
+    Rotate,
+    LockedScale
+  ]
   editor_ = new Rete.NodeEditor('MrPP@0.1.0', container)
   editor_.silent = true
   // alert(editor_.silent)
   editor_.use(ConnectionPlugin)
   editor_.use(VueRenderPlugin)
-  editor_.use(ContextMenuPlugin)
+  editor_.use(ContextMenuPlugin, {
+    delay: 100,
+    allocate(component) {
+      if (typeof component.type_.allocate !== 'undefined') {
+        return component.type_.allocate
+      }
+
+      return []
+    },
+    rename(component) {
+      console.log(component)
+      return component.name
+    }
+  })
   editor_.use(AutoArrangePlugin, { margin: { x: 50, y: 50 }, depth: 110 })
   editor_.use(AreaPlugin)
   editor_.use(LimitPlugin, [{ name: 'MetaRoot', max: 1, min: 1 }])

@@ -1,7 +1,7 @@
 <template>
   <el-form :inline="true" size="mini">
     <el-form-item class="el-form-item" :inline="true" :label="data.title">
-      <el-input v-model="value" :readonly="readonly" />
+      <el-input v-model="value" :readonly="data.readonly" />
     </el-form-item>
   </el-form>
 </template>
@@ -16,12 +16,6 @@ export default {
     }
   },
   computed: {
-    readonly() {
-      if (typeof this.value.readonly !== 'undefined') {
-        return this.value.readonly
-      }
-      return this.data.readonly
-    },
     value: {
       get() {
         return this.value_
@@ -37,7 +31,10 @@ export default {
     const value = this.getData(this.data.key)
     if (typeof value !== 'undefined') {
       this.value = value
+    } else if (typeof this.data.default !== 'undefined') {
+      this.value = this.data.default
     }
+    this.refresh()
   },
   methods: {
     refresh() {

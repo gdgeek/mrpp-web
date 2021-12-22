@@ -2,6 +2,7 @@ import { EntitySocket, ComponentSocket } from '@/node-editor/sockets/sockets'
 
 var VideoType = {
   title: 'Video',
+  allocate: ['实体'],
   controls: [
     {
       type: 'string',
@@ -25,6 +26,33 @@ var VideoType = {
       key: 'video',
       title: '视频',
       readonly: false
+    },
+    {
+      type: 'number',
+      key: 'width',
+      title: '宽度',
+      readonly: false
+    },
+    {
+      type: 'bool',
+      key: 'loop',
+      title: '循环',
+      readonly: false,
+      default: false
+    },
+    {
+      type: 'bool',
+      key: 'play',
+      title: '播放',
+      readonly: false,
+      default: true
+    },
+    {
+      type: 'bool',
+      key: 'console',
+      title: '控制',
+      readonly: false,
+      default: true
     }
   ],
   inputs: [

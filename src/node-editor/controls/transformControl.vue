@@ -2,22 +2,22 @@
   <div>
     <el-form size="mini" :inline="true">
       <el-form-item class="tranform-item" label="位置">
-        <input v-model.number="value.transform.position.x" step="0.01" :readonly="data.readonly" type="number" class="input-left" style="width:45px;display:inline;" placeholder="x" @input="change($event)">
-        <input v-model.number="value.transform.position.y" step="0.01" :readonly="data.readonly" type="number" class="input-min" style="width:45px;display:inline;" placeholder="y" @input="change($event)">
-        <input v-model.number="value.transform.position.z" step="0.01" :readonly="data.readonly" type="number" class="input-right" style="width:45px;display:inline;" placeholder="z" @input="change($event)">
+        <input v-model.number="position_x" step="0.01" :readonly="data.readonly" type="number" class="input-left" style="width:45px;display:inline;" placeholder="x">
+        <input v-model.number="position_y" step="0.01" :readonly="data.readonly" type="number" class="input-min" style="width:45px;display:inline;" placeholder="y">
+        <input v-model.number="position_z" step="0.01" :readonly="data.readonly" type="number" class="input-right" style="width:45px;display:inline;" placeholder="z">
       </el-form-item>
       <br>
       <el-form-item class="tranform-item" label="旋转">
-        <input v-model.number="value.transform.rotate.x" step="0.01" :readonly="data.readonly" type="number" class="input-left" style="width:45px;display:inline;" placeholder="x" @input="change($event)">
-        <input v-model.number="value.transform.rotate.y" step="0.01" :readonly="data.readonly" type="number" class="input-min" style="width:45px;display:inline;" placeholder="y" @input="change($event)">
-        <input v-model.number="value.transform.rotate.z" step="0.01" :readonly="data.readonly" type="number" class="input-right" style="width:45px;display:inline;" placeholder="z" @input="change($event)">
+        <input v-model.number="rotate_x" step="0.01" :readonly="data.readonly" type="number" class="input-left" style="width:45px;display:inline;" placeholder="x">
+        <input v-model.number="rotate_y" step="0.01" :readonly="data.readonly" type="number" class="input-min" style="width:45px;display:inline;" placeholder="y">
+        <input v-model.number="rotate_z" step="0.01" :readonly="data.readonly" type="number" class="input-right" style="width:45px;display:inline;" placeholder="z">
       </el-form-item>
 
       <br>
       <el-form-item class="tranform-item" label="缩放">
-        <input v-model.number="value.transform.scale.x" step="0.01" :readonly="data.readonly" type="number" class="input-left" style="width:45px;display:inline;" placeholder="x" @input="change($event)">
-        <input v-model.number="value.transform.scale.y" step="0.01" :readonly="data.readonly" type="number" class="input-min" style="width:45px;display:inline;" placeholder="y" @input="change($event)">
-        <input v-model.number="value.transform.scale.z" step="0.01" :readonly="data.readonly" type="number" class="input-right" style="width:45px;display:inline;" placeholder="z" @input="change($event)">
+        <input v-model.number="scale_x" step="0.01" :readonly="data.readonly" type="number" class="input-left" style="width:45px;display:inline;" placeholder="x">
+        <input v-model.number="scale_y" step="0.01" :readonly="data.readonly" type="number" class="input-min" style="width:45px;display:inline;" placeholder="y">
+        <input v-model.number="scale_z" step="0.01" :readonly="data.readonly" type="number" class="input-right" style="width:45px;display:inline;" placeholder="z">
       </el-form-item>
     </el-form>
   </div>
@@ -30,34 +30,112 @@ export default {
   data() {
     return {
 
-      value: {
-        transform: {
-          position: { x: 0, y: 0, z: 0 },
-          rotate: { x: 0, y: 0, z: 0 },
-          scale: { x: 1, y: 1, z: 1 }
-        }
+      value_: {
+        position: { x: 0, y: 0, z: 0 },
+        rotate: { x: 0, y: 0, z: 0 },
+        scale: { x: 1, y: 1, z: 1 }
       }
 
     }
+  },
+  computed: {
+    position_x: {
+      get() {
+        return this.value_.position.x
+      },
+      set(value) {
+        this.value_.position.x = value
+        console.log(this.value_)
+      }
+    },
+    position_y: {
+      get() {
+        return this.value_.position.y
+      },
+      set(value) {
+        this.value_.position.y = value
+        console.log(this.value_)
+      }
+    },
+    position_z: {
+      get() {
+        return this.value_.position.z
+      },
+      set(value) {
+        this.value_.position.z = value
+        console.log(this.value_)
+      }
+    },
+    rotate_x: {
+      get() {
+        return this.value_.rotate.x
+      },
+      set(value) {
+        this.value_.rotate.x = value
+        console.log(this.value_)
+      }
+    },
+    rotate_y: {
+      get() {
+        return this.value_.rotate.y
+      },
+      set(value) {
+        this.value_.rotate.y = value
+        console.log(this.value_)
+      }
+    },
+    rotate_z: {
+      get() {
+        return this.value_.rotate.z
+      },
+      set(value) {
+        this.value_.rotate.z = value
+        console.log(this.value_)
+      }
+    },
+
+    scale_x: {
+      get() {
+        return this.value_.scale.x
+      },
+      set(value) {
+        this.value_.scale.x = value
+        console.log(this.value_)
+      }
+    },
+    scale_y: {
+      get() {
+        return this.value_.scale.y
+      },
+      set(value) {
+        this.value_.scale.y = value
+        console.log(this.value_)
+      }
+    },
+    scale_z: {
+      get() {
+        return this.value_.scale.z
+      },
+      set(value) {
+        this.value_.scale.z = value
+        console.log(this.value_)
+      }
+    }
+
   },
   mounted() {
     const value = this.getData(this.data.key)
     if (typeof value !== 'undefined') {
       this.value = value
+    } else if (typeof this.data.default !== 'undefined') {
+      this.value = this.data.default
     }
+    this.refresh()
   },
 
   methods: {
-    editor(id) {
-      this.root.$router.push({ path: '/verse/meta/editor', query: { id }})
-    // alert(this.root)
-    },
-    change(e) {
-      //  this.value = e.target.value
-      console.log(this.value)
-      this.update()
-    },
-    update() {
+
+    refresh() {
       if (this.data) { this.putData(this.data.key, this.value) }
       this.emitter.trigger('process')
     }

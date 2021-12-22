@@ -1,8 +1,7 @@
 import { EntitySocket, ComponentSocket } from '@/node-editor/sockets/sockets'
 
-var PictureType = {
-  title: 'Picture',
-  allocate: ['实体'],
+var TextType = {
+  title: 'Text',
   controls: [
     {
       type: 'string',
@@ -22,15 +21,21 @@ var PictureType = {
       readonly: false
     },
     {
-      type: 'picture',
-      key: 'picture',
-      title: '图片',
+      type: 'string',
+      key: 'name',
+      title: '内容',
       readonly: false
     },
     {
-      type: 'number',
-      key: 'width',
-      title: '宽度',
+      type: 'num',
+      key: 'size',
+      title: '尺寸',
+      readonly: false
+    },
+    {
+      type: 'color',
+      key: 'color',
+      title: '颜色',
       readonly: false
     }
   ],
@@ -57,4 +62,4 @@ var PictureType = {
     }
   ]
 }
-export default PictureType
+export default TextType

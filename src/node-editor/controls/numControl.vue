@@ -1,5 +1,10 @@
 <template>
-  <input type="number" :readonly="data.readonly" :value="value" @input="change($event)" @dblclick.stop="" @pointerdown.stop="" @pointermove.stop="">
+  <el-form :inline="true" size="mini">
+    <el-form-item class="el-form-item" :inline="true" :label="data.title">
+      <el-input v-model="value" step="0.01" type="number" :readonly="data.readonly" />
+    </el-form-item>
+  </el-form>
+
 </template>
 
 <script>
@@ -8,19 +13,34 @@ export default {
 
   data() {
     return {
-      value: 0
+      value_: 0
     }
   },
+  computed: {
+    value: {
+      get() {
+        return this.value_
+      },
+      set(value) {
+        this.value_ = value
+        this.refresh()
+      }
+    }
+
+  },
   mounted() {
-    this.value = this.getData(this.data.key)
+    const value = this.getData(this.data.key)
+    if (typeof value !== 'undefined') {
+      this.value = value
+    } else if (typeof this.data.default !== 'undefined') {
+      this.value = this.data.default
+    }
+    this.refresh()
   },
 
   methods: {
-    change(e) {
-      this.value = +e.target.value
-      this.update()
-    },
-    update() {
+
+    refresh() {
       if (this.data) { this.putData(this.data.key, this.value) }
       this.emitter.trigger('process')
     }
