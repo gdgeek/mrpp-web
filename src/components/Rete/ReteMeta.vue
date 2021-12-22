@@ -3,8 +3,8 @@
 </template>
 
 <script>
-import { initMeta, fromJson, arrange } from '@/node-editor/meta'
-// import { postMetaRete, putMetaRete } from '@/api/v1/metaRete'
+import { initMeta, firstTime, toJson, fromJson, arrange } from '@/node-editor/meta'
+import { postMetaRete, putMetaRete } from '@/api/v1/metaRete'
 export default {
   props: {
     metaId: {
@@ -23,14 +23,15 @@ export default {
   },
   methods: {
     createRete() {
-    //  const self = this
-      // const json = toJson()
-      /* postMetaRete({
-        verse_id: self.verseId,
+      const self = this
+      firstTime()
+      const json = toJson()
+      postMetaRete({
+        meta_id: self.metaId,
         data: JSON.stringify(json)
       }).then(response => {
         console.log(response)
-      })*/
+      })
     },
     arrange() {
       arrange()
@@ -39,16 +40,16 @@ export default {
       fromJson(JSON.parse(data))
     },
     save(id) {
-      // const self = this
-      // const json = toJson()
-      /*
-      putVerseRete(id, {
+      const self = this
+      const json = toJson()
+
+      putMetaRete(id, {
         id,
-        verse_id: self.verseId,
+        meta_id: self.metaId,
         data: JSON.stringify(json)
       }).then(response => {
         console.log(response)
-      })*/
+      })/**/
     }
   }
 }

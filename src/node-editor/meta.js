@@ -32,6 +32,14 @@ export const toJson = function() {
   const json = editor_.toJSON()
   return json
 }
+export const firstTime = async function() {
+  editor_.silent = true
+  const comp = editor_.getComponent('MetaRoot')
+  const node = await comp.createNode()
+  node.position = [0, 0]
+  editor_.addNode(node)
+  arrange()
+}
 
 export const initMeta = async function(container, metaId, root) {
   const types = [
@@ -98,7 +106,5 @@ export const initMeta = async function(container, metaId, root) {
   editor_.trigger('process')
 }
 export const fromJson = function(data) {
-  // alert(data)
-  // const obj = JSON.parse(data)
   editor_.fromJSON(data)
 }

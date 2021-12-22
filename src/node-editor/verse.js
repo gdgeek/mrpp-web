@@ -18,11 +18,18 @@ export const toJson = function() {
   const json = editor_.toJSON()
   return json
 }
+export const firstTime = async function() {
+  editor_.silent = true
+  const comp = editor_.getComponent('Verse')
+  const node = await comp.createNode()
+  node.position = [0, 0]
+  editor_.addNode(node)
+  arrange()
+}
 
 export const initVerse = async function(container, verseId, root) {
   const types = [Meta, Verse]
   editor_ = new Rete.NodeEditor('MrPP@0.1.0', container)
-  editor_.silent = true
   // alert(editor_.silent)
   editor_.use(ConnectionPlugin)
   editor_.use(VueRenderPlugin)
@@ -49,7 +56,6 @@ export const initVerse = async function(container, verseId, root) {
   editor_.trigger('process')
 }
 export const fromJson = function(data) {
-  // alert(data)
-  // const obj = JSON.parse(data)
+  editor_.silent = true
   editor_.fromJSON(data)
 }

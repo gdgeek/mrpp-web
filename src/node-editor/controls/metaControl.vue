@@ -8,7 +8,7 @@
         <el-input v-model.number="value.id" />
       </el-form-item>
       <el-form-item>
-        <el-button @click="editor(value.id)">编辑</el-button>
+        <el-button :disabled="value.id === -1" @click="editor(value.id)">编辑</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -23,7 +23,7 @@ export default {
     return {
       value: {
         name: '名称',
-        id: 0
+        id: -1
       }
     }
   },

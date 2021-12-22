@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { initVerse, toJson, fromJson, arrange } from '@/node-editor/verse'
+import { initVerse, firstTime, toJson, fromJson, arrange } from '@/node-editor/verse'
 import { postVerseRete, putVerseRete } from '@/api/v1/verseRete'
 export default {
   props: {
@@ -24,6 +24,7 @@ export default {
   methods: {
     createRete() {
       const self = this
+      firstTime()
       const json = toJson()
       postVerseRete({
         verse_id: self.verseId,

@@ -22,6 +22,7 @@ var ButtonType = {
       title: '动作',
       socket: ActionSocket,
       multiConns: true
+
     }
   ],
   outputs: [

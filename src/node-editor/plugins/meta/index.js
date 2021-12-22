@@ -22,10 +22,11 @@ function install(editor, options) {
   })
 
   editor.on('nodecreate', component => {
-    const meta = component.controls.get('meta')
     if (component.name !== 'Meta' || editor.silent) {
       return true
     }
+
+    const meta = component.controls.get('meta')
     component.data['meta'] = { name: '初始化...', id: -1 }
     postMeta({
       verse_id: options.verseId,
