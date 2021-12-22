@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     id() {
-      return this.$route.query.id
+      return parseInt(this.$route.query.id)
     }
   },
   created() {

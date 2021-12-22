@@ -62,7 +62,7 @@ export default {
       })
     },
     refresh() {
-      if (this.ikey) { this.putData(this.ikey, this.value) }
+      if (this.data) { this.putData(this.data.key, this.value) }
       this.emitter.trigger('process')
     }
   }

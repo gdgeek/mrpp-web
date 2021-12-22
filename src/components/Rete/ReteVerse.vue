@@ -8,7 +8,7 @@ import { postVerseRete, putVerseRete } from '@/api/v1/verseRete'
 export default {
   props: {
     verseId: {
-      type: String,
+      type: Number,
       required: true
     }
   },

@@ -43,7 +43,7 @@ export default {
       polygenList: state => state.resource.polygenList
     }),
     id() {
-      return this.$route.query.id
+      return parseInt(this.$route.query.id)
     }
   },
   created() {
@@ -57,7 +57,6 @@ export default {
     getPicture().then(response => {
       console.log(response.data)
       self.setPictureList(response.data)
-      console.log(self.pictureList)
     })
 
     getVideo().then(response => {

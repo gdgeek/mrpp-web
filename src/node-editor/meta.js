@@ -17,7 +17,11 @@ import {
   Entity,
   Transparent,
   Rotate,
-  LockedScale
+  LockedScale,
+  ImageTarget,
+  Toolbar,
+  Button,
+  Action
 } from './type/metaEditor'
 let editor_ = null
 let engine_ = null
@@ -38,7 +42,11 @@ export const initMeta = async function(container, metaId, root) {
     Video,
     Transparent,
     Rotate,
-    LockedScale
+    LockedScale,
+    ImageTarget,
+    Toolbar,
+    Button,
+    Action
   ]
   editor_ = new Rete.NodeEditor('MrPP@0.1.0', container)
   editor_.silent = true
@@ -66,7 +74,9 @@ export const initMeta = async function(container, metaId, root) {
     { component: 'Polygen', target: 'name' },
     { component: 'Video', target: 'name' },
     { component: 'Picture', target: 'name' },
-    { component: 'Entity', target: 'name' }
+    { component: 'Entity', target: 'name' },
+    { component: 'Button', target: 'title' },
+    { component: 'Action', target: 'title' }
   ])
   // editor_.use(MetaRootPlugin, { metaId })
   // setInterval(() => { alert(editor_.silent) }, 1000)

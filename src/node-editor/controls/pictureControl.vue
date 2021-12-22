@@ -41,6 +41,7 @@ export default {
     }
   },
   mounted() {
+    this.setList(this.root.$store.state.resource.pictureList)
     const value = this.getData(this.data.key)
     if (typeof value !== 'undefined') {
       this.value = value
@@ -61,7 +62,7 @@ export default {
       })
     },
     refresh() {
-      if (this.ikey) { this.putData(this.ikey, this.value) }
+      if (this.data) { this.putData(this.data.key, this.value) }
       this.emitter.trigger('process')
     }
   }

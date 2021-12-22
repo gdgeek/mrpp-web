@@ -9,6 +9,7 @@ import PolygenControl from './polygenControl.vue'
 import VideoControl from './videoControl.vue'
 import PictureControl from './pictureControl.vue'
 import Vector3Control from './vector3Control.vue'
+import IconsControl from './iconsControl.vue'
 
 export class Control extends Rete.Control {
   constructor(emitter, data, root) {
@@ -44,6 +45,9 @@ export class Control extends Rete.Control {
       case 'vector3':
         this.component = Vector3Control
         break
+      case 'icons':
+        this.component = IconsControl
+        break
       default:
         this.component = VueNumControl
     }
@@ -57,6 +61,6 @@ export class Control extends Rete.Control {
 
   setValue(val) {
     this.vueContext.value = val
-    this.vueContext.update()
+    this.vueContext.refresh()
   }
 }

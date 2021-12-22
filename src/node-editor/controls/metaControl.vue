@@ -42,7 +42,7 @@ export default {
       this.root.$router.push({ path: '/verse/meta/editor', query: { id }})
     },
 
-    update() {
+    refresh() {
       if (this.data) { this.putData(this.data.key, this.value) }
       this.emitter.trigger('process')
     }

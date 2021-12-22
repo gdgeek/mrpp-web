@@ -8,7 +8,7 @@ import { initMeta, fromJson, arrange } from '@/node-editor/meta'
 export default {
   props: {
     metaId: {
-      type: String,
+      type: Number,
       required: true
     }
   },

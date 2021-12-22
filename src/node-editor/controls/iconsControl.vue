@@ -1,30 +1,39 @@
 <template>
   <el-form :inline="true" size="mini" label-width="40px">
+
     <el-form-item :inline="true" class="el-form-item" :label="data.title">
       <el-select v-model="value" placeholder="请选择">
+
+        <template slot="prefix"><font-awesome-icon :icon="['fas', value]" style="color:#55F" /></template>
         <el-option
           v-for="item in options"
           :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        />
+          :value="item.key"
+          :label="item.key"
+        >
+          <span style="float: left">
+            <font-awesome-icon :icon="item.key" /></span>
+          <span style="float: right; color: #8492a6; font-size: 13px">{{ item.key }}</span>
+        </el-option>
       </el-select>
     </el-form-item>
   </el-form>
 </template>
 
 <script>
+import font from '@/assets/js/fontok'
+// import outfont from '@/assets/js/outfont'
 export default {
   props: ['data', 'root', 'emitter', 'getData', 'putData'],
-
   data() {
     return {
-      options: [],
-      value_: ''
+      value_: 'book'
     }
   },
   computed: {
-
+    options() {
+      return font
+    },
     value: {
       get() {
         return this.value_
@@ -35,13 +44,7 @@ export default {
       }
     }
   },
-  watch: {
-    'root.$store.state.resource.polygenList': function() {
-      this.setList(this.root.$store.state.resource.polygenList)
-    }
-  },
   mounted() {
-    this.setList(this.root.$store.state.resource.polygenList)
     const value = this.getData(this.data.key)
     if (typeof value !== 'undefined') {
       this.value = value
@@ -51,16 +54,7 @@ export default {
     this.refresh()
   },
   methods: {
-    setList(list) {
-      const self = this
-      this.options = []
-      list.forEach(item => {
-        self.options.push({
-          value: item.id,
-          label: item.id + ':' + item.name
-        })
-      })
-    },
+
     refresh() {
       if (this.data) { this.putData(this.data.key, this.value) }
       this.emitter.trigger('process')

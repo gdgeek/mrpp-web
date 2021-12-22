@@ -26,13 +26,13 @@ var MetaRootType = {
   inputs: [
     {
       key: 'entity-in',
-      title: 'Entities',
+      title: '实体',
       socket: EntitySocket,
       multiConns: true
     },
     {
       key: 'addon-in',
-      title: 'Addons',
+      title: '插件',
       socket: AddonSocket,
       multiConns: true
     }
