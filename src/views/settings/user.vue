@@ -69,9 +69,15 @@
             <el-form-item label="行业" prop="industry">
               <el-input v-model="infoForm.industry" placeholder="所在行业" />
             </el-form-item>
-            <!-- <el-form-item label="居住地" prop="address">
-              <el-input v-model="infoForm.address" placeholder="居住地" />
-            </el-form-item> -->
+            <el-form-item label="居住地" prop="selectedOptions">
+              <el-cascader
+                v-model="infoForm.selectedOptions"
+                size="large"
+                :options="infoForm.options"
+                style="width: 100%"
+                @change="handleChange"
+              />
+            </el-form-item>
             <el-form-item label="个人简介">
               <el-input
                 v-model="infoForm.textarea"
@@ -101,8 +107,9 @@
 
 <script>
 
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import { putUserData } from '@/api/v1/user'
+import { regionDataPlus, CodeToText } from 'element-china-area-data'
 export default {
   name: 'User',
   computed: {
@@ -125,7 +132,9 @@ export default {
       infoForm: {
         sex: 'man',
         industry: '',
-        // address: '',
+        // address-options
+        options: regionDataPlus,
+        selectedOptions: [],
         textarea: ''
       },
       infoRules: {
@@ -156,6 +165,11 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['SET_DATA']),
+    handleChange(value) {
+      var ctt = CodeToText[value[0]] + CodeToText[value[1]] + CodeToText[value[2]]
+      console.log(ctt)
+    },
     submitNickname() {
       const self = this
       this.$refs.nicknameForm.validate((valid) => {
@@ -169,8 +183,9 @@ export default {
     },
     refreshUserdata(data) {
       console.log(data.data)
-      this.$store.commit('setNickname', this.nicknameForm.nickname)
+      this.userData.nickname = data.data.nickname
       // this.$store.commit('SET_DATA', data.data)
+      // this.SET_DATA(data.datae)
     },
     saveInfo() {
       const self = this
@@ -182,9 +197,6 @@ export default {
           })
         }
       })
-    },
-    resetForm() {
-      this.$refs.addForm.resetFields()
     },
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw)
@@ -246,16 +258,6 @@ export default {
   width: 132px;
   height: 132px;
   display: block;
-
 }
-// .user-icon {
-//   display: block;
-//   margin-right: 12px;
-//   width: 130px;
-//   height: 130px;
-//   background: url(logo.jpg) no-repeat;
-//   background-size: 100%;
-//   border-radius: 5%;
-// }
-
 </style>
+
