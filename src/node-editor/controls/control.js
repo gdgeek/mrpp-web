@@ -10,6 +10,7 @@ import VideoControl from './videoControl.vue'
 import PictureControl from './pictureControl.vue'
 import Vector3Control from './vector3Control.vue'
 import IconsControl from './iconsControl.vue'
+import VerseNameControl from './verseNameControl.vue'
 
 export class Control extends Rete.Control {
   constructor(emitter, data, root) {
@@ -47,6 +48,9 @@ export class Control extends Rete.Control {
         break
       case 'icons':
         this.component = IconsControl
+        break
+      case 'verse-name':
+        this.component = VerseNameControl
         break
       default:
         this.component = VueNumControl

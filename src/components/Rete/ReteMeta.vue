@@ -1,10 +1,12 @@
 <template>
-  <div v-show="visible" id="rete" ref="rete" />
+  <div>{{ metaId }}
+    <div v-show="visible" id="rete" ref="rete" />
+  </div>
 </template>
 
 <script>
-import { initMeta, firstTime, toJson, fromJson, arrange } from '@/node-editor/meta'
-import { postMetaRete, putMetaRete } from '@/api/v1/metaRete'
+import { initMeta, firstTime, toJson, save, fromJson, arrange } from '@/node-editor/meta'
+import { postMetaRete } from '@/api/v1/metaRete'
 export default {
   props: {
     metaId: {
@@ -19,18 +21,30 @@ export default {
   },
   mounted() {
     const self = this
-    initMeta(self.$refs.rete, self.metaId, self)
+    initMeta({
+      container: self.$refs.rete,
+      metaId: self.metaId,
+      root: self
+    })
+  },
+
+  beforeDestroy() {
+    this.save()
   },
   methods: {
     createRete() {
       const self = this
-      firstTime()
-      const json = toJson()
-      postMetaRete({
-        meta_id: self.metaId,
-        data: JSON.stringify(json)
-      }).then(response => {
-        console.log(response)
+      return new Promise((resolve, reject) => {
+        firstTime()
+        const json = toJson()
+        postMetaRete({
+          meta_id: self.metaId,
+          data: JSON.stringify(json)
+        }).then(response => {
+          resolve(response.data)
+        }).catch(e => {
+          reject(e)
+        })
       })
     },
     arrange() {
@@ -39,17 +53,8 @@ export default {
     load(data) {
       fromJson(JSON.parse(data))
     },
-    save(id) {
-      const self = this
-      const json = toJson()
-
-      putMetaRete(id, {
-        id,
-        meta_id: self.metaId,
-        data: JSON.stringify(json)
-      }).then(response => {
-        console.log(response)
-      })/**/
+    save() {
+      save()
     }
   }
 }

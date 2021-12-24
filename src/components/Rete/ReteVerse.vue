@@ -10,6 +10,10 @@ export default {
     verseId: {
       type: Number,
       required: true
+    },
+    id: {
+      type: Number,
+      required: true
     }
   },
   data() {
@@ -21,16 +25,23 @@ export default {
     const self = this
     initVerse(self.$refs.rete, self.verseId, self)
   },
+  beforeDestroy() {
+    this.save()
+  },
   methods: {
     createRete() {
       const self = this
-      firstTime()
-      const json = toJson()
-      postVerseRete({
-        verse_id: self.verseId,
-        data: JSON.stringify(json)
-      }).then(response => {
-        console.log(response)
+      return new Promise((resolve, reject) => {
+        firstTime()
+        const json = toJson()
+        postVerseRete({
+          verse_id: self.verseId,
+          data: JSON.stringify(json)
+        }).then(response => {
+          resolve(response.data)
+        }).catch(e => {
+          reject(e)
+        })
       })
     },
     arrange() {
@@ -39,12 +50,10 @@ export default {
     load(data) {
       fromJson(JSON.parse(data))
     },
-    save(id) {
+    save() {
       const self = this
       const json = toJson()
-
-      putVerseRete(id, {
-        id,
+      putVerseRete(self.id, {
         verse_id: self.verseId,
         data: JSON.stringify(json)
       }).then(response => {

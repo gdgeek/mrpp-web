@@ -3,15 +3,18 @@
     <el-container>
 
       <el-main>
-        <el-card class="box-card">
+        <el-card v-loading="loading" class="box-card">
           <div v-if="meta !== null" slot="header" class="clearfix">
-            元数据名称：{{ metaName }}
+            <router-link :to="'/verse/editor?id='+meta.verse.id">
+              <el-link :underline="false"> 【宇宙】{{ meta.verse.name }}</el-link>
+            </router-link>
+            / 【元】{{ metaName }}
             <el-button-group style="float: right">
               <el-button type="primary" size="mini" @click="arrange()"><font-awesome-icon icon="project-diagram" />  整理 </el-button>
               <el-button type="primary" size="mini" @click="save()"><font-awesome-icon icon="save" />  保存 </el-button>
             </el-button-group>
           </div>
-          <rete-meta ref="rete" class="rete" :meta-id="id" />
+          <rete-meta :id="reteId" ref="rete" class="rete" :meta-id="id" />
         </el-card>
       </el-main>
     </el-container>
@@ -32,12 +35,15 @@ export default {
   },
   data() {
     return {
-      meta: null
+      meta: null,
+      loading: true
     }
   },
   computed: {
     ...mapState({
-      metaName: state => state.meta.name,
+      metaName: state => state.meta.data.name,
+      reteId: state => state.meta.data.reteId,
+      metaReteData: state => state.meta.data.reteData,
       pictureList: state => state.resource.pictureList,
       videoList: state => state.resource.videoList,
       polygenList: state => state.resource.polygenList
@@ -65,33 +71,40 @@ export default {
       console.log(self.videoList)
     })
 
+    self.setMetaId(this.id)
     getMeta(this.id).then(response => {
       self.meta = response.data
-      self.putMetaName(response.data.name)
+      self.setMetaData(response.data)
       if (self.meta.metaRetes != null && self.meta.metaRetes.length > 0) {
-        // self.load(response.data.verseRetes[0].data)
+        self.load(self.meta.metaRetes[0].data)
+        self.loading = false
       } else {
-        // self.data.verseRetes = [self.createRete(self.data.id)]
+        self.createRete().then(data => {
+          self.setMetaReteId(self.meta.metaRetes[0].id)
+          self.loading = false
+        })
       }
     })
   },
   methods: {
     ...mapMutations([
-      'putMetaName',
+      'setMetaName',
+      'setMetaReteId',
+      'setMetaId',
+      'setMetaData',
       'setPolygenList',
       'setPictureList',
       'setVideoList'
 
     ]),
-    createRete(verseId) {
-      this.$refs.rete.createRete(verseId)// $emit('load', data)
+    createRete() {
+      return this.$refs.rete.createRete()// $emit('load', data)
     },
     load(data) {
       this.$refs.rete.load(data)// $emit('load', data)
     },
     save() {
-      const self = this
-      this.$refs.rete.save(self.data.metaRetes[0].id, self.id)// .$emit('save', self.id)
+      this.$refs.rete.save()// .$emit('save', self.id)
     },
     arrange() {
       this.$refs.rete.arrange()// .$emit('arrange')

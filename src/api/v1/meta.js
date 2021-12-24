@@ -9,7 +9,7 @@ export function postMeta(data) {
 
 export function getMeta(id) {
   return request({
-    url: 'v1/metas/' + id,
+    url: 'v1/metas/' + id + '?expand=verse,metaRetes',
     method: 'get'
   })
 }
@@ -21,9 +21,9 @@ export function getMetas() {
   })
 }
 
-export function putMeta(data) {
+export function putMeta(id, data) {
   return request({
-    url: 'v1/metas',
+    url: 'v1/metas/' + id,
     method: 'put',
     data: data
   })

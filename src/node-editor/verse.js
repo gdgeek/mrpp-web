@@ -7,7 +7,6 @@ import ContextMenuPlugin from 'rete-context-menu-plugin'
 import LimitPlugin from '@/node-editor/plugins/limit'
 import MetaPlugin from '@/node-editor/plugins/meta'
 import { Component } from './components/Component'
-
 import { Meta, Verse } from './type/verseEditor'
 let editor_ = null
 let engine_ = null
@@ -18,13 +17,18 @@ export const toJson = function() {
   const json = editor_.toJSON()
   return json
 }
+
 export const firstTime = async function() {
-  editor_.silent = true
   const comp = editor_.getComponent('Verse')
   const node = await comp.createNode()
   node.position = [0, 0]
   editor_.addNode(node)
-  arrange()
+
+  editor_.view.resize()
+  AreaPlugin.zoomAt(editor_)
+  editor_.trigger('process')
+
+  setTimeout(arrange, 100)
 }
 
 export const initVerse = async function(container, verseId, root) {
@@ -54,6 +58,8 @@ export const initVerse = async function(container, verseId, root) {
   editor_.view.resize()
   AreaPlugin.zoomAt(editor_)
   editor_.trigger('process')
+
+  // setTimeout(arrange, 100)
 }
 export const fromJson = function(data) {
   editor_.silent = true

@@ -7,21 +7,21 @@ export function postMetaRete(data) {
   })
 }
 
-export function getVerseRete(id) {
+export function getMetaRete(id) {
   return request({
     url: 'v1/meta-retes/' + id,
     method: 'get'
   })
 }
 
-export function putVerseRete(id, data) {
+export function putMetaRete(id, data) {
   return request({
     url: 'v1/meta-retes/' + id,
     method: 'put',
     data
   })
 }
-export function deleteVerseRete(id) {
+export function deleteMetaRete(id) {
   return request({
     url: 'v1/meta-retes/' + id,
     method: 'delete'
