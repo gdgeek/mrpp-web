@@ -36,6 +36,7 @@ export default {
     } else if (typeof this.data.default !== 'undefined') {
       this.value = this.data.default
     }
+    this.refresh()
   },
 
   methods: {

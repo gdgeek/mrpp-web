@@ -4,6 +4,7 @@ console.log(EntitySocket)
 // import { MetaSocket } from '@/node-editor/sockets/sockets'
 var MetaRootType = {
   title: 'MetaRoot',
+  root: true,
   controls: [
     {
       type: 'meta-name',
@@ -13,7 +14,7 @@ var MetaRootType = {
     },
     {
       type: 'transform',
-      key: 'meta-root',
+      key: 'transform',
       readonly: false
     },
     {
@@ -25,13 +26,13 @@ var MetaRootType = {
   ],
   inputs: [
     {
-      key: 'entity-in',
+      key: 'entities',
       title: '实体',
       socket: EntitySocket,
       multiConns: true
     },
     {
-      key: 'addon-in',
+      key: 'addons',
       title: '插件',
       socket: AddonSocket,
       multiConns: true

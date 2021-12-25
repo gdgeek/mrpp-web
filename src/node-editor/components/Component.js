@@ -45,7 +45,53 @@ export class Component extends Rete.Component {
     return node
   }
   worker(node, inputs, outputs) {
-    alert(5)
-    outputs['num'] = node.data.num
+    const data = {}
+    data.type = this.type_.title
+    if (
+      typeof this.type_.controls !== 'undefined' &&
+      this.type_.controls !== null
+    ) {
+      data.parameters = {}
+      this.type_.controls.forEach(ctrl => {
+        data.parameters[ctrl.key] = node.data[ctrl.key]
+
+        console.log(JSON.stringify(ctrl.key))
+        console.log(JSON.stringify(node.data[ctrl.key]))
+        console.log(JSON.stringify(data.parameters))
+      })
+    }
+
+    if (
+      typeof this.type_.inputs !== 'undefined' &&
+      this.type_.inputs !== null
+    ) {
+      data.chieldren = {}
+      this.type_.inputs.forEach(input => {
+        const items = inputs[input.key]
+        data.chieldren[input.key] = []
+        items.forEach(item => {
+          data.chieldren[input.key].push(item)
+        })
+      })
+    }
+
+    if (
+      typeof this.type_.outputs !== 'undefined' &&
+      this.type_.outputs !== null
+    ) {
+      this.type_.outputs.forEach(output => {
+        outputs[output.key] = data
+      })
+    }
+    if (typeof this.type_.root !== 'undefined' && this.type_.root) {
+      // alert(1)
+      console.log(JSON.stringify(data))
+      // const data = {}
+      // data.type = this.type_.title
+      // alert(jsondata)
+    }
+
+    // alert(5)
+    // outputs['num'] = node.data.num
   }
 }

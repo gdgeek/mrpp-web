@@ -6,9 +6,8 @@ import AutoArrangePlugin from 'rete-auto-arrange-plugin'
 import ContextMenuPlugin from 'rete-context-menu-plugin'
 import LimitPlugin from '@/node-editor/plugins/limit'
 import MetaPlugin from '@/node-editor/plugins/meta'
-import AddComponent from '@/node-editor/components/addComponent'
-import { Component } from './components/Component'
-import { Meta, Verse } from './type/verseEditor'
+import { Component } from '@/node-editor/components/Component'
+import { Meta, Verse } from '@/node-editor/type/verseEditor'
 let editor_ = null
 let engine_ = null
 export const arrange = function() {
@@ -19,8 +18,7 @@ export const toJson = function() {
   return json
 }
 export const process = async function() {
-  await engine_.abort()
-  await engine_.process(editor_.toJSON())
+  editor_.trigger('process')
 }
 export const firstTime = async function() {
   const comp = editor_.getComponent('Verse')
@@ -48,7 +46,9 @@ export const initVerse = async function(container, verseId, root) {
   engine_ = new Rete.Engine('MrPP@0.1.0')
 
   types.forEach(type => {
-    editor_.register(new Component(type, root))
+    const component = new Component(type, root)
+    editor_.register(component)
+    engine_.register(component)
   })
 
   editor_.on(

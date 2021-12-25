@@ -27,7 +27,9 @@ import {
 
 let editor_ = null
 let engine_ = null
-
+export const process = async function() {
+  editor_.trigger('process')
+}
 export const arrange = function() {
   console.log(editor_.nodes.length)
   if (editor_.nodes.length > 0) {
@@ -100,7 +102,9 @@ export const initMeta = async function(parameter) {
 
   engine_ = new Rete.Engine('MrPP@0.1.0')
   types.forEach(type => {
-    editor_.register(new Component(type, parameter.root))
+    const component = new Component(type, parameter.root)
+    editor_.register(component)
+    engine_.register(component)
   })
   // editor_.register(new AddComponent())
 

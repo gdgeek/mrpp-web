@@ -10,7 +10,7 @@
       </el-form-item>
 
       <el-form-item class="el-form-item" label="操作">
-        <el-button :disabled="value.id === -1" @click="editor(value.id)"> 进入编辑</el-button>
+        <el-button type="success" plain :disabled="value.id === -1" @click="editor(value.id)"> 进入编辑</el-button>
       </el-form-item>
 
     </el-form>

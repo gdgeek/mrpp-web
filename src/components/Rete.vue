@@ -3,7 +3,7 @@
 </template>
 
 <script>
-// import init from '../node-test'
+import init from '../node-test'
 
 export default {
   data() {
@@ -12,7 +12,7 @@ export default {
     }
   },
   mounted() {
-    // init(this.$refs.rete)
+    init(this.$refs.rete)
   },
   methods: {
   }

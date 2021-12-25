@@ -69,7 +69,9 @@ export default {
   methods: {
 
     refresh() {
-      if (this.data) { this.putData(this.data.key, this.value) }
+      if (this.data) {
+        this.putData(this.data.key, this.value_)
+      }
       this.emitter.trigger('process')
     }
   }

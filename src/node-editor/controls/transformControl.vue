@@ -120,8 +120,10 @@ export default {
         this.value_.scale.z = value
         console.log(this.value_)
       }
+    },
+    value() {
+      return this.value_
     }
-
   },
   mounted() {
     const value = this.getData(this.data.key)

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { initMeta, firstTime, toJson, fromJson, arrange } from '@/node-editor/meta'
+import { initMeta, process, firstTime, toJson, fromJson, arrange } from '@/node-editor/meta'
 
 import { mapActions } from 'vuex'
 export default {
@@ -41,6 +41,9 @@ export default {
       firstTime()
       const json = toJson()
       return this.createMeta(JSON.stringify(json))
+    },
+    process() {
+      process()
     },
     arrange() {
       arrange()

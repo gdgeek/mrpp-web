@@ -36,13 +36,13 @@ var PictureType = {
   ],
   inputs: [
     {
-      key: 'entity-in',
+      key: 'entities',
       title: '实体',
       socket: EntitySocket,
       multiConns: true
     },
     {
-      key: 'component-in',
+      key: 'components',
       title: '组件',
       socket: ComponentSocket,
       multiConns: true

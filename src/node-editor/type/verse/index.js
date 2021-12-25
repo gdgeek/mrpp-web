@@ -1,9 +1,8 @@
 import { MetaSocket } from '@/node-editor/sockets/sockets'
 
-// import { MetaSocket } from '@/node-editor/sockets/sockets'
 var VerseType = {
   title: 'Verse',
-
+  root: true,
   controls: [
     {
       type: 'verse-name',
@@ -14,7 +13,7 @@ var VerseType = {
 
   inputs: [
     {
-      key: 'meta-in',
+      key: 'metas',
       title: 'Meta',
       socket: MetaSocket,
       multiConns: true
