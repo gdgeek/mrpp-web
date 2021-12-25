@@ -7,6 +7,7 @@
           <div v-if="data !== null" slot="header" class="clearfix">
             【宇宙】{{ verseName }}
             <el-button-group style="float: right">
+              <el-button type="primary" size="mini" @click="process()"><font-awesome-icon icon="project-diagram" />  触发 </el-button>
               <el-button type="primary" size="mini" @click="arrange()"><font-awesome-icon icon="project-diagram" />  整理 </el-button>
               <el-button type="primary" size="mini" @click="save()"><font-awesome-icon icon="save" />  保存 </el-button>
             </el-button-group>
@@ -85,6 +86,9 @@ export default {
     },
     save() {
       this.$refs.rete.save()// .$emit('save', self.id)
+    },
+    process() {
+      this.$refs.rete.process()// .$emit('arrange')
     },
     arrange() {
       this.$refs.rete.arrange()// .$emit('arrange')

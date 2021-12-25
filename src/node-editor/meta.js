@@ -5,6 +5,7 @@ import AreaPlugin from 'rete-area-plugin'
 import AutoArrangePlugin from 'rete-auto-arrange-plugin'
 import ContextMenuPlugin from 'rete-context-menu-plugin'
 import LimitPlugin from '@/node-editor/plugins/limit'
+// import AddComponent from '@/node-editor/components/addComponent'
 // import AutoSavePlugin from '@/node-editor/plugins/autoSave'
 import RandomStringPlugin from '@/node-editor/plugins/randomString'
 import { Component } from './components/Component'
@@ -101,6 +102,7 @@ export const initMeta = async function(parameter) {
   types.forEach(type => {
     editor_.register(new Component(type, parameter.root))
   })
+  // editor_.register(new AddComponent())
 
   editor_.on(
     'process nodecreated noderemoved connectioncreated connectionremoved',

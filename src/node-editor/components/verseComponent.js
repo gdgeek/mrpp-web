@@ -22,7 +22,9 @@ export class VerseComponent extends Rete.Component {
     // .addOutput(out)
   }
 
-  worker(node, inputs, outputs) { /*
+  worker(node, inputs, outputs) {
+    alert(3)
+    /*
     var n1 = inputs['num'].length ? inputs['num'][0] : node.data.num1
     var n2 = inputs['num2'].length ? inputs['num2'][0] : node.data.num2
     var sum = n1 + n2

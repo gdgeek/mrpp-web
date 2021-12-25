@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { initVerse, firstTime, toJson, fromJson, arrange } from '@/node-editor/verse'
+import { initVerse, firstTime, toJson, fromJson, arrange, process } from '@/node-editor/verse'
 
 import { mapActions } from 'vuex'
 export default {
@@ -35,6 +35,9 @@ export default {
       saveVerse: 'saveVerse',
       createVerse: 'createVerse'
     }),
+    process() {
+      process()
+    },
     createRete() {
       firstTime()
       const json = toJson()
