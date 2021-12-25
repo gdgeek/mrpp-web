@@ -34,8 +34,8 @@ export default {
   },
   methods: {
     ...mapActions('meta', {
-      saveVerse: 'saveMeta',
-      createVerse: 'createMeta'
+      saveMeta: 'saveMeta',
+      createMeta: 'createMeta'
     }),
     createRete() {
       firstTime()

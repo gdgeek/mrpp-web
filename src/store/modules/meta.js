@@ -34,7 +34,7 @@ const mutations = {
   }
 }
 const actions = {
-  saveVerse({ state }, data) {
+  saveMeta({ state }, data) {
     return new Promise((resolve, reject) => {
       putMetaRete(state.data.reteId, {
         meta_id: state.data.id,
@@ -48,7 +48,7 @@ const actions = {
         })
     })
   },
-  createVerse({ state }, data) {
+  createMeta({ state }, data) {
     return new Promise((resolve, reject) => {
       postMetaRete({
         meta_id: state.data.id,
