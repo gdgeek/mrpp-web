@@ -4,7 +4,8 @@
 
 <script>
 import { initVerse, firstTime, toJson, fromJson, arrange } from '@/node-editor/verse'
-import { postVerseRete, putVerseRete } from '@/api/v1/verseRete'
+
+import { mapActions } from 'vuex'
 export default {
   props: {
     verseId: {
@@ -26,23 +27,18 @@ export default {
     initVerse(self.$refs.rete, self.verseId, self)
   },
   beforeDestroy() {
-    this.save()
+    const json = toJson()
+    this.saveVerse(JSON.stringify(json))
   },
   methods: {
+    ...mapActions('verse', {
+      saveVerse: 'saveVerse',
+      createVerse: 'createVerse'
+    }),
     createRete() {
-      const self = this
-      return new Promise((resolve, reject) => {
-        firstTime()
-        const json = toJson()
-        postVerseRete({
-          verse_id: self.verseId,
-          data: JSON.stringify(json)
-        }).then(response => {
-          resolve(response.data)
-        }).catch(e => {
-          reject(e)
-        })
-      })
+      firstTime()
+      const json = toJson()
+      return this.createVerse(JSON.stringify(json))
     },
     arrange() {
       arrange()
@@ -51,14 +47,8 @@ export default {
       fromJson(JSON.parse(data))
     },
     save() {
-      const self = this
       const json = toJson()
-      putVerseRete(self.id, {
-        verse_id: self.verseId,
-        data: JSON.stringify(json)
-      }).then(response => {
-        console.log(response)
-      })
+      return this.saveVerse(JSON.stringify(json))
     }
   }
 }

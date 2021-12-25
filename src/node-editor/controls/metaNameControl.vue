@@ -2,7 +2,7 @@
   <el-form :inline="true" size="mini">
     <el-form-item class="el-form-item" :inline="true" :label="data.title">
 
-      <el-tag size="small" @click="changeMateName()"> {{ value.name }}</el-tag>
+      <el-tag type="success" size="small" @click="changeMateName()"> {{ value.name }}</el-tag>
     </el-form-item>
   </el-form>
 </template>

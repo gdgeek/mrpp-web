@@ -1,12 +1,13 @@
 <template>
-  <div>{{ metaId }}
+  <div>
     <div v-show="visible" id="rete" ref="rete" />
   </div>
 </template>
 
 <script>
-import { initMeta, firstTime, toJson, save, fromJson, arrange } from '@/node-editor/meta'
-import { postMetaRete } from '@/api/v1/metaRete'
+import { initMeta, firstTime, toJson, fromJson, arrange } from '@/node-editor/meta'
+
+import { mapActions } from 'vuex'
 export default {
   props: {
     metaId: {
@@ -32,20 +33,14 @@ export default {
     this.save()
   },
   methods: {
+    ...mapActions('meta', {
+      saveVerse: 'saveMeta',
+      createVerse: 'createMeta'
+    }),
     createRete() {
-      const self = this
-      return new Promise((resolve, reject) => {
-        firstTime()
-        const json = toJson()
-        postMetaRete({
-          meta_id: self.metaId,
-          data: JSON.stringify(json)
-        }).then(response => {
-          resolve(response.data)
-        }).catch(e => {
-          reject(e)
-        })
-      })
+      firstTime()
+      const json = toJson()
+      return this.createMeta(JSON.stringify(json))
     },
     arrange() {
       arrange()
@@ -54,7 +49,8 @@ export default {
       fromJson(JSON.parse(data))
     },
     save() {
-      save()
+      const json = toJson()
+      return this.saveMeta(JSON.stringify(json))
     }
   }
 }

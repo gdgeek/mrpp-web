@@ -80,18 +80,23 @@ export default {
         self.loading = false
       } else {
         self.createRete().then(data => {
-          self.setMetaReteId(self.meta.metaRetes[0].id)
+          // self.meta.metaRetes = [data]
+          self.setMetaReteId(data.id)
           self.loading = false
         })
       }
     })
   },
   methods: {
-    ...mapMutations([
+    ...mapMutations('meta', [
       'setMetaName',
       'setMetaReteId',
       'setMetaId',
-      'setMetaData',
+      'setMetaData'
+
+    ]),
+    ...mapMutations([
+
       'setPolygenList',
       'setPictureList',
       'setVideoList'

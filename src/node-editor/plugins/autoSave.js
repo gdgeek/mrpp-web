@@ -27,6 +27,7 @@ function install(editor, options) {
 }
 function save() {
   const json = editor_.toJSON()
+
   putMetaRete(root_.$store.state.meta.data.reteId, {
     meta_id: root_.$store.state.meta.data.id,
     data: JSON.stringify(json)

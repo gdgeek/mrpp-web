@@ -5,7 +5,7 @@ import AreaPlugin from 'rete-area-plugin'
 import AutoArrangePlugin from 'rete-auto-arrange-plugin'
 import ContextMenuPlugin from 'rete-context-menu-plugin'
 import LimitPlugin from '@/node-editor/plugins/limit'
-import AutoSavePlugin from '@/node-editor/plugins/autoSave'
+// import AutoSavePlugin from '@/node-editor/plugins/autoSave'
 import RandomStringPlugin from '@/node-editor/plugins/randomString'
 import { Component } from './components/Component'
 
@@ -42,9 +42,7 @@ export const fromJson = function(data) {
   // setTimeout(arrange, 100)
   // arrange()
 }
-export const save = function() {
-  AutoSavePlugin.save()
-}
+
 export const firstTime = async function() {
   const comp = editor_.getComponent('MetaRoot')
   if (comp === null) { return }
@@ -72,7 +70,7 @@ export const initMeta = async function(parameter) {
   editor_.silent = true
   editor_.use(ConnectionPlugin)
   editor_.use(VueRenderPlugin)
-  editor_.use(AutoSavePlugin, { metaId: parameter.metaId, root: parameter.root })
+  // editor_.use(AutoSavePlugin, { metaId: parameter.metaId, root: parameter.root })
   editor_.use(ContextMenuPlugin, {
     delay: 100,
     allocate(component) {

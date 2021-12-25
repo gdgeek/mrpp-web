@@ -53,28 +53,30 @@ export default {
       if (response.data.verseRetes != null && response.data.verseRetes.length > 0) {
         self.load(response.data.verseRetes[0].data)
         self.loading = false
-        // this.reteId = self.data.verseRetes[0].id
       } else {
         self.createRete().then(data => {
           self.data.verseRetes = [data]
-          self.setVerseId(self.data.verseRetes[0].id)
-          // this.reteId = self.data.verseRetes[0].id
+          self.setVerseReteId(data.id)
           self.loading = false
         })
       }
     })
   },
   methods: {
-    ...mapMutations([
+    ...mapMutations('verse', [
       'setVerseName',
       'setVerseReteId',
       'setVerseId',
-      'setVerseData',
+      'setVerseData'
+
+    ]),
+    ...mapMutations([
       'setPolygenList',
       'setPictureList',
       'setVideoList'
 
     ]),
+
     createRete() {
       return this.$refs.rete.createRete()// $emit('load', data)
     },
