@@ -38,7 +38,7 @@ var EntityType = {
   ],
   outputs: [
     {
-      key: 'entity-out',
+      key: 'out',
       title: '实体',
       socket: EntitySocket,
       multiConns: true

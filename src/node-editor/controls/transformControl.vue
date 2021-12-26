@@ -55,6 +55,7 @@ export default {
       set(value) {
         this.value_.position.y = value
         console.log(this.value_)
+        this.refresh()
       }
     },
     position_z: {
@@ -64,6 +65,7 @@ export default {
       set(value) {
         this.value_.position.z = value
         console.log(this.value_)
+        this.refresh()
       }
     },
     rotate_x: {
@@ -73,6 +75,7 @@ export default {
       set(value) {
         this.value_.rotate.x = value
         console.log(this.value_)
+        this.refresh()
       }
     },
     rotate_y: {
@@ -82,6 +85,7 @@ export default {
       set(value) {
         this.value_.rotate.y = value
         console.log(this.value_)
+        this.refresh()
       }
     },
     rotate_z: {
@@ -91,6 +95,7 @@ export default {
       set(value) {
         this.value_.rotate.z = value
         console.log(this.value_)
+        this.refresh()
       }
     },
 
@@ -101,6 +106,7 @@ export default {
       set(value) {
         this.value_.scale.x = value
         console.log(this.value_)
+        this.refresh()
       }
     },
     scale_y: {
@@ -110,6 +116,7 @@ export default {
       set(value) {
         this.value_.scale.y = value
         console.log(this.value_)
+        this.refresh()
       }
     },
     scale_z: {
@@ -119,10 +126,17 @@ export default {
       set(value) {
         this.value_.scale.z = value
         console.log(this.value_)
+        this.refresh()
       }
     },
-    value() {
-      return this.value_
+    value: {
+      get() {
+        return this.value_
+      },
+      set(value) {
+        this.value_ = value
+        this.refresh()
+      }
     }
   },
   mounted() {
@@ -139,7 +153,7 @@ export default {
 
     refresh() {
       if (this.data) { this.putData(this.data.key, this.value) }
-      this.emitter.trigger('process')
+      this.emitter.trigger('process', { status: 'node' })
     }
   }
 }

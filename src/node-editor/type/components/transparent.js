@@ -15,7 +15,7 @@ var TransparentType = {
   inputs: [],
   outputs: [
     {
-      key: 'component-out',
+      key: 'out',
       title: '组件',
       socket: ComponentSocket,
       multiConns: true

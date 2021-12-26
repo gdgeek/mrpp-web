@@ -1,5 +1,5 @@
 import Rete from 'rete'
-import { Control } from '../controls/control.js'
+import { Control } from '@/node-editor/controls/control'
 export class Component extends Rete.Component {
   constructor(type, root) {
     super(type.title)
@@ -44,7 +44,7 @@ export class Component extends Rete.Component {
     }
     return node
   }
-  worker(node, inputs, outputs) {
+  worker(node, inputs, outputs, callback) {
     const data = {}
     data.type = this.type_.title
     if (
@@ -86,6 +86,7 @@ export class Component extends Rete.Component {
     if (typeof this.type_.root !== 'undefined' && this.type_.root) {
       // alert(1)
       console.log(JSON.stringify(data))
+      callback(JSON.stringify(data))
       // const data = {}
       // data.type = this.type_.title
       // alert(jsondata)

@@ -28,7 +28,7 @@ import {
 let editor_ = null
 let engine_ = null
 export const process = async function() {
-  editor_.trigger('process')
+  editor_.trigger('process', { status: 'save' })
 }
 export const arrange = function() {
   console.log(editor_.nodes.length)
@@ -54,7 +54,7 @@ export const firstTime = async function() {
   editor_.addNode(node)
 }
 
-export const initMeta = async function(parameter) {
+export const initMeta = async function({ container, root }) {
   const types = [
     MetaRoot,
     Entity,
@@ -69,11 +69,10 @@ export const initMeta = async function(parameter) {
     Button,
     Action
   ]
-  editor_ = new Rete.NodeEditor('MrPP@0.1.0', parameter.container)
+  editor_ = new Rete.NodeEditor('MrPP@0.1.0', container)
   editor_.silent = true
   editor_.use(ConnectionPlugin)
   editor_.use(VueRenderPlugin)
-  // editor_.use(AutoSavePlugin, { metaId: parameter.metaId, root: parameter.root })
   editor_.use(ContextMenuPlugin, {
     delay: 100,
     allocate(component) {
@@ -102,23 +101,32 @@ export const initMeta = async function(parameter) {
 
   engine_ = new Rete.Engine('MrPP@0.1.0')
   types.forEach(type => {
-    const component = new Component(type, parameter.root)
+    const component = new Component(type, root)
     editor_.register(component)
     engine_.register(component)
   })
   // editor_.register(new AddComponent())
 
   editor_.on(
-    'process nodecreated noderemoved connectioncreated connectionremoved',
-    async() => {
-      await engine_.abort()
-      await engine_.process(editor_.toJSON())
+    'process',
+    async(e) => {
+      if (typeof e === 'object' && typeof e.status === 'string') {
+        if (e.status === 'save') {
+          // alert(e.status)
+          await engine_.abort()
+          await engine_.process(editor_.toJSON(), null, function(data) {
+            root.$store.dispatch('meta/saveMeta', data).then(response => {
+              // alert(response)
+            })
+          })
+        }
+      }
     }
   )
 
   editor_.view.resize()
   AreaPlugin.zoomAt(editor_)
-  editor_.trigger('process')
+  editor_.trigger('process', { status: 'init' })
   // editor_.trigger('save')
 
   // setTimeout(arrange, 100)

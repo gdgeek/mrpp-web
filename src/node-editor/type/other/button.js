@@ -22,12 +22,11 @@ var ButtonType = {
       title: '动作',
       socket: ActionSocket,
       multiConns: true
-
     }
   ],
   outputs: [
     {
-      key: 'button-out',
+      key: 'out',
       title: '按钮',
       socket: ButtonSocket,
       multiConns: false

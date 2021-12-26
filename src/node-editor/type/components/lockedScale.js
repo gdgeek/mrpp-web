@@ -3,12 +3,11 @@ import { ComponentSocket } from '@/node-editor/sockets/sockets'
 var LockedScaleType = {
   title: 'LockedScale',
   allocate: ['组件'],
-  controls: [
-  ],
+  controls: [],
   inputs: [],
   outputs: [
     {
-      key: 'component-out',
+      key: 'out',
       title: '组件',
       socket: ComponentSocket,
       multiConns: true

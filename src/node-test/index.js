@@ -47,5 +47,5 @@ export default async function(container) {
 
   editor.view.resize()
   AreaPlugin.zoomAt(editor)
-  editor.trigger('process')
+  editor.trigger('process', { status: 'init' })
 }

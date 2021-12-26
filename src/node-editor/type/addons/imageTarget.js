@@ -31,7 +31,7 @@ var ImageTargetType = {
   inputs: [],
   outputs: [
     {
-      key: 'entity-out',
+      key: 'out',
       title: '插件',
       socket: AddonSocket,
       multiConns: false

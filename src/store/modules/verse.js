@@ -1,4 +1,5 @@
 import { putVerseRete, postVerseRete } from '@/api/v1/verseRete'
+import { putVerse } from '@/api/v1/verse'
 const state = {
   data: {
     name: null,
@@ -33,19 +34,34 @@ const mutations = {
   }
 }
 const actions = {
-  saveVerse({ state }, data) {
+  saveVerseRete({ state }, data) {
     return new Promise((resolve, reject) => {
       putVerseRete(state.data.reteId, {
         verse_id: state.data.id,
         data
-      }).then(response => {
-        resolve(response.data)
-      }).catch((e) => {
-        reject(e)
       })
+        .then(response => {
+          resolve(response.data)
+        })
+        .catch(e => {
+          reject(e)
+        })
     })
   },
-  createVerse({ state }, data) {
+  saveVerse({ state }, data) {
+    return new Promise((resolve, reject) => {
+      putVerse(state.data.id, {
+        data
+      })
+        .then(response => {
+          resolve(response.data)
+        })
+        .catch(e => {
+          reject(e)
+        })
+    })
+  },
+  createVerseRete({ state }, data) {
     return new Promise((resolve, reject) => {
       postVerseRete({
         verse_id: state.data.id,

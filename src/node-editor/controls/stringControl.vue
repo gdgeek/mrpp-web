@@ -39,7 +39,7 @@ export default {
   methods: {
     refresh() {
       if (this.data) { this.putData(this.data.key, this.value) }
-      this.emitter.trigger('process')
+      this.emitter.trigger('process', { status: 'node' })
     }
   }
 }

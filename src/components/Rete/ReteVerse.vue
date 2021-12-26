@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { initVerse, firstTime, toJson, fromJson, arrange, process } from '@/node-editor/verse'
+import { initVerse, setup, firstTime, toJson, fromJson, arrange, process } from '@/node-editor/verse'
 
 import { mapActions } from 'vuex'
 export default {
@@ -24,16 +24,16 @@ export default {
   },
   mounted() {
     const self = this
-    initVerse(self.$refs.rete, self.verseId, self)
+    initVerse({ container: self.$refs.rete, verseId: self.verseId, root: self })
   },
   beforeDestroy() {
     const json = toJson()
-    this.saveVerse(JSON.stringify(json))
+    this.saveVerseRete(JSON.stringify(json))
   },
   methods: {
     ...mapActions('verse', {
-      saveVerse: 'saveVerse',
-      createVerse: 'createVerse'
+      saveVerseRete: 'saveVerseRete',
+      createVerseRete: 'createVerseRete'
     }),
     process() {
       process()
@@ -41,17 +41,20 @@ export default {
     createRete() {
       firstTime()
       const json = toJson()
-      return this.createVerse(JSON.stringify(json))
+      return this.createVerseRete(JSON.stringify(json))
     },
     arrange() {
       arrange()
+    },
+    setup(data) {
+      return setup(data)
     },
     load(data) {
       fromJson(JSON.parse(data))
     },
     save() {
       const json = toJson()
-      return this.saveVerse(JSON.stringify(json))
+      return this.saveVerseRete(JSON.stringify(json))
     }
   }
 }

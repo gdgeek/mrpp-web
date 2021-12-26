@@ -51,6 +51,10 @@ export default {
     getVerse(this.id).then(response => {
       self.setVerseData(response.data)
       self.data = response.data
+      // alert(response.data.data)
+      self.loading = false
+      this.setup(response.data.data)
+      /*
       if (response.data.verseRetes != null && response.data.verseRetes.length > 0) {
         self.load(response.data.verseRetes[0].data)
         self.loading = false
@@ -60,7 +64,7 @@ export default {
           self.setVerseReteId(data.id)
           self.loading = false
         })
-      }
+      }*/
     })
   },
   methods: {
@@ -80,6 +84,9 @@ export default {
 
     createRete() {
       return this.$refs.rete.createRete()// $emit('load', data)
+    },
+    setup(data) {
+      return this.$refs.rete.setup(data)
     },
     load(data) {
       this.$refs.rete.load(data)// $emit('load', data)

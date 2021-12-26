@@ -34,6 +34,7 @@ export default {
       set(value) {
         this.value_.x = value
         console.log(this.value_)
+        this.refresh()
       }
     },
     y: {
@@ -43,6 +44,7 @@ export default {
       set(value) {
         this.value_.y = value
         console.log(this.value_)
+        this.refresh()
       }
     },
     z: {
@@ -52,9 +54,17 @@ export default {
       set(value) {
         this.value_.z = value
         console.log(this.value_)
+        this.refresh()
+      }
+    }, value: {
+      get() {
+        return this.value_
+      },
+      set(value) {
+        this.value_ = value
+        this.refresh()
       }
     }
-
   },
   mounted() {
     const value = this.getData(this.data.key)
@@ -70,9 +80,9 @@ export default {
 
     refresh() {
       if (this.data) {
-        this.putData(this.data.key, this.value_)
+        this.putData(this.data.key, this.value)
       }
-      this.emitter.trigger('process')
+      this.emitter.trigger('process', { status: 'node' })
     }
   }
 }

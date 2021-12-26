@@ -26,17 +26,21 @@ function install(editor, options) {
       return true
     }
 
+    console.log('îiiiiiiiiiii')
+    console.log(component.data['meta'])
     const meta = component.controls.get('meta')
-    component.data['meta'] = { name: '初始化...', id: -1 }
-    postMeta({
-      verse_id: options.verseId,
-      name: randomWords()
-    }).then(response => {
-      if (meta !== null) {
-        const data = response.data
-        meta.setValue({ name: data.name, id: data.id })
-      }
-    })
+    if (typeof component.data['meta'] === 'undefined' || component.data['meta'] === null) {
+      component.data['meta'] = { name: '初始化...', id: -1 }
+      postMeta({
+        verse_id: options.verseId,
+        name: randomWords()
+      }).then(response => {
+        if (meta !== null) {
+          const data = response.data
+          meta.setValue({ name: data.name, id: data.id })
+        }
+      })
+    }
 
     return true
   })

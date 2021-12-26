@@ -24,7 +24,6 @@ export default {
     const self = this
     initMeta({
       container: self.$refs.rete,
-      metaId: self.metaId,
       root: self
     })
   },
@@ -34,13 +33,13 @@ export default {
   },
   methods: {
     ...mapActions('meta', {
-      saveMeta: 'saveMeta',
-      createMeta: 'createMeta'
+      saveMetaRete: 'saveMetaRete',
+      createMetaRete: 'createMetaRete'
     }),
     createRete() {
       firstTime()
       const json = toJson()
-      return this.createMeta(JSON.stringify(json))
+      return this.createMetaRete(JSON.stringify(json))
     },
     process() {
       process()
@@ -53,7 +52,7 @@ export default {
     },
     save() {
       const json = toJson()
-      return this.saveMeta(JSON.stringify(json))
+      return this.saveMetaRete(JSON.stringify(json))
     }
   }
 }

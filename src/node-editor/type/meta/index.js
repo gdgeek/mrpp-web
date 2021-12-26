@@ -13,7 +13,7 @@ var MetaType = {
   inputs: null,
   outputs: [
     {
-      key: 'meta-out',
+      key: 'out',
       title: 'Meta',
       socket: MetaSocket,
       multiConns: false

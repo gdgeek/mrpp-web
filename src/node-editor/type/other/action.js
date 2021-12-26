@@ -12,7 +12,7 @@ var ActionType = {
   ],
   outputs: [
     {
-      key: 'action-out',
+      key: 'out',
       title: '动作',
       socket: ActionSocket,
       multiConns: true

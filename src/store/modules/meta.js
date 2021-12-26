@@ -1,4 +1,6 @@
 import { putMetaRete, postMetaRete } from '@/api/v1/metaRete'
+import { putMeta } from '@/api/v1/meta'
+
 const state = {
   data: {
     name: null,
@@ -34,7 +36,7 @@ const mutations = {
   }
 }
 const actions = {
-  saveMeta({ state }, data) {
+  saveMetaRete({ state }, data) {
     return new Promise((resolve, reject) => {
       putMetaRete(state.data.reteId, {
         meta_id: state.data.id,
@@ -48,7 +50,20 @@ const actions = {
         })
     })
   },
-  createMeta({ state }, data) {
+  saveMeta({ state }, data) {
+    return new Promise((resolve, reject) => {
+      putMeta(state.data.id, {
+        data
+      })
+        .then(response => {
+          resolve(response.data)
+        })
+        .catch(e => {
+          reject(e)
+        })
+    })
+  },
+  createMetaRete({ state }, data) {
     return new Promise((resolve, reject) => {
       postMetaRete({
         meta_id: state.data.id,
