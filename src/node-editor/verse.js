@@ -15,29 +15,28 @@ let engine_ = null
 export const arrange = function() {
   editor_.trigger('arrange', editor_.nodes)
 }
-export const toJson = function() {
-  const json = editor_.toJSON()
-  return json
-}
-export const process = async function() {
+
+export const save = async function() {
   editor_.trigger('process', { status: 'save' })
 }
-export const firstTime = async function() {
-  const comp = editor_.getComponent('Verse')
-  const node = await comp.createNode()
-  node.position = [0, 0]
-  editor_.addNode(node)
 
-  editor_.view.resize()
-  AreaPlugin.zoomAt(editor_)
-  editor_.trigger('process', { status: 'first' })
-
-  setTimeout(arrange, 100)
+export const create = function(verse) {
+  const data = {
+    type: 'Verse',
+    parameters: { verse },
+    chieldren: {
+      metas: []
+    }
+  }
+  return setup(data)
 }
 export const setup = function(data) {
-  Build({ editor: editor_ }, JSON.parse(data)).then(node => {
-    editor_.view.resize()
-    setTimeout(arrange, 100)
+  return new Promise((resolve, reject) => {
+    Build(editor_, data).then(node => {
+      editor_.view.resize()
+      setTimeout(arrange, 100)
+      resolve(data)
+    })
   })
 }
 export const initVerse = async function({ container, verseId, root }) {
@@ -73,8 +72,4 @@ export const initVerse = async function({ container, verseId, root }) {
   editor_.view.resize()
   AreaPlugin.zoomAt(editor_)
   editor_.trigger('process', { status: 'init' })
-}
-export const fromJson = function(data) {
-  editor_.silent = true
-  editor_.fromJSON(data)
 }

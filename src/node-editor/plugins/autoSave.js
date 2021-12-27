@@ -20,7 +20,7 @@ function install(editor, options) {
           // save()
         }
       }
-      root_.$store.commit('setMetaReteData', data)
+      // root_.$store.commit('setMetaReteData', data)
       return true
     }
   )

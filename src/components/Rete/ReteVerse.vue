@@ -3,16 +3,11 @@
 </template>
 
 <script>
-import { initVerse, setup, firstTime, toJson, fromJson, arrange, process } from '@/node-editor/verse'
+import { initVerse, setup, create, arrange, save } from '@/node-editor/verse'
 
-import { mapActions } from 'vuex'
 export default {
   props: {
     verseId: {
-      type: Number,
-      required: true
-    },
-    id: {
       type: Number,
       required: true
     }
@@ -27,34 +22,20 @@ export default {
     initVerse({ container: self.$refs.rete, verseId: self.verseId, root: self })
   },
   beforeDestroy() {
-    const json = toJson()
-    this.saveVerseRete(JSON.stringify(json))
+    this.save()
   },
   methods: {
-    ...mapActions('verse', {
-      saveVerseRete: 'saveVerseRete',
-      createVerseRete: 'createVerseRete'
-    }),
-    process() {
-      process()
+    save() {
+      save()
     },
-    createRete() {
-      firstTime()
-      const json = toJson()
-      return this.createVerseRete(JSON.stringify(json))
+    create(verse) {
+      return create(verse)
     },
     arrange() {
       arrange()
     },
     setup(data) {
-      return setup(data)
-    },
-    load(data) {
-      fromJson(JSON.parse(data))
-    },
-    save() {
-      const json = toJson()
-      return this.saveVerseRete(JSON.stringify(json))
+      return setup(JSON.parse(data))
     }
   }
 }

@@ -10,6 +10,7 @@ import LimitPlugin from '@/node-editor/plugins/limit'
 import RandomStringPlugin from '@/node-editor/plugins/randomString'
 import { Component } from './components/Component'
 
+import { Build } from '@/node-editor/factory'
 import {
   MetaRoot,
   Polygen,
@@ -27,7 +28,7 @@ import {
 
 let editor_ = null
 let engine_ = null
-export const process = async function() {
+export const save = async function() {
   editor_.trigger('process', { status: 'save' })
 }
 export const arrange = function() {
@@ -36,22 +37,37 @@ export const arrange = function() {
     editor_.trigger('arrange', editor_.nodes)
   }
 }
-export const toJson = function() {
-  const json = editor_.toJSON()
-  return json
+export const create = function(meta) {
+  const data = {
+    type: 'MetaRoot',
+    parameters: {
+      name: meta,
+      transform: {
+        position: { x: 0, y: 0, z: 0 },
+        rotate: { x: 0, y: 0, z: 0 },
+        scale: { x: 1, y: 1, z: 1 }
+      },
+      active: true
+    },
+    chieldren: {
+      entities: [],
+      addons: []
+    }
+  }
+  return setup(data)
 }
-export const fromJson = function(data) {
-  editor_.fromJSON(data)
-  // setTimeout(arrange, 100)
-  // arrange()
-}
-
-export const firstTime = async function() {
-  const comp = editor_.getComponent('MetaRoot')
-  if (comp === null) { return }
-  const node = await comp.createNode()
-  node.position = [0, 0]
-  editor_.addNode(node)
+export const setup = function(data) {
+  console.log('--------------')
+  console.log(data)
+  return new Promise((resolve, reject) => {
+    Build(editor_, data)
+      .then(node => {
+        editor_.view.resize()
+        setTimeout(arrange, 100)
+        resolve(data)
+      })
+      .catch(e => reject(e))
+  })
 }
 
 export const initMeta = async function({ container, root }) {

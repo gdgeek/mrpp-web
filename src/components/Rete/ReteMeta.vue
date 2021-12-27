@@ -5,16 +5,9 @@
 </template>
 
 <script>
-import { initMeta, process, firstTime, toJson, fromJson, arrange } from '@/node-editor/meta'
+import { initMeta, save, setup, create, arrange } from '@/node-editor/meta'
 
-import { mapActions } from 'vuex'
 export default {
-  props: {
-    metaId: {
-      type: Number,
-      required: true
-    }
-  },
   data() {
     return {
       visible: true
@@ -32,28 +25,19 @@ export default {
     this.save()
   },
   methods: {
-    ...mapActions('meta', {
-      saveMetaRete: 'saveMetaRete',
-      createMetaRete: 'createMetaRete'
-    }),
-    createRete() {
-      firstTime()
-      const json = toJson()
-      return this.createMetaRete(JSON.stringify(json))
-    },
-    process() {
-      process()
+    save() {
+      save()
     },
     arrange() {
       arrange()
     },
-    load(data) {
-      fromJson(JSON.parse(data))
+    create(meta) {
+      return create(meta)
     },
-    save() {
-      const json = toJson()
-      return this.saveMetaRete(JSON.stringify(json))
+    setup(data) {
+      return setup(JSON.parse(data))
     }
+
   }
 }
 </script>

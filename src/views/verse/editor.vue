@@ -4,15 +4,14 @@
 
       <el-main>
         <el-card v-loading="loading" class="box-card">
-          <div v-if="data !== null" slot="header" class="clearfix">
+          <div v-if="verse !== null" slot="header" class="clearfix">
             【宇宙】{{ verseName }}
             <el-button-group style="float: right">
-              <el-button type="primary" size="mini" @click="process()"><font-awesome-icon icon="project-diagram" />  触发 </el-button>
               <el-button type="primary" size="mini" @click="arrange()"><font-awesome-icon icon="project-diagram" />  整理 </el-button>
               <el-button type="primary" size="mini" @click="save()"><font-awesome-icon icon="save" />  保存 </el-button>
             </el-button-group>
           </div>
-          <rete-verse :id="reteId" ref="rete" class="rete" :verse-id="id" />
+          <rete-verse ref="rete" class="rete" :verse-id="id" />
         </el-card>
       </el-main>
     </el-container>
@@ -22,8 +21,7 @@
 
 <script>
 import ReteVerse from '@/components/Rete/ReteVerse.vue'
-
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import { getVerse } from '@/api/v1/verse'
 export default {
   name: 'VerseEditor',
@@ -32,15 +30,14 @@ export default {
   },
   data() {
     return {
-      data: null,
+      verse: null,
       loading: true
     }
   },
   computed: {
     ...mapState({
       verseName: state => state.verse.data.name,
-      reteId: state => state.verse.data.reteId,
-      verseReteData: state => state.verse.data.reteData
+      reteId: state => state.verse.data.reteId
     }),
     id() {
       return parseInt(this.$route.query.id)
@@ -48,55 +45,50 @@ export default {
   },
   created() {
     const self = this
+
+    self.setVerseId(this.id)
     getVerse(this.id).then(response => {
       self.setVerseData(response.data)
-      self.data = response.data
-      // alert(response.data.data)
-      self.loading = false
-      this.setup(response.data.data)
-      /*
-      if (response.data.verseRetes != null && response.data.verseRetes.length > 0) {
-        self.load(response.data.verseRetes[0].data)
-        self.loading = false
-      } else {
-        self.createRete().then(data => {
-          self.data.verseRetes = [data]
-          self.setVerseReteId(data.id)
+      self.verse = response.data
+
+      if (self.verse.data !== null) {
+        self.setup(self.verse.data).then((data) => {
           self.loading = false
         })
-      }*/
+      } else {
+        self.create({ name: self.verse.name, id: self.verse.id }).then(data => {
+          self.saveVerse(JSON.stringify(data)).then((response) => {
+            self.loading = false
+          })
+        })
+      }
     })
   },
   methods: {
     ...mapMutations('verse', [
-      'setVerseName',
-      'setVerseReteId',
       'setVerseId',
       'setVerseData'
-
     ]),
+    ...mapActions('verse', {
+      saveVerse: 'saveVerse'
+    }),
     ...mapMutations([
       'setPolygenList',
       'setPictureList',
       'setVideoList'
 
     ]),
-
-    createRete() {
-      return this.$refs.rete.createRete()// $emit('load', data)
+    create(verse) {
+      return this.$refs.rete.create(verse)
     },
     setup(data) {
       return this.$refs.rete.setup(data)
     },
-    load(data) {
-      this.$refs.rete.load(data)// $emit('load', data)
-    },
+
     save() {
       this.$refs.rete.save()// .$emit('save', self.id)
     },
-    process() {
-      this.$refs.rete.process()// .$emit('arrange')
-    },
+
     arrange() {
       this.$refs.rete.arrange()// .$emit('arrange')
     }

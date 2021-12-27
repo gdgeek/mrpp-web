@@ -10,12 +10,11 @@
             </router-link>
             / 【元】{{ metaName }}
             <el-button-group style="float: right">
-              <el-button type="primary" size="mini" @click="process()"><font-awesome-icon icon="project-diagram" />  触发 </el-button>
               <el-button type="primary" size="mini" @click="arrange()"><font-awesome-icon icon="project-diagram" />  整理 </el-button>
               <el-button type="primary" size="mini" @click="save()"><font-awesome-icon icon="save" />  保存 </el-button>
             </el-button-group>
           </div>
-          <rete-meta :id="reteId" ref="rete" class="rete" :meta-id="id" />
+          <rete-meta ref="rete" class="rete" />
         </el-card>
       </el-main>
     </el-container>
@@ -26,7 +25,7 @@
 <script>
 import ReteMeta from '@/components/Rete/ReteMeta.vue'
 
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import { getMeta } from '@/api/v1/meta'
 import { getPolygen, getPicture, getVideo } from '@/api/resources'
 export default {
@@ -73,50 +72,50 @@ export default {
     })
 
     self.setMetaId(this.id)
+
     getMeta(this.id).then(response => {
       self.meta = response.data
-      self.setMetaData(response.data)
-      if (self.meta.metaRetes != null && self.meta.metaRetes.length > 0) {
-        self.load(self.meta.metaRetes[0].data)
-        self.loading = false
-      } else {
-        self.createRete().then(data => {
-          // self.meta.metaRetes = [data]
-          self.setMetaReteId(data.id)
+      self.setMetaData(self.meta)
+      if (self.meta.data !== null) {
+        self.setup(self.meta.data).then(data => {
           self.loading = false
+        })
+      } else {
+        self.create({ name: self.meta.name, id: self.meta.id }).then(data => {
+          self.saveMeta(JSON.stringify(data)).then((response) => {
+            self.loading = false
+          })
         })
       }
     })
   },
   methods: {
     ...mapMutations('meta', [
-      'setMetaName',
-      'setMetaReteId',
       'setMetaId',
       'setMetaData'
 
     ]),
+    ...mapActions('meta', {
+      saveMeta: 'saveMeta'
+    }),
     ...mapMutations([
-
       'setPolygenList',
       'setPictureList',
       'setVideoList'
-
     ]),
-    createRete() {
-      return this.$refs.rete.createRete()// $emit('load', data)
+
+    setup(data) {
+      return this.$refs.rete.setup(data)
     },
-    load(data) {
-      this.$refs.rete.load(data)// $emit('load', data)
+    create() {
+      return this.$refs.rete.create()
     },
-    save() {
-      this.$refs.rete.save()// .$emit('save', self.id)
-    },
+
     arrange() {
       this.$refs.rete.arrange()// .$emit('arrange')
     },
-    process() {
-      this.$refs.rete.process()// .$emit('arrange')
+    save() {
+      this.$refs.rete.save()// .$emit('arrange')
     }
   }
 }
