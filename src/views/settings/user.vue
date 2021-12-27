@@ -32,13 +32,13 @@
                 :auto-upload="false"
                 :show-file-list="false"
                 :on-change="handleChangeUpload"
+                accept="image/jpeg,image/gif,image/png,image/bmp"
                 style="float: left"
               >
                 <img v-if="imageUrl" :src="imageUrl" class="avatar">
                 <i v-else class="el-icon-plus avatar-uploader-icon" />
               </el-upload>
               <div style="float: left">
-
                 <p class="user-explain">最大尺寸 2 MB。JPG、GIF、PNG。</p>
               </div>
             </el-form-item>
@@ -84,7 +84,7 @@
               <el-cascader
                 v-model="infoForm.selectedOptions"
                 size="large"
-                :options="infoForm.addressOptions"
+                :options="addressOptions"
                 style="width: 100%"
                 @change="handleChange"
               />
@@ -112,7 +112,7 @@
       </el-row>
       <!-- 用户基本信息 end-->
       <!-- vueCropper 剪裁图片dialog实现-->
-      <el-dialog title="图片剪裁" :visible.sync="dialogVisible" class="crop-dialog" append-to-body>
+      <el-dialog title="头像截取" :visible.sync="dialogVisible" class="crop-dialog" append-to-body>
         <div class="cropper-content">
           <div class="cropper" style="text-align:center">
             <vueCropper
@@ -138,6 +138,7 @@
           </div>
         </div>
         <div class="action-box">
+
           <el-upload
             class="upload-demo"
             action=""
@@ -145,18 +146,24 @@
             :show-file-list="false"
             :on-change="handleChangeUpload"
           >
-            <el-button type="primary" plain>更换图片</el-button>
+            <!-- <el-button type="primary" plain>更换图片</el-button> -->
+
           </el-upload>
-          <el-button type="primary" plain @click="clearImgHandle">清除图片</el-button>
-          <el-button type="primary" plain @click="rotateLeftHandle">左旋转</el-button>
-          <el-button type="primary" plain @click="rotateRightHandle">右旋转</el-button>
-          <el-button type="primary" plain @click="changeScaleHandle(1)">放大</el-button>
-          <el-button type="primary" plain @click="changeScaleHandle(-1)">缩小</el-button>
-          <el-button type="primary" plain @click="downloadHandle('blob')">下载</el-button>
+
         </div>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" :loading="loading" @click="finish">确认</el-button>
+          <el-button-group style=" float: left;">
+            <!--   <el-button type="primary" plain @click="clearImgHandle">清除图片</el-button> -->
+            <el-button type="primary" plain @click="rotateLeftHandle">左旋转</el-button>
+            <el-button type="primary" plain @click="rotateRightHandle">右旋转</el-button>
+            <el-button type="primary" plain @click="changeScaleHandle(1)">放大</el-button>
+            <el-button type="primary" plain @click="changeScaleHandle(-1)">缩小</el-button>
+            <!--    <el-button type="primary" plain @click="downloadHandle('blob')">下载</el-button>-->
+          </el-button-group>
+          <el-button-group>
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" :loading="loading" @click="finish">确认</el-button>
+          </el-button-group>
         </div>
       </el-dialog>
       <!-- vueCropper 剪裁图片dialog end-->
@@ -168,12 +175,19 @@
 import { mapGetters } from 'vuex'
 import { putUserData } from '@/api/v1/user'
 import { regionDataPlus, CodeToText } from 'element-china-area-data'
+
+import { postFile } from '@/api/files'
+import SparkMD5 from 'spark-md5'
+import { fileMD5, fileCos, fileUpload, fileHas, fileUrl } from '@/assets/js/file.js'
 export default {
   name: 'User',
   computed: {
     ...mapGetters([
       'userData'
-    ])
+    ]),
+    imageUrl() {
+      return null
+    }
   },
   data: function() {
     return {
@@ -186,11 +200,10 @@ export default {
           { min: 2, message: '昵称长度应该大于2', trigger: 'blur' }
         ]
       },
+      addressOptions: regionDataPlus,
       infoForm: {
         sex: 'man',
         industry: '',
-        // address-options
-        addressOptions: regionDataPlus,
         selectedOptions: [],
         textarea: ''
       },
@@ -201,15 +214,15 @@ export default {
         ]
       },
       // 剪裁组件配置开始
-      isPreview: false,
+      // isPreview: false,
       dialogVisible: false,
-      previewImg: '', // 预览图片地址
+      // previewImg: '', // 预览图片地址
       // 裁剪组件的基础配置option
       option: {
         img: '', // 裁剪图片的地址
         info: true, // 裁剪框的大小信息
         outputSize: 1, // 裁剪生成图片的质量
-        outputType: 'png', // 裁剪生成图片的格式
+        outputType: 'jpg', // 裁剪生成图片的格式
         canScale: true, // 图片是否允许滚轮缩放
         autoCrop: true, // 是否默认生成截图框
         canMoveBox: true, // 截图框能否拖动
@@ -243,6 +256,10 @@ export default {
       if (typeof info.textarea !== 'undefined') {
         self.infoForm.textarea = info.textarea
       }
+
+      if (typeof info.selectedOptions !== 'undefined') {
+        self.infoForm.selectedOptions = info.selectedOptions
+      }
     }
   },
   methods: {
@@ -257,6 +274,10 @@ export default {
           putUserData({ nickname: self.nicknameForm.nickname }).then(response => {
             console.log(response.data)
             self.refreshUserdata(response.data)
+            this.$message({
+              message: '修改昵称成功',
+              type: 'success'
+            })
           })
         }
       })
@@ -272,6 +293,10 @@ export default {
           putUserData({ info: JSON.stringify(self.infoForm) }).then(response => {
             console.log(response.data)
             self.refreshUserdata(response.data)
+            this.$message({
+              message: '修改信息成功',
+              type: 'success'
+            })
           })
         }
       })
@@ -279,10 +304,10 @@ export default {
     // 头像上传方法开始
     // 上传按钮 限制图片大小和类型
     handleChangeUpload(file, fileList) {
-      const isJPG = file.raw.type === 'image/jpeg' || file.raw.type === 'image/png'
+      const isJPG = file.raw.type === 'image/jpeg' || file.raw.type === 'image/png' || file.raw.type === 'image/bmp' || file.raw.type === 'image/gif'
       const isLt2M = file.size / 1024 / 1024 < 2
       if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG/PNG 格式!')
+        this.$message.error('上传头像图片只能是 JPG/PNG/BMP/GIF 格式!')
         return false
       }
       if (!isLt2M) {
@@ -317,13 +342,13 @@ export default {
       aLink.download = 'author-img'
       if (type === 'blob') {
         this.$refs.cropper.getCropBlob((data) => {
-          const downImg = window.URL.createObjectURL(data)
+          //   const downImg = window.URL.createObjectURL(data)
           aLink.href = window.URL.createObjectURL(data)
           aLink.click()
         })
       } else {
         this.$refs.cropper.getCropData((data) => {
-          const downImg = data
+        //  const downImg = data
           aLink.href = data
           aLink.click()
         })
@@ -339,13 +364,49 @@ export default {
       // let cropAxis = [data.axis.x1, data.axis.y1, data.axis.x2, data.axis.y2]
       // console.log(cropAxis)
     },
+    saveAvatar(file, md5, url) {
+      postFile(file.name, md5, file.type, url).then((response) => {
+        putUserData({ avatar_id: response.data.id }).then((data) => {
+          this.loading = false
+        }).catch(err => {
+          this.loading = false
+          console.log(err)
+        })
+      }).catch(err => {
+        this.loading = false
+        console.log(err)
+      })
+    },
     finish() {
+      const self = this
       // 获取截图的 blob 数据
       this.$refs.cropper.getCropBlob((blob) => {
-        this.loading = true
+        alert(self.userData.username)
+        blob.name = self.userData.username + '.avatar'
+        blob.extension = '.jpg'
+        const file = blob
+
+        fileMD5(file, (p) => {}, new SparkMD5()).then(function(md5) {
+          const key = md5 + file.extension
+          fileCos().then(cos => {
+            fileHas(key, cos).then(function(has) {
+              if (has) {
+                self.saveAvatar(file, md5, fileUrl(key, cos))
+              } else {
+                fileUpload(key, file, (p) => {}, cos)
+                  .then(data => {
+                    self.saveAvatar(file, md5, fileUrl(key, cos))
+                  })
+              }
+            })
+          })
+        })
+        alert(blob.extension)
         this.dialogVisible = false
+        this.loading = true
+        /*
         this.previewImg = URL.createObjectURL(blob)
-        this.isPreview = true
+        this.isPreview = true*/
       })
       // 获取截图的 base64 数据
       // this.$refs.cropper.getCropData(data => {
