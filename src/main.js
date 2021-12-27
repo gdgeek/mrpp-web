@@ -16,7 +16,9 @@ import router from './router'
 import VueCookies from 'vue-cookies'
 import '@/icons' // icon
 import '@/permission' // permission control
+import VueCropper from 'vue-cropper'
 
+Vue.use(VueCropper)
 Vue.use(VueCookies)
 Vue.$cookies.config('7d')
 
