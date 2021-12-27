@@ -18,11 +18,6 @@ const mutations = {
   setVerseData(state, verse) {
     state.data.name = verse.name
     state.data.id = verse.id
-
-    if (verse.verseRetes.length > 0) {
-      state.data.reteId = verse.verseRetes[0].id
-      state.data.reteData = verse.verseRetes[0].data
-    }
   }
 }
 const actions = {

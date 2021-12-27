@@ -43,7 +43,6 @@ export default {
     ...mapState({
       metaName: state => state.meta.data.name,
       reteId: state => state.meta.data.reteId,
-      metaReteData: state => state.meta.data.reteData,
       pictureList: state => state.resource.pictureList,
       videoList: state => state.resource.videoList,
       polygenList: state => state.resource.polygenList

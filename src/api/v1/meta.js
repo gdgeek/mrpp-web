@@ -9,7 +9,7 @@ export function postMeta(data) {
 
 export function getMeta(id) {
   return request({
-    url: 'v1/metas/' + id + '?expand=verse,metaRetes',
+    url: 'v1/metas/' + id + '?expand=verse',
     method: 'get'
   })
 }
