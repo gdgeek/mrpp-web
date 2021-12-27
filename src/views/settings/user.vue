@@ -186,6 +186,9 @@ export default {
       'userData'
     ]),
     imageUrl() {
+      if (typeof this.userData.avatar === 'undefined') {
+        return ''
+      }
       return this.userData.avatar.url
     }
   },

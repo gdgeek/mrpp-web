@@ -10,7 +10,7 @@
         <div class="avatar-wrapper">
           <div class="right-menu-item">
             <!-- {{ $store.state.user.data.nickname }} -->
-            {{ userData.nickname }}
+            {{ nickname }}
           </div>
           <el-avatar :src="avatar" shape="square">
             <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png">
@@ -63,7 +63,16 @@ export default {
       'userData'
     ]),
     avatar() {
+      if (typeof this.userData.avatar === 'undefined') {
+        return ''
+      }
       return this.userData.avatar.url
+    },
+    nickname() {
+      if (typeof this.userData.nickname === 'undefined') {
+        return this.userData.username
+      }
+      return this.userData.nickname
     }
   },
   created() {
