@@ -8,7 +8,7 @@ export class NumControl extends Rete.Control {
     this.props = { emitter, ikey: key, readonly }
     setTimeout(() => {
       this.vueContext.value = 12
-      alert(this.vueContext.value)
+      // alert(this.vueContext.value)
     }, 1000)
   }
 

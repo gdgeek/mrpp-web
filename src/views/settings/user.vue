@@ -186,7 +186,7 @@ export default {
       'userData'
     ]),
     imageUrl() {
-      return null
+      return this.userData.avatar.url
     }
   },
   data: function() {
@@ -272,7 +272,6 @@ export default {
       this.$refs.nicknameForm.validate((valid) => {
         if (valid) {
           putUserData({ nickname: self.nicknameForm.nickname }).then(response => {
-            console.log(response.data)
             self.refreshUserdata(response.data)
             this.$message({
               message: '修改昵称成功',
@@ -365,8 +364,14 @@ export default {
       // console.log(cropAxis)
     },
     saveAvatar(file, md5, url) {
+      const self = this
       postFile(file.name, md5, file.type, url).then((response) => {
-        putUserData({ avatar_id: response.data.id }).then((data) => {
+        putUserData({ avatar_id: response.data.id }).then((response) => {
+          self.refreshUserdata(response.data)
+          this.$message({
+            message: '修改头像成功',
+            type: 'success'
+          })
           this.loading = false
         }).catch(err => {
           this.loading = false
@@ -381,7 +386,6 @@ export default {
       const self = this
       // 获取截图的 blob 数据
       this.$refs.cropper.getCropBlob((blob) => {
-        alert(self.userData.username)
         blob.name = self.userData.username + '.avatar'
         blob.extension = '.jpg'
         const file = blob
@@ -401,17 +405,9 @@ export default {
             })
           })
         })
-        alert(blob.extension)
         this.dialogVisible = false
         this.loading = true
-        /*
-        this.previewImg = URL.createObjectURL(blob)
-        this.isPreview = true*/
       })
-      // 获取截图的 base64 数据
-      // this.$refs.cropper.getCropData(data => {
-      //     console.log(data)
-      // })
     }
     // 头像上床方法结束
   }

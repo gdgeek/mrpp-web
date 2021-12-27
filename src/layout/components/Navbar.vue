@@ -12,7 +12,7 @@
             <!-- {{ $store.state.user.data.nickname }} -->
             {{ userData.nickname }}
           </div>
-          <el-avatar :src="userData.avatar" shape="square">
+          <el-avatar :src="avatar" shape="square">
             <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png">
           </el-avatar>
           <i class="el-icon-caret-bottom" />
@@ -61,7 +61,13 @@ export default {
     ...mapGetters([
       'sidebar',
       'userData'
-    ])
+    ]),
+    avatar() {
+      return this.userData.avatar.url
+    }
+  },
+  created() {
+    // alert(this.userData.avatar.url)
   },
   methods: {
     toggleSideBar() {
