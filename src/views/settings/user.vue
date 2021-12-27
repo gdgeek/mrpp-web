@@ -158,7 +158,7 @@
             <el-button type="primary" plain @click="rotateRightHandle">右旋转</el-button>
             <el-button type="primary" plain @click="changeScaleHandle(1)">放大</el-button>
             <el-button type="primary" plain @click="changeScaleHandle(-1)">缩小</el-button>
-            <!--    <el-button type="primary" plain @click="downloadHandle('blob')">下载</el-button>-->
+            <el-button type="primary" plain @click="downloadHandle('blob')">下载</el-button>
           </el-button-group>
           <el-button-group>
             <el-button @click="dialogVisible = false">取 消</el-button>
@@ -187,7 +187,7 @@ export default {
     ]),
     imageUrl() {
       if (typeof this.userData.avatar === 'undefined') {
-        return ''
+        return null
       }
       return this.userData.avatar.url
     }

@@ -13,7 +13,7 @@
             {{ nickname }}
           </div>
           <el-avatar :src="avatar" shape="square">
-            <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png">
+            <img src="@/assets/image/null.png">
           </el-avatar>
           <i class="el-icon-caret-bottom" />
 
