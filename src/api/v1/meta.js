@@ -13,10 +13,18 @@ export function getMeta(id) {
     method: 'get'
   })
 }
+export function getMetas(sort = '-created_at', search = '', page = 0) {
+  let url = 'v1/metas?expand=image,author&sort=' + sort
 
-export function getMetas() {
+  if (search !== '') {
+    url += '&VerseSearch[name]=' + search
+  }
+  if (page > 1) {
+    url += '&page=' + page
+  }
+
   return request({
-    url: 'v1/metas',
+    url,
     method: 'get'
   })
 }

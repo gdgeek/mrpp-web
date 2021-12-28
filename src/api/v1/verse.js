@@ -14,7 +14,7 @@ export function getVerse(id) {
   })
 }
 
-export function getVerses(sort, search = '', page = 0) {
+export function getVerses(sort = '-created_at', search = '', page = 0) {
   let url = 'v1/verses?expand=image,author&sort=' + sort
 
   if (search !== '') {
