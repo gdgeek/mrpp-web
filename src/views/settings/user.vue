@@ -21,7 +21,7 @@
                 autocomplete="off"
                 @keyup.enter.native="submitNickname"
               >
-                <el-button slot="suffix" style="margin-right:-5px" @click="submitNickname">确定</el-button>
+                <el-button slot="suffix" style="margin-right:-5px" :disabled="isDisable" @click="submitNickname">确定</el-button>
               </el-input>
             </el-form-item>
             <!-- 头像部分 -->
@@ -102,6 +102,7 @@
               <el-button
                 type="primary"
                 style="width: 150px"
+                :disabled="isDisable"
                 @click="saveInfo()"
               >
                 保存
@@ -137,8 +138,7 @@
             />
           </div>
         </div>
-        <div class="action-box">
-
+        <!-- <div class="action-box">
           <el-upload
             class="upload-demo"
             action=""
@@ -146,11 +146,9 @@
             :show-file-list="false"
             :on-change="handleChangeUpload"
           >
-            <!-- <el-button type="primary" plain>更换图片</el-button> -->
-
+            <el-button type="primary" plain>更换图片</el-button>
           </el-upload>
-
-        </div>
+        </div> -->
         <div slot="footer" class="dialog-footer">
           <el-button-group style=" float: left;">
             <!--   <el-button type="primary" plain @click="clearImgHandle">清除图片</el-button> -->
@@ -193,14 +191,25 @@ export default {
     }
   },
   data: function() {
+    const validateNickname = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入用户昵称 '))
+      } else if (value === this.userData.nickname) {
+        callback(new Error('新用户名不能和旧用户名一致!'))
+      } else {
+        callback()
+      }
+    }
     return {
+      isDisable: false,
       nicknameForm: {
         nickname: ''
       },
       nicknameRules: {
         nickname: [
           { required: true, message: '请输入用户昵称', trigger: 'blur' },
-          { min: 2, message: '昵称长度应该大于2', trigger: 'blur' }
+          { min: 2, message: '昵称长度应该大于2', trigger: 'blur' },
+          { validator: validateNickname, trigger: 'blur' }
         ]
       },
       addressOptions: regionDataPlus,
@@ -229,8 +238,8 @@ export default {
         canScale: true, // 图片是否允许滚轮缩放
         autoCrop: true, // 是否默认生成截图框
         canMoveBox: true, // 截图框能否拖动
-        autoCropWidth: 200, // 默认生成截图框宽度
-        autoCropHeight: 200, // 默认生成截图框高度
+        autoCropWidth: 300, // 默认生成截图框宽度
+        autoCropHeight: 300, // 默认生成截图框高度
         fixedBox: false, // 固定截图框大小 不允许改变
         fixed: true, // 是否开启截图框宽高固定比例
         fixedNumber: [1, 1], // 截图框的宽高比例
@@ -272,6 +281,10 @@ export default {
     },
     submitNickname() {
       const self = this
+      self.isDisable = true
+      setTimeout(() => {
+        this.isDisable = false // 防重复提交，两秒后才能再次点击
+      }, 2000)
       this.$refs.nicknameForm.validate((valid) => {
         if (valid) {
           putUserData({ nickname: self.nicknameForm.nickname }).then(response => {
@@ -290,6 +303,10 @@ export default {
     },
     saveInfo() {
       const self = this
+      self.isDisable = true
+      setTimeout(() => {
+        this.isDisable = false // 防重复提交，两秒后才能再次点击
+      }, 2000)
       this.$refs.infoForm.validate((valid) => {
         if (valid) {
           putUserData({ info: JSON.stringify(self.infoForm) }).then(response => {
@@ -443,9 +460,6 @@ export default {
  }
 
 .avatar-uploader {
-  margin: 0 12px 12px 0;
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -460,11 +474,16 @@ export default {
   height: 132px;
   line-height: 132px;
   text-align: center;
+  border: 1px dashed #d9d9d9;
+  margin-right: 12px;
+  border-radius: 6px;
 }
 .avatar {
   width: 132px;
   height: 132px;
   display: block;
+  border-radius: 6px;
+  margin-right: 12px;
 }
 </style>
 
