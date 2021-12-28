@@ -2,7 +2,7 @@ import { putVerse } from '@/api/v1/verse'
 const state = {
   data: {
     name: null,
-    mates: null,
+    metas: null,
     id: -1
   }
 }
@@ -18,6 +18,7 @@ const mutations = {
   setVerseData(state, verse) {
     state.data.name = verse.name
     state.data.id = verse.id
+    state.data.metas = verse.metas
   }
 }
 const actions = {

@@ -52,6 +52,9 @@ export default {
   },
   methods: {
     setList(list) {
+      if (list === null) {
+        return
+      }
       const self = this
       this.options = []
       list.forEach(item => {

@@ -2,7 +2,7 @@
   <el-form :inline="true" size="mini">
     <el-form-item class="el-form-item" :inline="true" :label="data.title">
 
-      <el-tag type="success" size="small" @click="changeMateName()"> {{ value.name }}</el-tag>
+      <el-tag type="success" size="small" @click="changeMetaName()"> {{ value.name }}</el-tag>
     </el-form-item>
   </el-form>
 </template>
@@ -45,7 +45,7 @@ export default {
   },
 
   methods: {
-    changeMateName() {
+    changeMetaName() {
       const id = this.root.$store.state.meta.data.id
       const self = this
       this.$prompt('请输入新的名称', '修改【元】名称', {
@@ -56,7 +56,7 @@ export default {
         // inputErrorMessage: '邮箱格式不正确'
       }).then(({ value }) => {
         putMeta(id, { name: value }).then(() => {
-          this.root.$store.commit('setMetaName', value)
+          this.root.$store.commit('meta/setMetaName', value)
           self.value.name = value
           //  this.root.$store.state.meta.data.name = value
           this.$message({

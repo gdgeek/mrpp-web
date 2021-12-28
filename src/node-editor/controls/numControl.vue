@@ -32,9 +32,9 @@ export default {
     const value = this.getData(this.data.key)
     if (typeof value !== 'undefined') {
       this.value = value
-      alert(2)
+      // alert(2)
     } else if (typeof this.data.default !== 'undefined') {
-      alert(this.data.default)
+      // alert(this.data.default)
       this.value = this.data.default
     }
     this.refresh()

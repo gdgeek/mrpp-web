@@ -1,7 +1,7 @@
 import COS from 'cos-js-sdk-v5'
 import { sts } from '@/api/servers'
 
-function saveMate(){
+function saveMeta(){
 
 }
-export { saveMate }
+export { saveMeta }

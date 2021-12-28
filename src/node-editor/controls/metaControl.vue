@@ -2,7 +2,7 @@
   <div>
     <el-form ref="value" :model="value" size="mini" label-width="40px">
       <el-form-item class="el-form-item" label="名称">
-        <el-tag size="small" type="success" @click="changeMateName(value.id)"> {{ value.name }}</el-tag>
+        <el-tag size="small" type="success" @click="changeMetaName(value.id)"> {{ value.name }}</el-tag>
       </el-form-item>
 
       <el-form-item class="el-form-item" hidden label="id">
@@ -33,17 +33,26 @@ export default {
     }
   },
   mounted() {
+    // alert(this.root.$store.state.verse.data.metas)
+
     const value = this.getData(this.data.key)
     if (typeof value !== 'undefined') {
       this.value = value
     } else if (typeof this.data.default !== 'undefined') {
       this.value = this.data.default
     }
+    if (this.root.$store.state.verse.data.metas != null) {
+      this.root.$store.state.verse.data.metas.forEach(meta => {
+        if (this.value.id === meta.id) {
+          this.value.name = meta.name
+        }
+      })
+    }
     this.refresh()
   },
 
   methods: {
-    changeMateName(id) {
+    changeMetaName(id) {
       const self = this
       this.$prompt('请输入新的名称', '修改【元】名称', {
         confirmButtonText: '确定',
