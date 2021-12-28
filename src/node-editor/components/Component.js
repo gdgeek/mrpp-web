@@ -47,6 +47,7 @@ export class Component extends Rete.Component {
   worker(node, inputs, outputs, callback) {
     const data = {}
     data.type = this.type_.title
+    // data.id = node.id
     if (
       typeof this.type_.controls !== 'undefined' &&
       this.type_.controls !== null

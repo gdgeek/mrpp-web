@@ -5,6 +5,10 @@ var EntityType = {
   allocate: ['实体'],
   controls: [
     {
+      type: 'uuid',
+      key: 'uuid'
+    },
+    {
       type: 'string',
       key: 'name',
       title: '名称',

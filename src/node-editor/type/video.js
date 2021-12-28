@@ -5,6 +5,10 @@ var VideoType = {
   allocate: ['实体'],
   controls: [
     {
+      type: 'uuid',
+      key: 'uuid'
+    },
+    {
       type: 'string',
       key: 'name',
       title: '名称',
@@ -31,7 +35,8 @@ var VideoType = {
       type: 'number',
       key: 'width',
       title: '宽度',
-      readonly: false
+      readonly: false,
+      default: 0.5
     },
     {
       type: 'bool',

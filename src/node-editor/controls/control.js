@@ -11,6 +11,7 @@ import PictureControl from './pictureControl.vue'
 import Vector3Control from './vector3Control.vue'
 import IconsControl from './iconsControl.vue'
 import VerseNameControl from './verseNameControl.vue'
+import UUIDControl from './uuidControl.vue'
 
 export class Control extends Rete.Control {
   constructor(emitter, data, root) {
@@ -51,6 +52,9 @@ export class Control extends Rete.Control {
         break
       case 'verse-name':
         this.component = VerseNameControl
+        break
+      case 'uuid':
+        this.component = UUIDControl
         break
       default:
         this.component = VueNumControl
