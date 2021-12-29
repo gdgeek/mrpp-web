@@ -12,6 +12,8 @@ import Vector3Control from './vector3Control.vue'
 import IconsControl from './iconsControl.vue'
 import VerseNameControl from './verseNameControl.vue'
 import UUIDControl from './uuidControl.vue'
+import CodeControl from './codeControl.vue'
+import ButtonControl from './buttonControl.vue'
 
 export class Control extends Rete.Control {
   constructor(emitter, data, root) {
@@ -55,6 +57,12 @@ export class Control extends Rete.Control {
         break
       case 'uuid':
         this.component = UUIDControl
+        break
+      case 'code':
+        this.component = CodeControl
+        break
+      case 'button':
+        this.component = ButtonControl
         break
       default:
         this.component = VueNumControl

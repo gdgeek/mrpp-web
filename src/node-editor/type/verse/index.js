@@ -8,6 +8,20 @@ var VerseType = {
       type: 'verse-name',
       key: 'verse',
       readonly: true
+    },
+    {
+      type: 'button',
+      key: 'code',
+      title: '进入编辑',
+      label: '逻辑',
+      style: 'primary',
+      callback: function(root) {
+        root.$router.push({
+          path: '/verse/code',
+          query: { id: root.$store.state.verse.data.id }
+        })
+      },
+      readonly: true
     }
   ],
 

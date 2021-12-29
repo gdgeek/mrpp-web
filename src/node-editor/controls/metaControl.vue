@@ -33,8 +33,6 @@ export default {
     }
   },
   mounted() {
-    // alert(this.root.$store.state.verse.data.metas)
-
     const value = this.getData(this.data.key)
     if (typeof value !== 'undefined') {
       this.value = value
@@ -62,7 +60,6 @@ export default {
         // inputErrorMessage: '邮箱格式不正确'
       }).then(({ value }) => {
         putMeta(id, { name: value }).then(() => {
-          // this.root.$store.commit('setMetaName', value)
           self.value.name = value
           this.$message({
             type: 'success',

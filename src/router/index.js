@@ -146,6 +146,11 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/blockly',
+    component: () => import('@/views/test/blockly'),
+    hidden: true
+  },
+  {
     path: 'home',
     component: Layout,
     children: [
@@ -175,6 +180,12 @@ export const constantRoutes = [
         name: 'Editor',
         meta: { title: '宇宙编辑' },
         component: () => import('@/views/verse/editor')
+      },
+      {
+        path: 'code',
+        name: 'Code',
+        meta: { title: '宇宙逻辑' },
+        component: () => import('@/views/verse/code')
       },
       {
         path: 'meta/editor',

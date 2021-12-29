@@ -1,8 +1,7 @@
 <template>
   <el-form :inline="true" size="mini">
-    <el-form-item class="el-form-item" :inline="true" :label="data.title">
+    <el-form-item class="el-form-item" :inline="true" label="名称">
       <el-tag size="small" @click="changeVerseName()"> {{ value.name }}</el-tag>
-
     </el-form-item>
   </el-form>
 </template>
@@ -27,7 +26,7 @@ export default {
         return this.root.$store.state.verse.data.name
       },
       set(value) {
-        this.root.$store.commit('setVerseName', value)
+        this.root.$store.commit('verse/setVerseName', value)
         this.refresh()
       }
     }
@@ -52,7 +51,7 @@ export default {
         putVerse(id, { name: value }).then(() => {
           // this.root.$store.commit('setMetaName', value)
           self.value.name = value
-          this.root.$store.commit('setVerseName', value)
+          this.root.$store.commit('verse/setVerseName', value)
           // this.root.$store.state.verse.data.name = value
           this.$message({
             type: 'success',
