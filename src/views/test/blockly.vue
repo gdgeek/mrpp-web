@@ -16,12 +16,7 @@
             </el-button-group>
           </div>
 
-          <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-            <el-tab-pane label="逻辑编辑" name="first" />
-            <el-tab-pane label="代码查看" name="second" />
-          </el-tabs>
-
-          <div id="blocklyDiv" style="height: 600px; width: 100%" />
+          <blockly/>
         </el-card>
       </el-main>
     </el-container>
@@ -29,16 +24,17 @@
 </template>
 
 <script>
-import Blockly from 'blockly'
-import toolbox from '@/assets/js/blockly/toolbox'
-import {AddBlocks}  from '@/assets/js/blockly/blocks'
-import 'blockly/lua'
+import Blockly from '@/components/Blockly.vue'
+
 export default {
   name: 'VerseCode',
+  components: {
+    Blockly,
+    verse: null
+  },
   data() {
     return {
       loading: false,
-      workspace: null
     }
   },
   computed: {
@@ -47,21 +43,7 @@ export default {
     }
   },
   mounted() {
-    AddBlocks()
-    this.workspace = Blockly.inject('blocklyDiv', {
-      toolbox: toolbox,
-      grid: { spacing: 20, length: 3, colour: '#ccc', snap: true },
-      move: {
-        scrollbars: {
-          horizontal: false,
-          vertical: true
-        },
-        drag: true,
-        wheel: false
-      },
-      zoom: { startScale: 1.0, maxScale: 3, minScale: 0.3, controls: true, wheel: true, pinch: true }
-    })
-    console.log(this.workspace)
+    
   },
   methods: {}
 }

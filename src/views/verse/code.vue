@@ -14,29 +14,36 @@
             </el-button-group>
           </div>
 
-          <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-            <el-tab-pane label="逻辑编辑" name="first" />
-            <el-tab-pane label="代码查看" name="second" />
-
-          </el-tabs>
-
-          <div id="blocklyDiv" style="height: 1024px; width: 100%;" />
-        </el-card>
+          <blockly/>
+       
+       </el-card>
       </el-main>
     </el-container>
   </div>
 </template>
 
 <script>
-import Blockly from 'blockly'
-import 'blockly/lua'
+import Blockly from '@/components/Blockly.vue'
+
+import { getVerse } from '@/api/v1/verse'
 export default {
   name: 'VerseCode',
+  components: {
+    Blockly
+  },
   data() {
     return {
-      loading: false
-
+      loading: false,
+      verse: null
     }
+  },
+  created() {
+    const self = this
+
+   
+    getVerse(this.id).then(response => {
+      verse = response.data
+    })
   },
   computed: {
 
@@ -45,41 +52,7 @@ export default {
     }
   },
   mounted() {
-    const toolbox = {
-      'kind': 'flyoutToolbox',
-      'contents': [
-        {
-          'kind': 'block',
-          'type': 'controls_if'
-        },
-        {
-          'kind': 'block',
-          'type': 'controls_repeat_ext'
-        },
-        {
-          'kind': 'block',
-          'type': 'logic_compare'
-        },
-        {
-          'kind': 'block',
-          'type': 'math_number'
-        },
-        {
-          'kind': 'block',
-          'type': 'math_arithmetic'
-        },
-        {
-          'kind': 'block',
-          'type': 'text'
-        },
-        {
-          'kind': 'block',
-          'type': 'text_print'
-        }
-      ]
-    }
-    var workspace = Blockly.inject('blocklyDiv', { toolbox: toolbox })
-    console.log(workspace)
+    
   },
   methods: {
 
