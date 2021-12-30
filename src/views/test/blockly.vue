@@ -31,6 +31,7 @@
 <script>
 import Blockly from 'blockly'
 import toolbox from '@/assets/js/blockly/toolbox'
+import {AddBlocks}  from '@/assets/js/blockly/blocks'
 import 'blockly/lua'
 export default {
   name: 'VerseCode',
@@ -46,7 +47,7 @@ export default {
     }
   },
   mounted() {
-    
+    AddBlocks()
     this.workspace = Blockly.inject('blocklyDiv', {
       toolbox: toolbox,
       grid: { spacing: 20, length: 3, colour: '#ccc', snap: true },
