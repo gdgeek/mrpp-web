@@ -25,6 +25,7 @@
 <script>
 import Blockly from '@/components/Blockly.vue'
 
+import { mapMutations} from 'vuex'
 import { getVerse } from '@/api/v1/verse'
 export default {
   name: 'VerseCode',
@@ -40,9 +41,13 @@ export default {
   created() {
     const self = this
 
-   
     getVerse(this.id).then(response => {
-      verse = response.data
+      self.verse = response.data
+      if(typeof response.data.metas !== 'undefined'){
+        response.data.metas.forEach(meta => {
+          self.addMeta(meta)
+        })
+      }
     })
   },
   computed: {
@@ -52,10 +57,12 @@ export default {
     }
   },
   mounted() {
-    
+   
   },
   methods: {
-
+    ...mapMutations('blockly', [
+      'addMeta',
+    ]),
   }
 }
 </script>

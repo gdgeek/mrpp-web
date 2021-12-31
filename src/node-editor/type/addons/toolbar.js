@@ -13,7 +13,7 @@ var ToolbarType = {
   ],
   inputs: [
     {
-      key: 'button-in',
+      key: 'buttons',
       title: '按钮',
       socket: ButtonSocket,
       multiConns: true
