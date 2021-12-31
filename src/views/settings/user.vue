@@ -284,7 +284,7 @@ export default {
       self.isDisable = true
       setTimeout(() => {
         this.isDisable = false // 防重复提交，两秒后才能再次点击
-      }, 2000)
+      }, 1000)
       this.$refs.nicknameForm.validate((valid) => {
         if (valid) {
           putUserData({ nickname: self.nicknameForm.nickname }).then(response => {

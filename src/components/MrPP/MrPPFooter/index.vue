@@ -29,11 +29,11 @@ export default {
 .footer {
   text-align:center;
   font-size: 12px;
-  margin: 0 20px;
-  line-height: 80px;
+  margin: 0 30px;
+  line-height:80px;
   .copyright a {
     color: rgb(40, 119, 129);
-    padding: 0 10px;
+    padding: 0 20px;
     font-size: 14px;
   }
   .copyright a:hover {
