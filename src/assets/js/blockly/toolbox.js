@@ -6,10 +6,11 @@ import List from '@/assets/js/blockly/list'
 import Colour from '@/assets/js/blockly/colour' 
 import Vector3Data from '@/assets/js/blockly/custom/data/vector3_data'
 import TransformData from '@/assets/js/blockly/custom/data/transform_data'
-import InitAction from '@/assets/js/blockly/custom/trigger/init_action'
+import InitTrigger from '@/assets/js/blockly/custom/trigger/init_trigger'
 
-import UpdateAction from '@/assets/js/blockly/custom/trigger/update_action'
-import DestroyAction from '@/assets/js/blockly/custom/trigger/destroy_action'
+import UpdateTrigger from '@/assets/js/blockly/custom/trigger/update_trigger'
+import DestroyTrigger from '@/assets/js/blockly/custom/trigger/destroy_trigger'
+import ActionTrigger from '@/assets/js/blockly/custom/trigger/action_trigger'
 const sep = {
   "kind": "sep"
 }
@@ -38,7 +39,12 @@ const Trigger = {
   kind: 'category',
   name: '触发',
   colour: '%{BKY_PROCEDURES_HUE}',
-  contents: [InitAction.toolbox, UpdateAction.toolbox, DestroyAction.toolbox]
+  contents: [
+    ActionTrigger.toolbox,
+    InitTrigger.toolbox,
+    UpdateTrigger.toolbox,
+    DestroyTrigger.toolbox
+  ]
 }
 
 export default {
