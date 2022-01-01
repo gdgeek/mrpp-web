@@ -4,7 +4,8 @@ const state = {
     actions: [],
     polygens: [],
     pictures: [],
-    videos: []
+    videos: [],
+    entities: []
   }
 }
 
@@ -15,18 +16,18 @@ const mutations = {
     state.pictures = []
     state.videos = []
   },
-  addMetaData(state, data) {
+  addMetaData(state, name, data) {
     if (typeof data.parameters.action !== 'undefined') {
       if (typeof data.parameters.action_parameter !== 'undefined') {
         state.data.actions.push({
           uuid: data.parameters.uuid,
-          name: data.parameters.action,
+          name: name + ':' + data.parameters.action,
           parameter: data.parameters.action_parameter
         })
       } else {
         state.data.actions.push({
           uuid: data.parameters.uuid,
-          name: data.parameters.action
+          name: name + ':' + data.parameters.action
         })
       }
     }
@@ -61,13 +62,13 @@ const mutations = {
       const keys = Object.keys(data.chieldren)
       keys.forEach(key => {
         data.chieldren[key].forEach(item => {
-          mutations.addMetaData(state, item)
+          mutations.addMetaData(state, name, item)
         })
       })
     }
   },
   addMeta(state, meta) {
-    mutations.addMetaData(state, JSON.parse(meta.data))
+    mutations.addMetaData(state, meta.name, JSON.parse(meta.data))
   }
 
 }

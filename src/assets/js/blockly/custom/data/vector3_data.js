@@ -1,14 +1,17 @@
 import Blockly from 'blockly'
 import DataType from './type'
+const data = {
+  name: 'vector3_data'
+}
 const block = {
-  title: 'vector3_data',
+  title: data.name,
   type: DataType.name,
   colour: DataType.colour,
   getBlock: function (root) {
     const block = {
       init: function () {
         this.jsonInit({
-          type: 'block_type',
+          type: data.name,
           message0: 'X %1 Y %2 X %3',
           args0: [
             {
@@ -61,9 +64,9 @@ const block = {
     }
     return lua
   },
-  toolbox:{
+  toolbox: {
     kind: 'block',
-    type: block.title,
+    type: data.name,
     inputs: {
       X: {
         shadow: {

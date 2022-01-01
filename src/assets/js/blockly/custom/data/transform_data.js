@@ -1,14 +1,16 @@
 import Blockly from 'blockly'
 import DataType from './type'
-
+const data = {
+  name: 'transform_data'
+}
 const block = {
-  title: 'transform_data',
+  title: data.name,
   type: DataType.name,
   getBlock(root) {
     const block = {
       init: function () {
         this.jsonInit({
-          type: 'transform_data',
+          type: data.name,
           message0: '位置 %1 旋转 %2 缩放 %3',
           args0: [
             {
@@ -70,7 +72,7 @@ const block = {
   },
   toolbox: {
     kind: 'block',
-    type: block.title,
+    type: data.name,
     inputs: {
       position: {
         shadow: {

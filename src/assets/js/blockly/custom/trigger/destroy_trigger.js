@@ -1,15 +1,18 @@
 import Blockly from 'blockly'
 
+const data = {
+  name: 'destroy_trigger'
+}
 import TriggerType from './type'
 const block = {
-  title: 'destroy_trigger',
+  title: data.name,
   type: TriggerType.name,
   colour: TriggerType.colour,
-  getBlock(root){
+  getBlock(root) {
     const block = {
       init: function () {
         this.jsonInit({
-          type: 'destroy_trigger',
+          type: data.name,
           message0: '初始化 %1 %2',
           args0: [
             {
@@ -28,7 +31,7 @@ const block = {
     }
     return block
   },
-  getLua(root){
+  getLua(root) {
     const lua = function (block) {
       var statements_content = Blockly.Lua.statementToCode(block, 'content')
       // TODO: Assemble Lua into code variable.
@@ -41,9 +44,9 @@ const block = {
     }
     return lua
   },
-  toolbox:{
+  toolbox: {
     kind: 'block',
-    type: block.title
+    type: data.name
   }
 }
 

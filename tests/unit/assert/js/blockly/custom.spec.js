@@ -4,6 +4,7 @@ import InitTrigger from '@/assets/js/blockly/custom/trigger/init_trigger'
 import UpdateTrigger from '@/assets/js/blockly/custom/trigger/update_trigger'
 import DestroyTrigger from '@/assets/js/blockly/custom/trigger/destroy_trigger'
 import ActionTrigger from '@/assets/js/blockly/custom/trigger/action_trigger'
+import PolygenEntity from '@/assets/js/blockly/custom/entity/polygen_entity'
 
 import Blockly from 'blockly'
 function AddBlockData(root, data) {
@@ -17,6 +18,8 @@ function AddBlocks(root) {
   AddBlockData(root, UpdateTrigger)
   AddBlockData(root, DestroyTrigger)
   AddBlockData(root, ActionTrigger)
+  AddBlockData(root, PolygenEntity)
+
   /*
   AddBlockData(root, TransformData)
   AddBlockData(root, InitTrigger)
