@@ -4,6 +4,10 @@ var TextType = {
   title: 'Text',
   controls: [
     {
+      type: 'uuid',
+      key: 'uuid'
+    },
+    {
       type: 'string',
       key: 'name',
       title: '名称',

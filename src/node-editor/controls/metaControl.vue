@@ -1,7 +1,7 @@
 <template>
   <div>
-    <el-form ref="value" :model="value" size="mini" label-width="40px">
-      <el-form-item class="el-form-item" label="名称">
+    <el-form ref="value" :model="value" size="mini">
+      <el-form-item :inline="true" class="el-form-item" label="名称">
         <el-tag size="small" type="success" @click="changeMetaName(value.id)"> {{ value.name }}</el-tag>
       </el-form-item>
 
@@ -9,7 +9,7 @@
         <el-input v-model.number="value.id" />
       </el-form-item>
 
-      <el-form-item class="el-form-item" label="操作">
+      <el-form-item :inline="true" class="el-form-item" label="操作">
         <el-button type="success" plain :disabled="value.id === -1" @click="editor(value.id)"> 进入编辑</el-button>
       </el-form-item>
 

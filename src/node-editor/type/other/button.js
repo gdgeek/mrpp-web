@@ -5,6 +5,10 @@ var ButtonType = {
   allocate: ['其他'],
   controls: [
     {
+      type: 'uuid',
+      key: 'uuid'
+    },
+    {
       type: 'string',
       key: 'title',
       title: '标题',
@@ -18,10 +22,16 @@ var ButtonType = {
   ],
   inputs: [
     {
-      key: 'action-in',
+      key: 'action',
       title: '动作',
       socket: ActionSocket,
-      multiConns: true
+      multiConns: false,
+      control: {
+        type: 'string',
+        key: 'action',
+        title: '动作',
+        default: 'action'
+      }
     }
   ],
   outputs: [

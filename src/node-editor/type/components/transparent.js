@@ -5,6 +5,10 @@ var TransparentType = {
   allocate: ['组件'],
   controls: [
     {
+      type: 'uuid',
+      key: 'uuid'
+    },
+    {
       type: 'number',
       key: 'alpha',
       title: '透明度',

@@ -7,6 +7,10 @@ var LockedScaleType = {
   inputs: [],
   outputs: [
     {
+      type: 'uuid',
+      key: 'uuid'
+    },
+    {
       key: 'out',
       title: '组件',
       socket: ComponentSocket,

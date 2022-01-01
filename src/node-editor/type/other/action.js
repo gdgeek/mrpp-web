@@ -5,9 +5,18 @@ var ActionType = {
   allocate: ['其他'],
   controls: [
     {
+      type: 'uuid',
+      key: 'uuid'
+    },
+    {
       type: 'string',
-      key: 'title',
-      title: '名称'
+      key: 'action',
+      title: '动作'
+    },
+    {
+      type: 'string',
+      key: 'action_parameter',
+      title: '参数'
     }
   ],
   outputs: [

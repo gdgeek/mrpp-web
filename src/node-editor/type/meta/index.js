@@ -5,6 +5,10 @@ var MetaType = {
   title: 'Meta',
   controls: [
     {
+      type: 'uuid',
+      key: 'uuid'
+    },
+    {
       type: 'meta',
       key: 'meta',
       readonly: true

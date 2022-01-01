@@ -22,9 +22,16 @@ export class Component extends Rete.Component {
       this.type_.inputs !== null
     ) {
       this.type_.inputs.forEach(input => {
-        node.addInput(
-          new Rete.Input(input.key, input.title, input.socket, input.multiConns)
+        const ipt = new Rete.Input(
+          input.key,
+          input.title,
+          input.socket,
+          input.multiConns
         )
+        if (typeof input.control !== 'undefined') {
+          ipt.addControl(new Control(this.editor, input.control, this.root_))
+        }
+        node.addInput(ipt)
       })
     }
     if (
@@ -47,18 +54,16 @@ export class Component extends Rete.Component {
   worker(node, inputs, outputs, callback) {
     const data = {}
     data.type = this.type_.title
-    // data.id = node.id
+    console.log(node)
+    console.log(inputs)
     if (
       typeof this.type_.controls !== 'undefined' &&
       this.type_.controls !== null
     ) {
       data.parameters = {}
       this.type_.controls.forEach(ctrl => {
+        // alert(ctrl.key)
         data.parameters[ctrl.key] = node.data[ctrl.key]
-
-        console.log(JSON.stringify(ctrl.key))
-        console.log(JSON.stringify(node.data[ctrl.key]))
-        console.log(JSON.stringify(data.parameters))
       })
     }
 
@@ -69,10 +74,18 @@ export class Component extends Rete.Component {
       data.chieldren = {}
       this.type_.inputs.forEach(input => {
         const items = inputs[input.key]
+
         data.chieldren[input.key] = []
-        items.forEach(item => {
-          data.chieldren[input.key].push(item)
-        })
+
+        if (items.length === 0) {
+          if (typeof input.control !== 'undefined') {
+            data.parameters[input.control.key] = node.data[input.control.key]
+          }
+        } else {
+          items.forEach(item => {
+            data.chieldren[input.key].push(item)
+          })
+        }
       })
     }
 
@@ -85,7 +98,7 @@ export class Component extends Rete.Component {
       })
     }
     if (typeof this.type_.root !== 'undefined' && this.type_.root) {
-      // alert(1)
+      alert(JSON.stringify(data))
       console.log(JSON.stringify(data))
       callback(JSON.stringify(data))
       // const data = {}

@@ -12,7 +12,6 @@ function install(editor, options) {
     options.forEach((value, index, arr) => {
       if (value.component === component.name) {
         const control = component.controls.get(value.target)
-
         if (control !== null) {
           if (typeof component.data[value.target] === 'undefined') {
             component.data[value.target] = randomWords()

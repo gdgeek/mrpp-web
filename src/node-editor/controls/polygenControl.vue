@@ -1,5 +1,5 @@
 <template>
-  <el-form :inline="true" size="mini" label-width="40px">
+  <el-form :inline="true" size="mini">
     <el-form-item :inline="true" class="el-form-item" :label="data.title">
       <el-select v-model="value" placeholder="请选择">
         <el-option

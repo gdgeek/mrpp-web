@@ -1,11 +1,15 @@
 import Vue from 'vue'
 import { shallowMount } from '@vue/test-utils'
-import Document from '@/components/Document.vue'
+import Blockly from '@/components/Blockly.vue'
 
+import ElementUI from 'element-ui'
+import locale from 'element-ui/lib/locale/lang/en'
+
+Vue.use(ElementUI, { locale })
 describe('Document.vue', () => {
-  it('increments count when button is clicked', async() => {
-    const wrapper = shallowMount(Document)
-    expect(wrapper.name()).toBe('Document')
+  it('test blockly', async() => {
+    const wrapper = shallowMount(Blockly)
+    expect(wrapper.name()).toBe('Blockly')
     // expect(wrapper.findAll('div').exists()).toBe(true)
     // wrapper.find('button').trigger('click')
     await Vue.nextTick()

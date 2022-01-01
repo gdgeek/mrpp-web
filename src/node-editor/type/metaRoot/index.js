@@ -6,7 +6,10 @@ var MetaRootType = {
   title: 'MetaRoot',
   root: true,
   controls: [
-
+    {
+      type: 'uuid',
+      key: 'uuid'
+    },
     {
       type: 'meta-name',
       key: 'name',

@@ -5,6 +5,10 @@ var RotateType = {
   allocate: ['组件'],
   controls: [
     {
+      type: 'uuid',
+      key: 'uuid'
+    },
+    {
       type: 'vector3',
       key: 'speed',
       title: '速度',

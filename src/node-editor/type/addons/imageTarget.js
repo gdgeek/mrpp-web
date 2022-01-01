@@ -5,6 +5,10 @@ var ImageTargetType = {
   allocate: ['插件'],
   controls: [
     {
+      type: 'uuid',
+      key: 'uuid'
+    },
+    {
       type: 'vector3',
       key: 'position',
       title: '位置'

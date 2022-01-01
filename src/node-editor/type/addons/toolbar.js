@@ -5,6 +5,10 @@ var ToolbarType = {
   allocate: ['插件'],
   controls: [
     {
+      type: 'uuid',
+      key: 'uuid'
+    },
+    {
       type: 'bool',
       key: 'destory',
       title: '销毁',

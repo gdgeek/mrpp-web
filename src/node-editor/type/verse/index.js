@@ -5,6 +5,10 @@ var VerseType = {
   root: true,
   controls: [
     {
+      type: 'uuid',
+      key: 'uuid'
+    },
+    {
       type: 'verse-name',
       key: 'verse',
       readonly: true
