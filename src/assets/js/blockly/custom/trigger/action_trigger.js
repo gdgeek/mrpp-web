@@ -17,7 +17,7 @@ const block = {
       args0: [
         {
           type: 'field_dropdown',
-          name: '动作',
+          name: 'Action',
           options: function () {
            
             const actions = root.$store.state.blockly.data.actions
@@ -53,7 +53,7 @@ const block = {
   },
   getLua(root) {
     const lua = function (block) {
-      var dropdown_option = block.getFieldValue('<#Action>')
+      var dropdown_option = block.getFieldValue('Action')
       var statements_content = Blockly.Lua.statementToCode(block, 'content')
       // TODO: Assemble Lua into code variable.
       var code = '..'

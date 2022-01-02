@@ -36,25 +36,25 @@ const mutations = {
       case 'Polygen':
         state.data.polygens.push({
           uuid: data.parameters.uuid,
-          name: data.parameters.action
+          name: name + ':' + data.parameters.name
         })
         break
       case 'Entity':
         state.data.entities.push({
           uuid: data.parameters.uuid,
-          name: data.parameters.action
+          name: name + ':' + data.parameters.name
         })
         break
       case 'Video':
         state.data.videos.push({
           uuid: data.parameters.uuid,
-          name: data.parameters.action
+          name: name + ':' + data.parameters.name
         })
         break
       case 'Picture':
         state.data.pictures.push({
           uuid: data.parameters.uuid,
-          name: data.parameters.action
+          name: name + ':' + data.parameters.name
         })
         break
     }

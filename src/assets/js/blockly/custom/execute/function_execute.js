@@ -1,7 +1,7 @@
-import Blockly from 'blockly'
+
 import DataType from './type'
 const data = {
-  name: 'polygen_entity'
+  name: 'function_execute'
 }
 const block = {
   title: data.name,
@@ -10,23 +10,28 @@ const block = {
   getBlockJson(root) {
     const json = {
       type: data.name,
-      message0: '模型 %1',
+      message0: '执行 %1',
       args0: [
         {
           type: 'field_dropdown',
-          name: 'Polygen',
-          options: function () {
-            const polygens = root.$store.state.blockly.data.polygens
-            let opt = [['none', '']]
-            polygens.forEach(poly => {
-              // alert(poly.name)
-              opt.push([poly.name, poly.uuid])
-            })
-            return opt
-          }
+          name: 'function',
+          options: [
+            ['redo', 'CS.MrPP.Lua.LuaExecuter.Redo()'],
+            ['undo', 'CS.MrPP.Lua.LuaExecuter.Undo()'],
+            [
+              'boom_reset',
+              'CS.MrPP.Lua.LuaExecuter.BoomReset(parameter.sample)'
+            ],
+            [
+              'sample_reset',
+              'CS.MrPP.Lua.LuaExecute.SampleReset(parameter.sample)'
+            ]
+          ]
         }
       ],
-      output: 'Entity',
+      inputsInline: false,
+      previousStatement: null,
+      nextStatement: null,
       colour: DataType.colour,
       tooltip: '',
       helpUrl: ''
@@ -44,12 +49,10 @@ const block = {
   },
   getLua(root) {
     const lua = function (block) {
-      var dropdown_polygen = block.getFieldValue('Polygen')
-      //alert(dropdown_polygen);
+      var dropdown_function = block.getFieldValue('function')
       // TODO: Assemble Lua into code variable.
-      var code = 'CS.MrPP.Lua.Handler("polygen", "' + dropdown_polygen + '")'
-      // TODO: Change ORDER_NONE to the correct strength.
-      return [code, Blockly.Lua.ORDER_NONE]
+      var code = dropdown_function + '\n'
+      return code
     }
     return lua
   },

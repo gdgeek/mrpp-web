@@ -5,9 +5,10 @@ import Texts from '@/assets/js/blockly/texts'
 import List from '@/assets/js/blockly/list' 
 import Colour from '@/assets/js/blockly/colour' 
 
-import TriggerCategory from '@/assets/js/blockly/custom/trigger/category'
-import DataCategory from '@/assets/js/blockly/custom/data/category'
-
+import { EntityCategory } from '@/assets/js/blockly/custom/entity'
+import { DataCategory } from '@/assets/js/blockly/custom/data'
+import { TriggerCategory } from '@/assets/js/blockly/custom/trigger'
+import { ExecuteCategory } from '@/assets/js/blockly/custom/execute'
 const sep = {
   "kind": "sep"
 }
@@ -37,6 +38,8 @@ export default {
     sep,
     DataCategory,
     TriggerCategory,
+    EntityCategory,
+    ExecuteCategory,
     sep,
     Variable,
     Procedure
