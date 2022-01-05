@@ -3,18 +3,18 @@
     <div class="guide-header">
       <!-- header布局开始 -->
       <el-row :gutter="20">
-        <el-col :xs="24" :sm="12" :md="12" :lg="15" :xl="15">
+        <el-col :xs="24" :sm="12" :md="12" :lg="14" :xl="14">
           <div>
             <ul class="guide-header-ul">
               <li><a>介绍</a></li><li><a>文档</a></li><li><a>帮助</a></li>
             </ul></div>
         </el-col>
-        <el-col :xs="18" :sm="12" :md="12" :lg="8" :xl="8">
+        <el-col :xs="18" :sm="12" :md="12" :lg="10" :xl="10">
           <div class="guide-header-search">
             <el-input
               v-model="input"
               size="mini"
-              style="width: 80%"
+              style="width: 80%;min-width:200px"
               placeholder="搜索名称"
               class="input-with-select"
               @keyup.enter.native="keyDown"
@@ -132,7 +132,7 @@ export default {
   .guide-header-ul {
     line-height: 0px;
     min-width: 500px;
-    margin-left: 10%;
+    margin-left: 14%;
   }
   .guide-header-ul li {
     list-style-type:none;
@@ -147,13 +147,14 @@ export default {
     color: rgb(74, 168, 180);
   }
   .guide-header-search {
-    padding-left: 5em;
+    margin: 0 70px 0 100px;
   }
 }
 // main样式开始
 .guide-main {
   width: 100%;
   height: 100%;
+  min-height: 80vh;
   background-color:rgb(236, 243, 241);
   margin: 0;
   padding: 40px 0 30px;
@@ -161,7 +162,7 @@ export default {
 .guide-main-box {
   border-radius: 6px;
   width: 84%;
-  min-height: 400px;
+  min-height: 80vh;
   margin: 0 auto;
   padding: 50px 50px;
   // text-align: center;

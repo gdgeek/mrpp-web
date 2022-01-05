@@ -134,17 +134,17 @@ export default {
   z-index: 100;
   width: 100%;
   text-align: right;
-  padding-right: 9em;
-  line-height: 60px;
+  padding-right: 5em;
+  align-items: center;
   background: #cadbe2;
   .guide-header-ul {
-    line-height: 0px;
+     align-items: center;
+     margin-right: 100px;
   }
   .guide-header-ul li {
     list-style-type: none;
-    display: inline;
-    padding-right: 4.8%;
-    line-height: 30px;
+    display: inline-block;
+    margin-right: 4.8%;
     font-size: 16px;
     font-weight: 700;
     color: rgb(101, 132, 136);
@@ -159,13 +159,14 @@ export default {
   margin-top: 55px;
   width: 100%;
   height: 100%;
+  min-height: 80vh;
   background-color: rgb(236, 243, 241);
   padding: 40px 0 30px;
 }
 
 .guide-main-box {
   width: 82%;
-  min-height: 400px;
+  min-height: 80vh;
   margin: 0 auto;
   padding: 50px 50px;
   border-radius: 6px;
