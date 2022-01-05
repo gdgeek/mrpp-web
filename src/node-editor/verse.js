@@ -15,8 +15,16 @@ let engine_ = null
 export const arrange = function() {
   editor_.trigger('arrange', editor_.nodes)
 }
-
-export const save = async function() {
+let outMeta_ = 0
+export const addMeta = function(meta) {
+  const component = editor_.getComponent('Meta')
+  component.createNode({ meta }).then(node => {
+    node.position = [-300 + outMeta_ * 50, -150 + outMeta_ * 50]
+    editor_.addNode(node)
+    outMeta_++
+  })
+}
+export const save = function() {
   editor_.trigger('process', { status: 'save' })
 }
 

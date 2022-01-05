@@ -20,7 +20,6 @@ export default {
   methods: {
 
     heartbeat() {
-      console.log(1)
       const tk = getToken()
       if (tk !== null) {
         token().then(response => {

@@ -53,6 +53,13 @@ export default {
 
       if (self.verse.data !== null) {
         self.setup(self.verse.data).then((data) => {
+          const json = JSON.parse(self.verse.data)
+          response.data.metas.forEach(meta => {
+            if (!json.chieldren.metas.find(item => item.parameters.meta.id === meta.id)) {
+              self.addMeta(meta)
+            }
+          })
+
           self.loading = false
         })
       } else {
@@ -78,6 +85,9 @@ export default {
       'setVideoList'
 
     ]),
+    addMeta(meta) {
+      return this.$refs.rete.addMeta(meta)
+    },
     create(verse) {
       return this.$refs.rete.create(verse)
     },

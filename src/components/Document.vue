@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name:'Document',
+  name: 'Document',
   data() {
     return {
       count: 0

@@ -2,7 +2,7 @@
   <div>
     <el-form :inline="true" size="mini">
       <el-form-item :inline="true" class="el-form-item" :label="label">
-        <el-button :type="style" plain @click="click">{{ title }}111</el-button>
+        <el-button :type="style" plain @click="click">{{ title }}</el-button>
       </el-form-item>
     </el-form>
   </div>

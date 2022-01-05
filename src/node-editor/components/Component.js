@@ -98,7 +98,7 @@ export class Component extends Rete.Component {
       })
     }
     if (typeof this.type_.root !== 'undefined' && this.type_.root) {
-      alert(JSON.stringify(data))
+      // JSON.stringify(data))
       console.log(JSON.stringify(data))
       callback(JSON.stringify(data))
       // const data = {}

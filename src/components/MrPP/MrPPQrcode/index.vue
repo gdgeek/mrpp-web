@@ -87,8 +87,6 @@ export default {
       }
       openid(this.token).then((response) => {
         if (typeof (response.data) !== 'undefined') {
-          console.log(self.token)
-          console.log(response.data.token)
           if (typeof (response.data.token) !== 'undefined' && response.data.token === self.token) {
             if (typeof (response.data.access_token) !== 'undefined') {
               setToken(response.data.access_token)

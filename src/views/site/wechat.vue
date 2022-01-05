@@ -47,7 +47,6 @@ export default {
     self.interval = setInterval(() => {
       self.refresh()
     }, 1000)
-    // alert(1)
   },
   methods: {
     refresh() {

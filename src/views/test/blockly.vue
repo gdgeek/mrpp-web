@@ -16,7 +16,7 @@
             </el-button-group>
           </div>
 
-          <blockly/>
+          <blockly />
         </el-card>
       </el-main>
     </el-container>
@@ -29,12 +29,11 @@ import Blockly from '@/components/Blockly.vue'
 export default {
   name: 'VerseCode',
   components: {
-    Blockly,
-    verse: null
+    Blockly
   },
   data() {
     return {
-      loading: false,
+      loading: false
     }
   },
   computed: {
@@ -43,7 +42,6 @@ export default {
     }
   },
   mounted() {
-    
   },
   methods: {}
 }

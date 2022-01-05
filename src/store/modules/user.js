@@ -1,11 +1,9 @@
 import { login, signup } from '@/api/sites'
 import { getData, getMenu, logout } from '@/api/servers'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { /* getToken, */setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
-
 const getDefaultState = () => {
   return {
-    token: getToken(),
     name: '',
     data: null,
     wxOpenid: '',
@@ -47,7 +45,6 @@ const actions = {
         .then(response => {
           const data = response.data
 
-          console.log(data.token)
           commit('SET_TOKEN', data.token)
           setToken(data.token)
           resolve(response)

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { initVerse, setup, create, arrange, save } from '@/node-editor/verse'
+import { initVerse, setup, create, arrange, save, addMeta } from '@/node-editor/verse'
 
 export default {
   props: {
@@ -36,6 +36,9 @@ export default {
     },
     setup(data) {
       return setup(JSON.parse(data))
+    },
+    addMeta(meta) {
+      return addMeta({ name: meta.name, id: meta.id })
     }
   }
 }

@@ -7,15 +7,15 @@ export function postVerse(data) {
   })
 }
 
-export function getVerse(id) {
+export function getVerse(id, expand = 'metas') {
   return request({
-    url: 'v1/verses/' + id + '?expand=metas',
+    url: 'v1/verses/' + id + '?expand=' + expand,
     method: 'get'
   })
 }
 
-export function getVerses(sort = '-created_at', search = '', page = 0) {
-  let url = 'v1/verses?expand=image,author&sort=' + sort
+export function getVerses(sort = '-created_at', search = '', page = 0, expand = 'image,author') {
+  let url = 'v1/verses?expand=' + expand + '&sort=' + sort
 
   if (search !== '') {
     url += '&VerseSearch[name]=' + search

@@ -11,7 +11,6 @@ export class NumComponent extends Rete.Component {
   }
 
   worker(node, inputs, outputs) {
-    // alert(1)
     outputs['num'] = node.data.num
   }
 }

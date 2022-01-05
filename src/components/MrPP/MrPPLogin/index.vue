@@ -34,7 +34,7 @@
 
 <script>
 // @ is an alias to /src
-import { setToken } from '@/utils/auth'
+import { setToken, getToken } from '@/utils/auth'
 import { login } from '@/api/sites'
 export default {
   name: 'MrPPLogin',
@@ -69,8 +69,12 @@ export default {
               console.log(response)
               if (response.data) {
                 setToken(response.data.access_token)
+
+                alert(getToken())
+
                 this.$router.push('/')
               }
+            }).catch(e => {
             })
         } else {
           return false

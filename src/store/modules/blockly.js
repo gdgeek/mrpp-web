@@ -17,6 +17,9 @@ const mutations = {
     state.videos = []
   },
   addMetaData(state, name, data) {
+    if (data === null) {
+      return
+    }
     if (typeof data.parameters.action !== 'undefined') {
       if (typeof data.parameters.action_parameter !== 'undefined') {
         state.data.actions.push({
