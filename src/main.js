@@ -1,5 +1,6 @@
 import Vue from 'vue'
-
+import { abilitiesPlugin } from '@casl/vue'
+import ability from './ability'
 import VueCookies from 'vue-cookies'
 Vue.use(VueCookies)
 Vue.$cookies.config('7d')
@@ -35,6 +36,9 @@ Vue.use(ElementUI, { locale })
 // Vue.use(ElementUI)
 Vue.config.productionTip = false
 
+Vue.use(abilitiesPlugin, ability, {
+  useGlobalProperties: true
+})/**/
 new Vue({
   el: '#app',
   router,
