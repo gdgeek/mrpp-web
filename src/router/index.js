@@ -209,7 +209,19 @@ export const constantRoutes = [
       {
         path: 'index',
         name: 'Index',
-        component: () => import('@/views/document/index')
+        component: () => import('@/views/document/index'),
+        children: [
+          {
+            path: '/main1',
+            name: 'Main1',
+            component: () => import('@/views/document/mains/Main1')
+          },
+          {
+            path: '/main2',
+            name: 'Main2',
+            component: () => import('@/views/document/mains/Main2')
+          }
+        ]
       }
     ]
   },

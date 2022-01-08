@@ -67,10 +67,7 @@
       <!-- 右侧主内容 -->
       <el-main>
         <router-view />
-        工作板块正在架设中，有检测-doing-封装-历史版本4个环节
-        <br>
-        历史版本在/document/workdata/vrsions目录下
-        <br>
+        演示文档
       </el-main>
     </el-container>
     <!-- 页面主体结束 -->

@@ -26,8 +26,8 @@
           router
           :default-openeds="['1']"
           unique-opened
-          background-color="#e9efed"
-          text-color="#475659"
+          background-color="#99b0b6"
+          text-color="#334157"
         >
           <el-submenu index="1">
             <template slot="title">
@@ -67,10 +67,7 @@
       <!-- 右侧主内容 -->
       <el-main>
         <router-view />
-        工作板块正在架设中，有检测-doing-封装-历史版本4个环节
-        <br>
-        历史版本在/document/workdata/vrsions目录下
-        <br>
+        演示文档
       </el-main>
     </el-container>
     <!-- 页面主体结束 -->
@@ -93,17 +90,22 @@ export default {
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  background:#cadbe2;
+  background: rgb(44, 210, 176);
+  background: linear-gradient(
+    101deg,
+    rgba(59, 219, 187, 0.776) 0%,
+    rgba(34, 184, 214, 0.807) 66%
+  );
   &-title {
     display: flex;
     align-items: center;
     font-size: 20px;
     font-weight: 700;
-    color: #698488;
+    color: #3b3d3d;
   }
 }
 .el-aside {
-  background-color: #e9efed;
+  background-color:#99b0b6;
   .el-menu{
     text-align: center;
   }
