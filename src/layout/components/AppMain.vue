@@ -1,6 +1,7 @@
 <template>
   <section class="app-main">
-    <transition name="fade-transform" mode="out-in">
+    <!-- name fade or fade-transform -->
+    <transition name="fade" mode="out-in">
       <router-view :key="key" />
     </transition>
   </section>

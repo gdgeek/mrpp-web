@@ -122,9 +122,6 @@ export default {
 <style lang="scss" scoped>
 // 头部样式
 .guide-header {
-//  position: fixed;
-//  bottom: 1;
-  // z-index: 2;
   width: 100%;
   line-height: 60px;
   background: #cadbe2;
@@ -137,7 +134,7 @@ export default {
   .guide-header-ul li {
     list-style-type:none;
     display:inline;
-    padding-right: 15%;
+    padding-right: 12%;
     line-height: 30px;
     font-size: 16px;
     font-weight:700;
@@ -154,7 +151,7 @@ export default {
 .guide-main {
   width: 100%;
   height: 100%;
-  min-height: 80vh;
+  min-height: calc(100vh - 110px);
   background-color:rgb(236, 243, 241);
   margin: 0;
   padding: 40px 0 30px;
@@ -162,9 +159,9 @@ export default {
 .guide-main-box {
   border-radius: 6px;
   width: 84%;
-  min-height: 80vh;
+  min-height: calc(100vh - 140px);
   margin: 0 auto;
-  padding: 50px 50px;
+  padding: 30px 50px;
   // text-align: center;
   background-color:#fff;
 }

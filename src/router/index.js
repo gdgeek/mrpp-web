@@ -37,6 +37,41 @@ export const constantRoutes = [
     component: Layout
   },
   {
+    path: '/document',
+    component: Layout,
+    redirect: '/document/workdata',
+    meta: { title: '工作中心' },
+    children: [
+      {
+        path: 'workdata',
+        name: 'Workdata',
+        component: () => import('@/views/document/workdata/workdata')
+      },
+      {
+        path: 'doing',
+        name: 'Doing',
+        component: () => import('@/views/document/workdata/doing/doing')
+      },
+      {
+        path: 'doing2',
+        name: 'Doing2',
+        component: () => import('@/views/document/workdata/doing/doing2')
+      }
+      // {
+      //   path: 'doing',
+      //   name: 'Doing',
+      //   component: () => import('@/views/document/workdata/doing/doing')
+      // }
+    ]
+  },
+  // {
+  //   path: '/workdata',
+  //   component: Layout,
+  //   meta: { title: '工作中心' },
+  //   redirect: '/workdata/workdata',
+
+  // },
+  {
     path: '/settings',
     component: Layout,
     meta: { title: '个人中心' },
@@ -214,12 +249,17 @@ export const constantRoutes = [
           {
             path: '/main1',
             name: 'Main1',
-            component: () => import('@/views/document/mains/Main1')
+            component: () => import('@/views/document/mains/main1')
           },
           {
             path: '/main2',
             name: 'Main2',
-            component: () => import('@/views/document/mains/Main2')
+            component: () => import('@/views/document/mains/main2')
+          },
+          {
+            path: '/main3',
+            name: 'Main3',
+            component: () => import('@/views/document/mains/main3')
           }
         ]
       }

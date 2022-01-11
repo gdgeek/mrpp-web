@@ -50,7 +50,7 @@
             </template>
             <el-menu-item index="/main1">教程</el-menu-item>
             <el-menu-item index="/main2">示例</el-menu-item>
-            <el-menu-item index="/main3">选项3</el-menu-item>
+            <el-menu-item index="/main1">选项3</el-menu-item>
             <el-menu-item index="/main2">选项4</el-menu-item>
           </el-submenu>
           <el-submenu index="3">

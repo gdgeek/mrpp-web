@@ -65,9 +65,62 @@
         </el-menu>
       </el-aside>
       <!-- 右侧主内容 -->
-      <el-main>
+      <el-main class="font-style">
         <router-view />
         演示文档
+        <p>
+          In order to receive the best answers to your questions please follow
+          these simple guidelines. Be descriptive about your question or problem
+          and be sure to include any errors. Single line topics will rarely
+          receive answers and do not just post a screenshot. Provide examples of
+          the code in question and use syntax highlighting. Breakdown the issue
+          in your code and provide a link to an example that replicates it. Use
+          JSFiddle, CodePen, JSBin, or CodeSandbox. Following these few steps
+          will greatly improve your chances of getting a good quality answer to
+          your issue. Remember, everyone is here to share ideas and to help out
+          using their own free time. Making an effort to craft a well thought
+          out topic pays tribute to this.
+        </p>
+        <p>
+          In order to receive the best answers to your questions please follow
+          these simple guidelines. Be descriptive about your question or problem
+          and be sure to include any errors. Single line topics will rarely
+          receive answers and do not just post a screenshot. Provide examples of
+          the code in question and use syntax highlighting. Breakdown the issue
+          in your code and provide a link to an example that replicates it. Use
+          JSFiddle, CodePen, JSBin, or CodeSandbox. Following these few steps
+          will greatly improve your chances of getting a good quality answer to
+          your issue. Remember, everyone is here to share ideas and to help out
+          using their own free time. Making an effort to craft a well thought
+          out topic pays tribute to this.
+        </p>
+
+        <p>
+          In order to receive the best answers to your questions please follow
+          these simple guidelines. Be descriptive about your question or problem
+          and be sure to include any errors. Single line topics will rarely
+          receive answers and do not just post a screenshot. Provide examples of
+          the code in question and use syntax highlighting. Breakdown the issue
+          in your code and provide a link to an example that replicates it. Use
+          JSFiddle, CodePen, JSBin, or CodeSandbox. Following these few steps
+          will greatly improve your chances of getting a good quality answer to
+          your issue. Remember, everyone is here to share ideas and to help out
+          using their own free time. Making an effort to craft a well thought
+          out topic pays tribute to this.
+        </p>
+        <p>
+          In order to receive the best answers to your questions please follow
+          these simple guidelines. Be descriptive about your question or problem
+          and be sure to include any errors. Single line topics will rarely
+          receive answers and do not just post a screenshot. Provide examples of
+          the code in question and use syntax highlighting. Breakdown the issue
+          in your code and provide a link to an example that replicates it. Use
+          JSFiddle, CodePen, JSBin, or CodeSandbox. Following these few steps
+          will greatly improve your chances of getting a good quality answer to
+          your issue. Remember, everyone is here to share ideas and to help out
+          using their own free time. Making an effort to craft a well thought
+          out topic pays tribute to this.
+        </p>
       </el-main>
     </el-container>
     <!-- 页面主体结束 -->
@@ -83,7 +136,7 @@ export default {
 
 <style lang="scss" scoped>
 .home-container {
-  min-height: 100vh;
+  min-height: calc(100vh - 110px);
 }
 .el-header {
   display: flex;
@@ -96,7 +149,7 @@ export default {
     align-items: center;
     font-size: 20px;
     font-weight: 700;
-    color: #698488;
+    color: #495d7c;
   }
 }
 .el-aside {
@@ -105,12 +158,16 @@ export default {
     text-align: center;
   }
   &-subtitle {
-    font-weight: 600;
+    font-weight: 700;
   }
 }
-
 .el-main {
+  min-height: calc(100vh - 110px);
   background-color: #fff;
-  padding: 30px 0 0 60px;
+  padding: 30px;
+}
+.font-style {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 </style>
