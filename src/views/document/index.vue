@@ -5,6 +5,7 @@
       <div class="el-header-title">
         <span>Wellcome to MrPP</span>
       </div>
+      <!--
       <el-input
         v-model="input"
         size="mini"
@@ -13,7 +14,7 @@
         class="input-with-select"
       >
         <el-button slot="append" icon="el-icon-search" size="mini" />
-      </el-input>
+      </el-input> -->
     </el-header>
     <!-- 头部区域结束 -->
     <!-- 页面主体 -->

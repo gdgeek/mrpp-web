@@ -9,9 +9,11 @@
 
         <el-tab-pane name="qrcode" label="微信扫码（登陆/注册）"><mr-p-p-qrcode :active="qrcode">微信扫码进入</mr-p-p-qrcode></el-tab-pane>
       </el-tabs>
-      <el-alert v-if="alert.show" :title="alert.title" :type="alert.type">
+      <!--
+      <el-alert v-if="!!alert.show" :title="alert.title" :type="alert.type">
         {{ alert.description }}
       </el-alert>
+      -->
     </div>
 
   </mr-p-p-site>
@@ -38,13 +40,14 @@ export default {
   computed: {
     qrcode() {
       return this.activeName === 'qrcode'
-    },
+    }
+    /*,
     alert() {
       return this.$store.state.flash.main
-    }
+    }*/
   },
   destroyed() {
-    this.$store.commit('flashClean')
+    // this.$store.commit('flashClean')
   },
   methods: {
     handleClick(tab, event) {

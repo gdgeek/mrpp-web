@@ -1,4 +1,6 @@
 import DataType from './type'
+
+import Blockly from 'blockly'
 const data = {
   name: 'line_execute'
 }

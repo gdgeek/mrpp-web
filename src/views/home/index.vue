@@ -1,23 +1,38 @@
 <template>
   <div class="document-index">
-    <el-card class="box-card">
-      <div slot="header">
-        <font-awesome-icon icon="globe" />
-        <b id="title">{{ title }}</b>
+
+    <el-container>
+      <el-header>
+        <br>
+
+      </el-header>
+
+      <el-main>
+        <br>
+        <el-card class="box-card">
+          <div slot="header">
+            <font-awesome-icon icon="globe" />
+            <b id="title"> {{ title }}</b>
+
+          </div>
+          <div class="box-item">
+            <aside style="margin-top: 15px">
+              <p
+                id="content"
+                class="text-muted well well-sm no-shadow"
+                style="margin: 20px"
+                v-html="content"
+              />
+            </aside>
+          </div>
+        </el-card>
+
+      </el-main>
+      <el-footer>
         <small id="date" class="pull-right">{{ date }}</small>
-      </div>
-      <div class="box-item">
-        <aside style="margin-top: 15px">
-          <p
-            id="content"
-            class="text-muted well well-sm no-shadow"
-            style="margin: 20px"
-            v-html="content"
-          />
-        </aside>
-      </div>
-    </el-card>
-  </div>
+      </el-footer>
+    </el-container>
+    <el-row :gutter="24" /></div>
 </template>
 <script>
 import { mapState, mapMutations } from 'vuex'
@@ -37,8 +52,9 @@ export default {
     })
   },
   created: function() {
+    // (this.$can('create', 'Post'))
     request({
-      url: this.document + 'posts/872',
+      url: this.document + 'posts/999',
       method: 'get'
     }).then(response => {
       this.title = response.data.title.rendered
@@ -51,3 +67,4 @@ export default {
   }
 }
 </script>
+

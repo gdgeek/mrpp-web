@@ -1,12 +1,11 @@
 import { login, signup } from '@/api/sites'
-import { getData, /* getMenu,*/ logout } from '@/api/servers'
+import { getUserData } from '@/api/v1/user'
+import { logout } from '@/api/servers'
 import { setToken, removeToken } from '@/utils/auth'
-import { resetRouter } from '@/router'
 const getDefaultState = () => {
   return {
-    name: '',
     data: null,
-    menu: []
+    roles: null
   }
 }
 
@@ -16,17 +15,13 @@ const mutations = {
   resetState: state => {
     Object.assign(state, getDefaultState())
   },
-  setData: (state, data) => {
+  setUser: (state, { data, roles }) => {
     state.data = data
-    state.name = data.username
-  },
-  setMenu: (state, menu) => {
-    state.menu = menu
+    state.roles = roles
   }
 }
 
 const actions = {
-
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
@@ -52,39 +47,16 @@ const actions = {
           reject(error)
         })
     })
-  }, /*
-  getMenu({ commit, state }) {
+  },
+  getUser({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getMenu()
-        .then(response => {
-          console.log(response)
-
-          const data = response.data
-
-          alert(JSON.stringify(data))
-          if (!data) {
-            return reject('No Menu.')
-          }
-          const { menu } = data
-          commit('setMenu', menu)
-          resolve(data)
-        })
-        .catch(error => {
-          console.log(error)
-          reject(error)
-        })
-    })
-  },*/
-  // get user info
-  getData({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      getData(state.token)
+      getUserData(state.token)
         .then(response => {
           const data = response.data
           if (!data) {
             return reject('Verification failed, please Login again.')
           }
-          commit('setData', data.data)
+          commit('setUser', data)
           resolve(data)
         })
         .catch(error => {
@@ -99,8 +71,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       logout()
         .then(() => {
-          removeToken() // must remove  token  first
-          resetRouter()
+          removeToken()
           commit('resetState')
           resolve()
         })

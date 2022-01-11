@@ -13,7 +13,9 @@
         :collapse-transition="false"
         mode="vertical"
       >
-        <sidebar-item v-for="item in items" :key="item.url[0]" :item="item" :collapse="isCollapse" :base-path="item.url[0]" />
+        <div v-for="item in items" :key="item.url">
+          <sidebar-item v-if="$can('menu', item.url)" :item="item" :collapse="isCollapse" :base-path="item.url" />
+        </div>
       </el-menu>
 
     </el-scrollbar>
@@ -32,7 +34,7 @@ export default {
     this.menu.forEach(function(element) {
       console.log(element)
       console.log(element.icon)
-      console.log(element.url[0])
+      console.log(element.url)
     })
   },
   computed: {

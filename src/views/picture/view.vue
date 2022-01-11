@@ -12,7 +12,7 @@
               id="image"
               v-loading="expire"
               element-loading-text="正在预处理"
-              element-loading-background="rgba(0, 0, 0, 0.8)"
+              element-loading-background="rgba(255,255, 255, 0.3)"
               style="height: 300px;width:100%;"
               :src="file"
               :fit="'contain'"
@@ -27,10 +27,7 @@
 
       <el-col :sm="8">
         <el-card
-          v-loading="expire"
           class="box-card"
-          element-loading-text="正在预处理"
-          element-loading-background="rgba(0, 0, 0, 0.8)"
         >
           <div slot="header">
 

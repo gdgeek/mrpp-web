@@ -2,62 +2,41 @@
   <div v-if="!item.hidden">
     <div v-if="!item.items">
 
-      <app-link v-if="this.$route.path !== item.url[0]" :to="item.url[0]" :align="align">
-        <el-menu-item :index="layer+':' + item.url[0]"><font-awesome-icon :icon="item.icon" />  <span v-if="!isCollapse">{{ item.label }}</span></el-menu-item>
+      <app-link v-if="this.$route.path !== item.url" :to="item.url" :align="align">
+        <el-menu-item :index="layer+':' + item.url"><font-awesome-icon :icon="item.icon" />  <span v-if="!isCollapse">{{ item.label }}</span></el-menu-item>
       </app-link>
       <div v-else :align="align">
-        <el-menu-item disabled :index="layer+':' + item.url[0]"><font-awesome-icon :icon="item.icon" />  <span v-if="!isCollapse">{{ item.label }}</span></el-menu-item>
+        <el-menu-item disabled :index="layer+':' + item.url"><font-awesome-icon :icon="item.icon" />  <span v-if="!isCollapse">{{ item.label }}</span></el-menu-item>
       </div>
     </div>
     <div v-else>
-      <el-submenu ref="subMenu" :index="layer+':' + item.url[0]" popper-append-to-body>
+      <el-submenu ref="subMenu" :index="layer+':' + item.url" popper-append-to-body>
         <template slot="title">
           <div :align="align">
             <font-awesome-icon :icon="item.icon" /> <span v-if="!isCollapse">{{ item.label }}</span>
           </div>
 
         </template>
-
-        <sidebar-item
-          v-for="child in item.items"
-          :key="child.url[0]"
-          :is-nest="true"
-          :item="child"
-          :base-path="child.url[0]"
-          :collapse="false"
-          :layer="layer+1"
-          class="nest-menu"
-        />
+        <div v-for="child in item.items" :key="child.url">
+          <sidebar-item v-if="$can('menu', child.url)" class="nest-menu" :is-nest="true" :layer="layer+1" :item="child" :collapse="false" :base-path="child.url" />
+        </div>
       </el-submenu>
 
     </div>
 
-    <el-submenu v-if="false" ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
-      <template slot="title">
-        <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
-      </template>
-      <sidebar-item
-        v-for="child in item.children"
-        :key="child.path"
-        :is-nest="true"
-        :item="child"
-        :base-path="resolvePath(child.path)"
-        class="nest-menu"
-      />
-    </el-submenu>
   </div>
 </template>
 
 <script>
 import path from 'path'
 import { isExternal } from '@/utils/validate'
-import Item from './Item'
+// import Item from './Item'
 import AppLink from './Link'
 import FixiOSBug from './FixiOSBug'
 
 export default {
   name: 'SidebarItem',
-  components: { Item, AppLink },
+  components: { AppLink },
   mixins: [FixiOSBug],
   props: {
     collapse: {

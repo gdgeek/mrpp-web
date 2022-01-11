@@ -13,7 +13,7 @@
               id="a-scene"
               v-loading="expire"
               element-loading-text="正在预处理"
-              element-loading-background="rgba(0, 0, 0, 0.8)"
+              element-loading-background="rgba(255,255, 255, 0.3)"
               name="scene"
               background="color: #E0FFFF"
               embedded=""
@@ -38,10 +38,7 @@
 
       <el-col :sm="8">
         <el-card
-          v-loading="expire"
           class="box-card"
-          element-loading-text="正在预处理"
-          element-loading-background="rgba(0, 0, 0, 0.8)"
         >
           <div slot="header">
             <b>模型信息</b>:

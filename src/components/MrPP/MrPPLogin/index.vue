@@ -34,7 +34,7 @@
 
 <script>
 // @ is an alias to /src
-import { setToken, getToken } from '@/utils/auth'
+import { setToken } from '@/utils/auth'
 import { login } from '@/api/sites'
 export default {
   name: 'MrPPLogin',
@@ -57,6 +57,7 @@ export default {
     }
   },
   methods: {
+
     submit(formName) {
       const self = this
       this.$refs[formName].validate(valid => {
@@ -70,7 +71,7 @@ export default {
               if (response.data) {
                 setToken(response.data.access_token)
 
-                alert(getToken())
+                //   alert(getToken())
 
                 this.$router.push('/')
               }

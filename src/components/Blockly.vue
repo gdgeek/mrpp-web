@@ -11,7 +11,6 @@
           <code class="lua">{{ script }}</code>
         </pre>
       </div>
-
     </el-card>
   </div>
 </template>
@@ -47,7 +46,7 @@ export default {
     const self = this
     AddBlocks(this)
     this.workspace = Blockly.inject('blocklyDiv', {
-      media: '/static/blockly/media/',
+      media: 'resource/blockly/media/',
       toolbox: toolbox,
       grid: { spacing: 20, length: 3, colour: '#ccc', snap: true },
       move: {

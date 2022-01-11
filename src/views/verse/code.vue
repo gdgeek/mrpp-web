@@ -6,7 +6,7 @@
         <el-card v-loading="loading" class="box-card">
           <div slot="header" class="clearfix">
             <router-link :to="'/verse/editor?id='+id">
-              <el-link :underline="false"> 【宇宙】</el-link>
+              <el-link v-if="verse" :underline="false"> 【宇宙】{{ verse.name }}</el-link>
             </router-link>
             / 【逻辑】
 

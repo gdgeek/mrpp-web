@@ -26,8 +26,6 @@ function install(editor, options) {
       return true
     }
 
-    console.log('îiiiiiiiiiii')
-    console.log(component.data['meta'])
     const meta = component.controls.get('meta')
     if (typeof component.data['meta'] === 'undefined' || component.data['meta'] === null) {
       component.data['meta'] = { name: '初始化...', id: -1 }

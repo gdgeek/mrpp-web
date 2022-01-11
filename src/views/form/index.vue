@@ -50,7 +50,6 @@
 
 <script>
 
-import { importRouter } from '@/router'
 export default {
   data() {
     return {
@@ -71,7 +70,7 @@ export default {
       this.$message('submit!')
     },
     onTest() {
-      importRouter()
+      // importRouter()
     },
     onCancel() {
       this.$message({

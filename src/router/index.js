@@ -1,7 +1,7 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
 /* Layout */
 import Layout from '@/layout'
@@ -33,198 +33,136 @@ import Layout from '@/layout'
 export const constantRoutes = [
   {
     path: '/',
-    redirect: '/document/index',
-    component: Layout
-  },
-  {
-    path: '/settings',
+    name: 'Root',
+    redirect: '/home/index',
     component: Layout,
-    meta: { title: '个人中心' },
-    redirect: '/settings/user',
     children: [
       {
-        path: 'user',
-        name: 'User',
+        meta: { title: '首页' },
+        path: 'home/index',
+        name: 'HomeIndex',
+        component: () => import('@/views/home/index')
+      },
+      {
+        meta: { title: '个人中心' },
+        path: 'settings/user',
+        name: 'SettingUser',
         component: () => import('@/views/settings/user')
-      }
-    ]
-  },
-  {
-    path: '/settings',
-    component: Layout,
-    meta: { title: '账号设置' },
-    redirect: '/settings/account',
-    children: [
+      },
       {
-        path: 'account',
-        name: 'Account',
+        meta: { title: '账号设置' },
+        path: 'settings/account',
+        name: 'SettingAccount',
         component: () => import('@/views/settings/account')
-      }
-    ]
-  },
-  {
-    path: '/polygen',
-    redirect: '/polygen/index',
-    component: Layout,
-    meta: { title: '模型管理' },
-    children: [
+      },
       {
-        path: 'upload',
-        name: 'Upload',
+        path: 'polygen/upload',
+        name: 'PolygenUpload',
         meta: { title: '模型上传' },
         component: () => import('@/views/polygen/upload')
       },
       {
-        path: 'index',
-        name: 'Index',
+        path: 'polygen/index',
+        name: 'PolygenIndex',
         meta: { title: '模型列表' },
         component: () => import('@/views/polygen/index')
       },
       {
-        path: 'view',
-        name: 'View',
+        path: 'polygen/view',
+        name: 'PolygenView',
         meta: { title: '模型处理' },
         component: () => import('@/views/polygen/view')
-      }
-    ]
-  },
-  {
-    path: '/picture',
-    redirect: '/picture/index',
-    component: Layout,
-    meta: { title: '图片管理' },
-    children: [
+      },
       {
-        path: 'upload',
-        name: 'Upload',
+        path: 'picture/upload',
+        name: 'PictureUpload',
         meta: { title: '上传图片' },
         component: () => import('@/views/picture/upload')
       },
       {
-        path: 'index',
-        name: 'Index',
+        path: 'picture/index',
+        name: 'PictureIndex',
         meta: { title: '图片列表' },
         component: () => import('@/views/picture/index')
       },
       {
-        path: 'view',
-        name: 'View',
+        path: 'picture/view',
+        name: 'PictureView',
         meta: { title: '图片处理' },
         component: () => import('@/views/picture/view')
-      }
-    ]
-  },
-  {
-    path: '/video',
-    redirect: '/video/index',
-    component: Layout,
-    meta: { title: '视频管理' },
-    children: [
+      },
       {
-        path: 'upload',
-        name: 'Upload',
+        path: 'video/upload',
+        name: 'VideoUpload',
         meta: { title: '视频上传' },
         component: () => import('@/views/video/upload')
       },
       {
-        path: 'index',
-        name: 'Index',
+        path: 'video/index',
+        name: 'VideoIndex',
         meta: { title: '视频列表' },
         component: () => import('@/views/video/index')
       },
       {
-        path: 'view',
-        name: 'View',
+        path: 'video/view',
+        name: 'VideoView',
         meta: { title: '视频处理' },
         component: () => import('@/views/video/view')
-      }
-    ]
-  },
-  {
-    path: '/rete',
-    component: () => import('@/views/test/rete'),
-    hidden: true
-  },
-  {
-    path: '/blockly',
-    component: () => import('@/views/test/blockly'),
-    hidden: true
-  },
-  {
-    path: 'home',
-    component: Layout,
-    children: [
+      },
       {
-        path: 'invitation',
-        name: 'Invitation',
-        component: () => import('@/views/jump')
-      }
-    ]
-  },
-
-  {
-    path: '/verse',
-    redirect: '/verse/index',
-    component: Layout,
-    meta: { title: '宇宙管理' },
-    children: [
-      {
-        path: 'index',
-        name: 'Index',
+        path: 'verse/index',
+        name: 'VerseIndex',
         meta: { title: '列表' },
         component: () => import('@/views/verse/index')
       },
 
       {
-        path: 'editor',
-        name: 'Editor',
+        path: 'verse/editor',
+        name: 'VerseEditor',
         meta: { title: '宇宙编辑' },
         component: () => import('@/views/verse/editor')
       },
       {
-        path: 'code',
-        name: 'Code',
+        path: 'verse/code',
+        name: 'VerseCode',
         meta: { title: '宇宙逻辑' },
         component: () => import('@/views/verse/code')
       },
       {
-        path: 'meta/editor',
-        name: 'MetaEditor',
+        path: 'verse/meta/editor',
+        name: 'VerseMetaEditor',
         meta: { title: '单元编辑' },
         component: () => import('@/views/verse/meta/editor')
       }
     ]
   },
-  {
-    path: '/project/index',
-    redirect: '/verse/index',
-    component: Layout,
-    meta: { title: '宇宙列表' }
-  },
+
   {
     path: '/document',
+    name: 'Document',
     component: Layout,
     meta: { title: '欢迎页面' },
     children: [
       {
         path: 'index',
-        name: 'Index',
+        name: 'DocumentIndex',
         component: () => import('@/views/document/index'),
         children: [
           {
             path: '/main1',
-            name: 'Main1',
+            name: 'DocumentIndexMain1',
             component: () => import('@/views/document/mains/Main1')
           },
           {
             path: '/main2',
-            name: 'Main2',
+            name: 'DocumentIndexMain2',
             component: () => import('@/views/document/mains/Main2')
           }
         ]
       }
     ]
   },
+
   {
     path: '/site',
     component: () => import('@/views/site/index'),
@@ -256,141 +194,12 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
-  },
-
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
-  },
-
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () =>
-                  import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () =>
-                  import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
-      },
-      {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        name: 'Menu2',
-        meta: { title: 'menu2' }
-      }
-    ]
-  },
-
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
 
-// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
-export function resetRouter() {
-  const newRouter = createRouter()
-  router.matcher = newRouter.matcher // reset router
-}
-const theRouter = () =>
-  new Router({
-    mode: 'history', // require service support
-    scrollBehavior: () => ({ y: 0 }),
-    routes: []
-  })
-
-export function importRouter() {
-  const newRouter = theRouter()
-  router.matcher = newRouter.matcher // reset router
-}
-
-const createRouter = () =>
-  new Router({
-    // mode: 'history', // require service support
-    scrollBehavior: () => ({ y: 0 }),
-    routes: constantRoutes
-  })
-
-const router = createRouter()
-
-export default router
+export default new VueRouter({
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRoutes
+})
