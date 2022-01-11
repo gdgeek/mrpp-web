@@ -1,121 +1,138 @@
 <template>
-  <el-container class="home-container">
-    <!-- 头部区域 -->
-    <el-header>
-      <div class="el-header-title">
-        <span>Wellcome to MrPP</span>
+  <div>
+    <div class="guide-header font-style">
+      <!-- header布局开始 -->
+      <el-row :gutter="20">
+        <el-col :xs="24" :sm="12" :md="12" :lg="14" :xl="14">
+          <div>
+            <ul class="guide-header-ul">
+              <li><a>工作文档</a></li>
+              <li><a>搭建中</a></li>
+              <li><a>搭建中</a></li>
+            </ul>
+          </div>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="10" :xl="10">
+          <div class="guide-header-search">
+            <el-input
+              v-model="input"
+              size="mini"
+              style="width: 80%; min-width: 200px"
+              placeholder="搜索名称"
+              class="input-with-select"
+              @keyup.enter.native="keyDown"
+            >
+              <el-button
+                slot="append"
+                icon="el-icon-search"
+                size="mini"
+                @click="search"
+              />
+            </el-input>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
+    <!-- header结束 -->
+    <!-- main star -->
+    <div class="guide-main font-style">
+      <div class="guide-main-box">
+        <div style="text-align: center">
+          <h3 style="color:#308831">工作文档</h3>
+          <p>
+            /document/workdata
+            目录下设doing（工作进展）,vresion（历史版本）<br> waittest（单元测试，组件封装测试准备）三大板块
+          </p>
+        </div>
+        <hr style=" height:10px;border:none;border-top:10px groove skyblue;">
+        <br>
+        <h4 class="font-color">目前进行中工作</h4>
+        <p>1.mrppcropper组件 <br> 2.论坛组件抽取，插件相关工作</p>
+        <hr style="height:1px;border:none;border-top:1px dashed #0066CC;">
+        <h4 class="font-color">vresion版本说明</h4>
+        <p>src/document/workdata/vrsions目录:<br>/index2:初级版本, /index3:无sidebar常规布局，/index4:无sidebar的fixed版本<br>
+          /index5:sidebar常规浅色版本， /index6:sidebar 渐变色fixed版本
+        </p>
+        <hr style="height:1px;border:none;border-top:1px dashed #0066CC;">
       </div>
-      <el-input
-        v-model="input"
-        size="mini"
-        style="width: 220px"
-        placeholder="搜索名称"
-        class="input-with-select"
-      >
-        <el-button slot="append" icon="el-icon-search" size="mini" />
-      </el-input>
-    </el-header>
-    <!-- 头部区域结束 -->
-    <!-- 页面主体 -->
-    <el-container>
-      <!-- 左侧边栏 -->
-      <el-aside width="200px">
-        <!-- 激活router 以index路径跳转 -->
-        <el-menu
-          class="el-aside-menu"
-          router
-          :default-openeds="['1']"
-          unique-opened
-          background-color="#99b0b6"
-          text-color="#334157"
-        >
-          <el-submenu index="1">
-            <template slot="title">
-              <div class="el-aside-subtitle">
-                <!-- <i class="el-icon-location" /> -->
-                介绍
-              </div>
-            </template>
-            <el-menu-item index="/main1">欢迎</el-menu-item>
-            <el-menu-item index="/main2">开启旅程</el-menu-item>
-          </el-submenu>
-          <el-submenu index="2">
-            <template slot="title">
-              <div class="el-aside-subtitle">
-                <!-- <i class="el-icon-location" /> -->
-                文档
-              </div>
-            </template>
-            <el-menu-item index="/main1">教程</el-menu-item>
-            <el-menu-item index="/main2">示例</el-menu-item>
-            <el-menu-item index="/main1">选项3</el-menu-item>
-            <el-menu-item index="/main2">选项4</el-menu-item>
-          </el-submenu>
-          <el-submenu index="3">
-            <template slot="title">
-              <div class="el-aside-subtitle">
-                <!-- <i class="el-icon-location" /> -->
-                生态
-              </div>
-            </template>
-            <el-menu-item index="/main1">帮助</el-menu-item>
-            <el-menu-item index="/main2">合作伙伴</el-menu-item>
-            <el-menu-item index="/main1">选项3</el-menu-item>
-          </el-submenu>
-        </el-menu>
-      </el-aside>
-      <!-- 右侧主内容 -->
-      <el-main>
-        <router-view />
-        演示文档
-      </el-main>
-    </el-container>
-    <!-- 页面主体结束 -->
-  </el-container>
+    </div>
+
+    <!-- footer star -->
+    <div class="guide-footer">
+      <mr-p-p-footer />
+    </div>
+  </div>
 </template>
 
 <script>
+import MrPPFooter from '@/components/MrPP/MrPPFooter'
 export default {
   name: 'DocumentIndex',
-  methods: {}
+  components: {
+    MrPPFooter
+  },
+  data() {
+    return {}
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-.home-container {
-  min-height: 100vh;
-}
-.el-header {
-  display: flex;
+// 头部样式
+.guide-header {
   width: 100%;
-  justify-content: space-between;
-  align-items: center;
-  background: rgb(44, 210, 176);
-  background: linear-gradient(
-    101deg,
-    rgba(59, 219, 187, 0.776) 0%,
-    rgba(34, 184, 214, 0.807) 66%
-  );
-  &-title {
-    display: flex;
-    align-items: center;
-    font-size: 20px;
+  line-height: 60px;
+  background: #cadbe2;
+  overflow: hidden;
+  .guide-header-ul {
+    line-height: 0px;
+    min-width: 500px;
+    margin-left: 14%;
+  }
+  .guide-header-ul li {
+    list-style-type: none;
+    display: inline;
+    padding-right: 10%;
+    line-height: 30px;
+    font-size: 16px;
     font-weight: 700;
-    color: #3b3d3d;
+    color: rgb(101, 132, 136);
+  }
+  .guide-header-ul a:hover {
+    color: rgb(74, 168, 180);
+  }
+  .guide-header-search {
+    margin: 0 65px 0 120px;
   }
 }
-.el-aside {
-  background-color:#99b0b6;
-  .el-menu{
-    text-align: center;
-  }
-  &-subtitle {
-    font-weight: 600;
-  }
+// main样式开始
+.guide-main {
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 110px);
+  background-color: rgb(236, 243, 241);
+  margin: 0;
+  padding: 40px 0 30px;
 }
-
-.el-main {
+.guide-main-box {
+  border-radius: 6px;
+  width: 84%;
+  min-height: calc(100vh - 110px);
+  margin: 0 auto;
+  padding: 30px 50px;
+  // text-align: center;
   background-color: #fff;
-  padding: 30px 0 0 60px;
+}
+.guide-footer {
+  width: 100%;
+  height: 80px;
+  background: #cadbe2;
+}
+.font-color{
+  color: #334157;
+}
+.font-style {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 </style>

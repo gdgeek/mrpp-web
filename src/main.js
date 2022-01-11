@@ -27,8 +27,8 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
-import VueCropper from 'vue-cropper'
-
+import VueCropper from 'vue-cropper' // head icon upload
+// set head icon upload
 Vue.use(VueCropper)
 Vue.use(vueHljs, { hljs })
 // set ElementUI lang to EN
