@@ -73,7 +73,9 @@ export default {
           '/community',
           '/community/index',
           '/verse',
-          '/verse/index'
+          '/verse/index',
+          '/settings/user',
+          '/settings/account'
         ])
 
         can('router', [

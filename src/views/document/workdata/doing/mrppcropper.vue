@@ -238,8 +238,8 @@ export default {
       })
     },
     refreshUserdata(data) {
-      console.log(data.data)
-      this.$store.commit('user/SET_DATA', data.data)
+      console.log(data)
+      this.$store.commit('user/setUser', data)
     },
     saveInfo() {
       const self = this

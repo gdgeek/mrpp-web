@@ -15,6 +15,9 @@ const mutations = {
   resetState: state => {
     Object.assign(state, getDefaultState())
   },
+  setData: (state, data) => {
+    state.data = data
+  },
   setUser: (state, { data, roles }) => {
     state.data = data
     state.roles = roles
