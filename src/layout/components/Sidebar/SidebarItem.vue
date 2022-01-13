@@ -34,7 +34,7 @@ import { isExternal } from '@/utils/validate'
 import AppLink from './Link'
 import FixiOSBug from './FixiOSBug'
 
-import { MenuItem } from '@/ability/menuItem'
+import { AbilityRouter } from '@/ability/ability'
 export default {
   name: 'SidebarItem',
   components: { AppLink },
@@ -80,7 +80,7 @@ export default {
   },
   methods: {
     open(path) {
-      return this.$can('open', new MenuItem(path))
+      return this.$can('open', new AbilityRouter(path))
     },
     hasOneShowingChild(children = [], parent) {
       const showingChildren = children.filter(item => {

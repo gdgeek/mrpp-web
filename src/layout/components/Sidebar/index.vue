@@ -23,7 +23,9 @@
 </template>
 
 <script>
-import { MenuItem } from '@/ability/menuItem'
+
+import { AbilityRouter } from '@/ability/ability'
+// import { MenuItem } from '@/ability/menuItem'
 import { mapGetters } from 'vuex'
 import Logo from './Logo'
 import SidebarItem from './SidebarItem'
@@ -40,7 +42,7 @@ export default {
   },
   methods: {
     open(path) {
-      return this.$can('open', new MenuItem(path))
+      return this.$can('open', new AbilityRouter(path))
     }
   },
   computed: {
