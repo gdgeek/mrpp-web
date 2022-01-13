@@ -13,6 +13,10 @@
       <el-form-item label="内容说明">
         <el-input v-model="form.desc" type="textarea" />
       </el-form-item>
+      <!-- 载入截图组件 -->
+      <el-form-item label="视频截图">
+        <Doing2 />
+      </el-form-item>
     </el-form>
 
     <span slot="footer" class="dialog-footer">
@@ -25,8 +29,13 @@
 
 <script>
 
+import Doing2 from '@/views/document/workdata/doing/doing2'
 export default {
   name: 'MrPPVerseWindow',
+  components: {
+    // 载入截图组件
+    Doing2
+  },
   props: {
     dialogTitle: {
       type: String,

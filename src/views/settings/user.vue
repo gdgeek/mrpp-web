@@ -429,7 +429,7 @@ export default {
         this.loading = true
       })
     }
-    // 头像上床方法结束
+    // 头像上传方法结束
   }
 }
 </script>
