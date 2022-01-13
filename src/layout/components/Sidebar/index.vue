@@ -14,7 +14,7 @@
         mode="vertical"
       >
         <div v-for="item in items" :key="item.url">
-          <sidebar-item v-if="$can('menu', item.url)" :item="item" :collapse="isCollapse" :base-path="item.url" />
+          <sidebar-item v-if="open(item.url)" :item="item" :collapse="isCollapse" :base-path="item.url" />
         </div>
       </el-menu>
 
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { MenuItem } from '@/ability/menuItem'
 import { mapGetters } from 'vuex'
 import Logo from './Logo'
 import SidebarItem from './SidebarItem'
@@ -36,6 +37,11 @@ export default {
       console.log(element.icon)
       console.log(element.url)
     })
+  },
+  methods: {
+    open(path) {
+      return this.$can('open', new MenuItem(path))
+    }
   },
   computed: {
     ...mapGetters([

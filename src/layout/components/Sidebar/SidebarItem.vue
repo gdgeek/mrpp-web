@@ -18,7 +18,7 @@
 
         </template>
         <div v-for="child in item.items" :key="child.url">
-          <sidebar-item v-if="$can('menu', child.url)" class="nest-menu" :is-nest="true" :layer="layer+1" :item="child" :collapse="false" :base-path="child.url" />
+          <sidebar-item v-if="open( child.url)" class="nest-menu" :is-nest="true" :layer="layer+1" :item="child" :collapse="false" :base-path="child.url" />
         </div>
       </el-submenu>
 
@@ -34,6 +34,7 @@ import { isExternal } from '@/utils/validate'
 import AppLink from './Link'
 import FixiOSBug from './FixiOSBug'
 
+import { MenuItem } from '@/ability/menuItem'
 export default {
   name: 'SidebarItem',
   components: { AppLink },
@@ -78,6 +79,9 @@ export default {
     console.log(this.$route.path)
   },
   methods: {
+    open(path) {
+      return this.$can('open', new MenuItem(path))
+    },
     hasOneShowingChild(children = [], parent) {
       const showingChildren = children.filter(item => {
         if (item.hidden) {

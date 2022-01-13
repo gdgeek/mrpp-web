@@ -6,6 +6,7 @@
 
 <script>
 
+import { Router } from '@/ability/router'
 import { AbilityBuilder, Ability } from '@casl/ability'
 import { getToken, setToken } from '@/utils/auth'
 import { token } from '@/api/servers'
@@ -16,6 +17,7 @@ export default {
     '$store.state.user.roles': function() {
       this.updateAbility(this.$store.state.user.roles)
     }
+
   },
   created() {
     const self = this
@@ -24,7 +26,7 @@ export default {
     }, 360000)
 
     this.$router.beforeEach((to, from, next) => {
-      if (self.$can('router', to.path)) {
+      if (self.$can('goto', new Router(to.path))) {
         next()
       } else {
         this.$message.error('权限不足！')
@@ -35,12 +37,74 @@ export default {
   methods: {
 
     updateAbility(roles) {
+      const { can, rules } = new AbilityBuilder(Ability)
       if (roles === null) {
         roles = []
       }
+      const guest = [
+        '/site',
+        '/site/logout',
+        '/site/index',
+        '/site/wechat-signup',
+        '/site/binded-email',
+        '/404']
 
+      guest.forEach(item => {
+        can('goto', 'Router', { path: item })
+      })
+
+      if (roles.find(role => role === 'user')) {
+        const menu = [
+          '/site/logout',
+          '/resource',
+          '/polygen',
+          '/polygen/index',
+          '/polygen/upload',
+          '/polygen/view',
+          '/picture',
+          '/picture/index',
+          '/picture/upload',
+          '/picture/view',
+          '/video',
+          '/video/index',
+          '/video/upload',
+          '/video/view',
+          '/document',
+          '/document/index',
+          '/home',
+          '/home/index',
+          '/community',
+          '/community/index',
+          '/verse',
+          '/verse/index',
+          '/settings/user',
+          '/settings/account'
+        ]
+
+        menu.forEach(item => {
+          can('open', 'MenuItem', { path: item })
+          can(['open', 'goto'], 'Router', { path: item })
+        })
+        const menu_regex = [/main/i]
+        menu_regex.forEach(item => {
+          can('open', 'MenuItem', { path: { $regex: item }})
+          can('goto', 'Router', { path: { $regex: item }})
+        })
+        const router = [
+          '/verse/editor',
+          '/verse/meta/editor',
+          '/verse/code'
+        ]
+
+        router.forEach(item => {
+          can('goto', 'Router', { path: item })
+        })
+      }
+
+      /*
+      can('read', 'Article', { published: true })
+      can('read', 'Article', { published: false, status: 'review' })
       // alert(2)
-      const { can, rules } = new AbilityBuilder(Ability)
       can('router', [
         '/site',
         '/site/logout',
@@ -98,7 +162,7 @@ export default {
       }
       if (roles.find(role => role === 'manager')) {
         console.log('manager')
-      }
+      }*/
       this.$ability.update(rules)
     },
     heartbeat() {
