@@ -2,33 +2,34 @@
   <el-container class="home-container">
     <!-- 头部区域 -->
     <el-header>
-      <div class="el-header-title">
+      <div class="el-header-title font-style">
         <span>Wellcome to MrPP</span>
       </div>
-      <!--
-      <el-input
-        v-model="input"
-        size="mini"
-        style="width: 220px"
-        placeholder="搜索名称"
-        class="input-with-select"
-      >
-        <el-button slot="append" icon="el-icon-search" size="mini" />
-      </el-input> -->
+      <div class="el-header-search">
+        <el-input
+          v-model="input"
+          size="mini"
+          style="width: 220px"
+          placeholder="搜索名称"
+        >
+          <el-button slot="append" icon="el-icon-search" size="mini" />
+        </el-input>
+      </div>
     </el-header>
     <!-- 头部区域结束 -->
     <!-- 页面主体 -->
     <el-container>
       <!-- 左侧边栏 -->
-      <el-aside width="200px">
+      <el-aside width="196px" class="font-style">
         <!-- 激活router 以index路径跳转 -->
         <el-menu
           class="el-aside-menu"
           router
-          :default-openeds="['1']"
+          :default-openeds="['1','2']"
           unique-opened
           background-color="#e9efed"
           text-color="#475659"
+          active-text-color="#61c08c"
         >
           <el-submenu index="1">
             <template slot="title">
@@ -66,12 +67,11 @@
         </el-menu>
       </el-aside>
       <!-- 右侧主内容 -->
-      <el-main>
+      <el-main class="font-style">
+        <!-- router页面跳转 -->
         <router-view />
-        工作板块正在架设中，有检测-doing-封装-历史版本4个环节
-        <br>
-        历史版本在/document/workdata/vrsions目录下
-        <br>
+        <!-- router页面跳转结束 -->
+
       </el-main>
     </el-container>
     <!-- 页面主体结束 -->
@@ -87,34 +87,67 @@ export default {
 
 <style lang="scss" scoped>
 .home-container {
-  min-height: 100vh;
+  min-height: 90vh;
 }
 .el-header {
-  display: flex;
+  position: fixed;
+  z-index: 100;
   width: 100%;
-  justify-content: space-between;
-  align-items: center;
-  background:#cadbe2;
+  min-width: 700px;
+  line-height: 60px;
+  text-align: right;
+  padding-right: 3rem;
+  // background: #cadbe2;
+  background: rgb(117, 195, 214);
+  background: linear-gradient(
+    333deg,
+    rgba(117, 195, 214, 0.986453956582633) 23%,
+    rgba(161, 228, 216, 1) 76%
+  );
   &-title {
-    display: flex;
-    align-items: center;
+    position: relative;
+    float: left;
     font-size: 20px;
     font-weight: 700;
-    color: #698488;
+    color: #2f3e50;
+  }
+  &-search {
+    position: relative;
+    float: right;
+    margin-right: 170px;
+    position: relative;
   }
 }
 .el-aside {
+  position: fixed;
+  z-index: 10;
+  top: 50px;
+  bottom: 0;
+  padding-top: 60px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  color: #333;
+  border-right: 1pxsolid #eaecef;
   background-color: #e9efed;
-  .el-menu{
+  .el-menu {
     text-align: center;
   }
   &-subtitle {
-    font-weight: 600;
+    font-weight: 700;
+    color: #495d7c;
   }
 }
 
 .el-main {
+  min-height: calc(100vh - 110px);
+  width: 100%;
   background-color: #fff;
-  padding: 30px 0 0 60px;
+  margin: 50px 0 0 240px;
+  overflow-y: auto;
+  padding: 50px 40px 30px 0;
+}
+.font-style {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 </style>
