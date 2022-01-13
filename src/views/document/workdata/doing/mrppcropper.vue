@@ -1,61 +1,30 @@
 <template>
   <div>
     <el-card class="box-card">
-      <div class="box-title">
-        <h3 class="font-color">个人中心</h3>
-        <small>用户昵称、头像、基本信息修改</small>
-      </div>
-      <el-divider />
-      <div class="box-title">
-        <h3 class="font-color">用户昵称</h3>
-        <small>让MrPP社区的其它用户更容易认识您。</small>
-      </div>
-      <!-- 用户头像和昵称开始 -->
-      <el-row :gutter="24">
-        <el-col :xs="16" :sm="16" :md="12" :lg="10" :xl="10" :offset="3">
-          <el-form ref="nicknameForm" :model="nicknameForm" :rules="nicknameRules" label-width="80px">
-            <el-form-item label="昵称" prop="nickname">
-              <el-input
-                v-model="nicknameForm.nickname"
-                placeholder="昵称"
-                autocomplete="off"
-                @keyup.enter.native="submitNickname"
-              >
-                <el-button slot="suffix" style="margin-right:-5px" :disabled="isDisable" @click="submitNickname">确定</el-button>
-              </el-input>
-            </el-form-item>
-            <!-- 头像部分 -->
-            <el-form-item label="头像">
-              <el-upload
-                class="avatar-uploader"
-                action=""
-                :auto-upload="false"
-                :show-file-list="false"
-                :on-change="handleChangeUpload"
-                accept="image/jpeg,image/gif,image/png,image/bmp"
-                style="float: left"
-              >
-                <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                <i v-else class="el-icon-plus avatar-uploader-icon" />
-              </el-upload>
-              <div style="float: left">
-                <p class="user-explain">最大尺寸 2 MB。JPG、GIF、PNG。</p>
-              </div>
-            </el-form-item>
-
-            <!-- 头像部分 end -->
-          </el-form>
-        </el-col>
-      </el-row>
-      <!-- 用户头像和昵称 end -->
-
-      <!-- 用户基本信息 star-->
+      头像组件抽取中
+      <el-upload
+        class="avatar-uploader"
+        action=""
+        :auto-upload="false"
+        :show-file-list="false"
+        :on-change="handleChangeUpload"
+        accept="image/jpeg,image/gif,image/png,image/bmp"
+        style="float: left"
+      >
+        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+        <i v-else class="el-icon-plus avatar-uploader-icon" />
+      </el-upload>
 
       <!-- 用户基本信息 end-->
       <!-- vueCropper 剪裁图片dialog实现-->
-      <el-dialog title="头像截取" :visible.sync="dialogVisible" class="crop-dialog" append-to-body>
+      <el-dialog
+        title="头像截取"
+        :visible.sync="dialogVisible"
+        class="crop-dialog"
+        append-to-body
+      >
         <div class="cropper-content">
-          <div class="cropper" style="text-align:center">
+          <div class="cropper" style="text-align: center">
             <vueCropper
               ref="cropper"
               :img="option.img"
@@ -90,17 +59,29 @@
           </el-upload>
         </div> -->
         <div slot="footer" class="dialog-footer">
-          <el-button-group style=" float: left;">
+          <el-button-group style="float: left">
             <!--   <el-button type="primary" plain @click="clearImgHandle">清除图片</el-button> -->
-            <el-button type="primary" plain @click="rotateLeftHandle">左旋转</el-button>
-            <el-button type="primary" plain @click="rotateRightHandle">右旋转</el-button>
-            <el-button type="primary" plain @click="changeScaleHandle(1)">放大</el-button>
-            <el-button type="primary" plain @click="changeScaleHandle(-1)">缩小</el-button>
-            <el-button type="primary" plain @click="downloadHandle('blob')">下载</el-button>
+            <el-button type="primary" plain @click="rotateLeftHandle">
+              左旋转
+            </el-button>
+            <el-button type="primary" plain @click="rotateRightHandle">
+              右旋转
+            </el-button>
+            <el-button type="primary" plain @click="changeScaleHandle(1)">
+              放大
+            </el-button>
+            <el-button type="primary" plain @click="changeScaleHandle(-1)">
+              缩小
+            </el-button>
+            <el-button type="primary" plain @click="downloadHandle('blob')">
+              下载
+            </el-button>
           </el-button-group>
           <el-button-group>
             <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" :loading="loading" @click="finish">确认</el-button>
+            <el-button type="primary" :loading="loading" @click="finish">
+              确认
+            </el-button>
           </el-button-group>
         </div>
       </el-dialog>
@@ -112,17 +93,19 @@
 <script>
 import { mapGetters } from 'vuex'
 import { putUserData } from '@/api/v1/user'
-import { regionDataPlus, CodeToText } from 'element-china-area-data'
-
 import { postFile } from '@/api/files'
 import SparkMD5 from 'spark-md5'
-import { fileMD5, fileCos, fileUpload, fileHas, fileUrl } from '@/assets/js/file.js'
+import {
+  fileMD5,
+  fileCos,
+  fileUpload,
+  fileHas,
+  fileUrl
+} from '@/assets/js/file.js'
 export default {
   name: 'User',
   computed: {
-    ...mapGetters([
-      'userData'
-    ]),
+    ...mapGetters(['userData']),
     imageUrl() {
       if (typeof this.userData.avatar === 'undefined') {
         return null
@@ -131,40 +114,8 @@ export default {
     }
   },
   data: function() {
-    const validateNickname = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入用户昵称 '))
-      } else if (value === this.userData.nickname) {
-        callback(new Error('新用户名不能和旧用户名一致!'))
-      } else {
-        callback()
-      }
-    }
     return {
       isDisable: false,
-      nicknameForm: {
-        nickname: ''
-      },
-      nicknameRules: {
-        nickname: [
-          { required: true, message: '请输入用户昵称', trigger: 'blur' },
-          { min: 2, message: '昵称长度应该大于2', trigger: 'blur' },
-          { validator: validateNickname, trigger: 'blur' }
-        ]
-      },
-      addressOptions: regionDataPlus,
-      infoForm: {
-        sex: 'man',
-        industry: '',
-        selectedOptions: [],
-        textarea: ''
-      },
-      infoRules: {
-        industry: [
-          { required: true, message: '请输入所在行业', trigger: 'blur' },
-          { min: 2, message: '行业长度应该大于2', trigger: 'blur' }
-        ]
-      },
       // 剪裁组件配置开始
       // isPreview: false,
       dialogVisible: false,
@@ -215,28 +166,7 @@ export default {
     }
   },
   methods: {
-    handleChange(value) {
-      var ctt = CodeToText[value[0]] + CodeToText[value[1]] + CodeToText[value[2]]
-      console.log(ctt)
-    },
-    submitNickname() {
-      const self = this
-      self.isDisable = true
-      setTimeout(() => {
-        this.isDisable = false // 防重复提交，两秒后才能再次点击
-      }, 1000)
-      this.$refs.nicknameForm.validate((valid) => {
-        if (valid) {
-          putUserData({ nickname: self.nicknameForm.nickname }).then(response => {
-            self.refreshUserdata(response.data)
-            this.$message({
-              message: '修改昵称成功',
-              type: 'success'
-            })
-          })
-        }
-      })
-    },
+    // 这个环节开始准备用mixin
     refreshUserdata(data) {
       console.log(data.data)
       this.$store.commit('user/SET_DATA', data.data)
@@ -247,23 +177,29 @@ export default {
       setTimeout(() => {
         this.isDisable = false // 防重复提交，两秒后才能再次点击
       }, 2000)
-      this.$refs.infoForm.validate((valid) => {
+      this.$refs.infoForm.validate(valid => {
         if (valid) {
-          putUserData({ info: JSON.stringify(self.infoForm) }).then(response => {
-            console.log(response.data)
-            self.refreshUserdata(response.data)
-            this.$message({
-              message: '修改信息成功',
-              type: 'success'
-            })
-          })
+          putUserData({ info: JSON.stringify(self.infoForm) }).then(
+            response => {
+              console.log(response.data)
+              self.refreshUserdata(response.data)
+              this.$message({
+                message: '修改信息成功',
+                type: 'success'
+              })
+            }
+          )
         }
       })
     },
     // 头像上传方法开始
     // 上传按钮 限制图片大小和类型
     handleChangeUpload(file, fileList) {
-      const isJPG = file.raw.type === 'image/jpeg' || file.raw.type === 'image/png' || file.raw.type === 'image/bmp' || file.raw.type === 'image/gif'
+      const isJPG =
+        file.raw.type === 'image/jpeg' ||
+        file.raw.type === 'image/png' ||
+        file.raw.type === 'image/bmp' ||
+        file.raw.type === 'image/gif'
       const isLt2M = file.size / 1024 / 1024 < 2
       if (!isJPG) {
         this.$message.error('上传头像图片只能是 JPG/PNG/BMP/GIF 格式!')
@@ -300,14 +236,14 @@ export default {
       const aLink = document.createElement('a')
       aLink.download = 'author-img'
       if (type === 'blob') {
-        this.$refs.cropper.getCropBlob((data) => {
+        this.$refs.cropper.getCropBlob(data => {
           //   const downImg = window.URL.createObjectURL(data)
           aLink.href = window.URL.createObjectURL(data)
           aLink.click()
         })
       } else {
-        this.$refs.cropper.getCropData((data) => {
-        //  const downImg = data
+        this.$refs.cropper.getCropData(data => {
+          //  const downImg = data
           aLink.href = data
           aLink.click()
         })
@@ -325,42 +261,45 @@ export default {
     },
     saveAvatar(file, md5, url) {
       const self = this
-      postFile(file.name, md5, file.type, url).then((response) => {
-        putUserData({ avatar_id: response.data.id }).then((response) => {
-          self.refreshUserdata(response.data)
-          this.$message({
-            message: '修改头像成功',
-            type: 'success'
-          })
-          this.loading = false
-        }).catch(err => {
+      postFile(file.name, md5, file.type, url)
+        .then(response => {
+          putUserData({ avatar_id: response.data.id })
+            .then(response => {
+              self.refreshUserdata(response.data)
+              this.$message({
+                message: '修改头像成功',
+                type: 'success'
+              })
+              this.loading = false
+            })
+            .catch(err => {
+              this.loading = false
+              console.log(err)
+            })
+        })
+        .catch(err => {
           this.loading = false
           console.log(err)
         })
-      }).catch(err => {
-        this.loading = false
-        console.log(err)
-      })
     },
     finish() {
       const self = this
       // 获取截图的 blob 数据
-      this.$refs.cropper.getCropBlob((blob) => {
+      this.$refs.cropper.getCropBlob(blob => {
         blob.name = self.userData.username + '.avatar'
         blob.extension = '.jpg'
         const file = blob
 
-        fileMD5(file, (p) => {}, new SparkMD5()).then(function(md5) {
+        fileMD5(file, p => {}, new SparkMD5()).then(function(md5) {
           const key = md5 + file.extension
           fileCos().then(cos => {
             fileHas(key, cos).then(function(has) {
               if (has) {
                 self.saveAvatar(file, md5, fileUrl(key, cos))
               } else {
-                fileUpload(key, file, (p) => {}, cos)
-                  .then(data => {
-                    self.saveAvatar(file, md5, fileUrl(key, cos))
-                  })
+                fileUpload(key, file, p => {}, cos).then(data => {
+                  self.saveAvatar(file, md5, fileUrl(key, cos))
+                })
               }
             })
           })
@@ -375,29 +314,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.box-card {
-  margin: 1.6% 1.6% 0.6%;
-}
-.box-title {
-  margin-bottom: 36px;
-  line-height: 10px;
-  padding: 2px 0;
-  margin-left: 1%;
-  color: #4d4f52;
-}
-.font-color{
-  font-weight:500;
-}
-.user-explain {
-  font-size: 12px;
-  line-height: 20px;
-}
 .cropper-content {
-    .cropper {
-        width: auto;
-        height: 350px;
-    }
- }
+  .cropper {
+    width: auto;
+    height: 350px;
+  }
+}
 
 .avatar-uploader {
   cursor: pointer;
@@ -405,7 +327,7 @@ export default {
   overflow: hidden;
 }
 .avatar-uploader:hover {
-  border-color: #409EFF;
+  border-color: #409eff;
 }
 .avatar-uploader-icon {
   font-size: 28px;
@@ -426,4 +348,3 @@ export default {
   margin-right: 12px;
 }
 </style>
-
