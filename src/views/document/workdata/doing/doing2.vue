@@ -1,53 +1,52 @@
 <template>
   <div>
-    <el-card class="box-card">
-      头像组件抽取中
-      <el-upload
-        class="avatar-uploader"
-        action=""
-        :auto-upload="false"
-        :show-file-list="false"
-        :on-change="handleChangeUpload"
-        accept="image/jpeg,image/gif,image/png,image/bmp"
-        style="float: left"
-      >
-        <img v-if="imageUrl" :src="imageUrl" class="avatar">
-        <i v-else class="el-icon-plus avatar-uploader-icon" />
-      </el-upload>
+    <!-- <el-card class="box-card"> -->
+    <el-upload
+      class="avatar-uploader"
+      action=""
+      :auto-upload="false"
+      :show-file-list="false"
+      :on-change="handleChangeUpload"
+      accept="image/jpeg,image/gif,image/png,image/bmp"
+      style="float: left"
+    >
+      <img v-if="imageUrl" :src="imageUrl" class="avatar">
+      <i v-else class="el-icon-plus avatar-uploader-icon" />
+    </el-upload>
 
-      <!-- 用户基本信息 end-->
-      <!-- vueCropper 剪裁图片dialog实现-->
-      <el-dialog
-        title="头像截取"
-        :visible.sync="dialogVisible"
-        class="crop-dialog"
-        append-to-body
-      >
-        <div class="cropper-content">
-          <div class="cropper" style="text-align: center">
-            <vueCropper
-              ref="cropper"
-              :img="option.img"
-              :output-size="option.size"
-              :output-type="option.outputType"
-              :info="true"
-              :full="option.full"
-              :can-move="option.canMove"
-              :can-move-box="option.canMoveBox"
-              :original="option.original"
-              :auto-crop="option.autoCrop"
-              :fixed="option.fixed"
-              :fixed-number="option.fixedNumber"
-              :center-box="option.centerBox"
-              :info-true="option.infoTrue"
-              :fixed-box="option.fixedBox"
-              :auto-crop-width="option.autoCropWidth"
-              :auto-crop-height="option.autoCropHeight"
-              @cropMoving="cropMoving"
-            />
-          </div>
+    <!-- 用户基本信息 end-->
+    <!-- vueCropper 剪裁图片dialog实现-->
+    <el-dialog
+      title="头像截取"
+      :visible.sync="dialogVisible"
+      class="crop-dialog"
+      append-to-body
+    >
+      <div class="cropper-content">
+        <div class="cropper" style="text-align: center">
+          <vueCropper
+            ref="cropper"
+            :img="option.img"
+            :output-size="option.size"
+            :output-type="option.outputType"
+            :info="true"
+            :full="option.full"
+            :can-move="option.canMove"
+            :can-move-box="option.canMoveBox"
+            :original="option.original"
+            :auto-crop="option.autoCrop"
+            :fixed="option.fixed"
+            :fixed-number="option.fixedNumber"
+            :center-box="option.centerBox"
+            :info-true="option.infoTrue"
+            :fixed-box="option.fixedBox"
+            :auto-crop-width="option.autoCropWidth"
+            :auto-crop-height="option.autoCropHeight"
+            @cropMoving="cropMoving"
+          />
         </div>
-        <!-- <div class="action-box">
+      </div>
+      <!-- <div class="action-box">
           <el-upload
             class="upload-demo"
             action=""
@@ -58,35 +57,35 @@
             <el-button type="primary" plain>更换图片</el-button>
           </el-upload>
         </div> -->
-        <div slot="footer" class="dialog-footer">
-          <el-button-group style="float: left">
-            <!--   <el-button type="primary" plain @click="clearImgHandle">清除图片</el-button> -->
-            <el-button type="primary" plain @click="rotateLeftHandle">
-              左旋转
-            </el-button>
-            <el-button type="primary" plain @click="rotateRightHandle">
-              右旋转
-            </el-button>
-            <el-button type="primary" plain @click="changeScaleHandle(1)">
-              放大
-            </el-button>
-            <el-button type="primary" plain @click="changeScaleHandle(-1)">
-              缩小
-            </el-button>
-            <el-button type="primary" plain @click="downloadHandle('blob')">
-              下载
-            </el-button>
-          </el-button-group>
-          <el-button-group>
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" :loading="loading" @click="finish">
-              确认
-            </el-button>
-          </el-button-group>
-        </div>
-      </el-dialog>
-      <!-- vueCropper 剪裁图片dialog end-->
-    </el-card>
+      <div slot="footer" class="dialog-footer">
+        <el-button-group style="float: left">
+          <!--   <el-button type="primary" plain @click="clearImgHandle">清除图片</el-button> -->
+          <el-button type="primary" plain @click="rotateLeftHandle">
+            左旋转
+          </el-button>
+          <el-button type="primary" plain @click="rotateRightHandle">
+            右旋转
+          </el-button>
+          <el-button type="primary" plain @click="changeScaleHandle(1)">
+            放大
+          </el-button>
+          <el-button type="primary" plain @click="changeScaleHandle(-1)">
+            缩小
+          </el-button>
+          <el-button type="primary" plain @click="downloadHandle('blob')">
+            下载
+          </el-button>
+        </el-button-group>
+        <el-button-group>
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" :loading="loading" @click="finish">
+            确认
+          </el-button>
+        </el-button-group>
+      </div>
+    </el-dialog>
+    <!-- vueCropper 剪裁图片dialog end-->
+    <!-- </el-card> -->
   </div>
 </template>
 
@@ -143,33 +142,10 @@ export default {
       loading: false
     }
   },
-  created() {
-    const self = this
-    self.nicknameForm.nickname = self.userData.nickname
-    const info = JSON.parse(self.userData.info)
-
-    if (info !== null) {
-      if (typeof info.sex !== 'undefined') {
-        self.infoForm.sex = info.sex
-      }
-
-      if (typeof info.industry !== 'undefined') {
-        self.infoForm.industry = info.industry
-      }
-      if (typeof info.textarea !== 'undefined') {
-        self.infoForm.textarea = info.textarea
-      }
-
-      if (typeof info.selectedOptions !== 'undefined') {
-        self.infoForm.selectedOptions = info.selectedOptions
-      }
-    }
-  },
   methods: {
-    // 这个环节开始准备用mixin
     refreshUserdata(data) {
-      console.log(data.data)
-      this.$store.commit('user/SET_DATA', data.data)
+      console.log(data)
+      this.$store.commit('user/setUser', data)
     },
     saveInfo() {
       const self = this
@@ -308,7 +284,7 @@ export default {
         this.loading = true
       })
     }
-    // 头像上床方法结束
+    // 头像上传方法结束
   }
 }
 </script>
