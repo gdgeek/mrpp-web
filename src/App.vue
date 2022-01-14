@@ -28,7 +28,7 @@ export default {
       if (self.$can('goto', new AbilityRouter(to.path))) {
         next()
       } else {
-        this.$message.error('权限不足！')
+        this.$message.error('权限不足！' + to.path)
       }
     })
   },
