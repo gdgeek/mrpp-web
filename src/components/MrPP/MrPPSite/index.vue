@@ -28,7 +28,7 @@
         </div>
         <hr>
         <div class="foot-summary linkcolor">
-          <el-link type="primary" :underline="false">
+          <el-link type="primary" :underline="false" target="_blank" href="@BPMrPP.pdf">
             <i class="el-icon-picture" />
             平台商业计划书
           </el-link>

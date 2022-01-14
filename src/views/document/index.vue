@@ -38,8 +38,8 @@
                 介绍
               </div>
             </template>
-            <el-menu-item index="/main1">欢迎</el-menu-item>
-            <el-menu-item index="/main2">开启旅程</el-menu-item>
+            <el-menu-item index="/document/index/main1">欢迎</el-menu-item>
+            <el-menu-item index="/document/index/main2">开启旅程</el-menu-item>
           </el-submenu>
           <el-submenu index="2">
             <template slot="title">

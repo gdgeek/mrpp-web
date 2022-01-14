@@ -133,28 +133,19 @@ export const constantRoutes = [
         name: 'VerseMetaEditor',
         meta: { title: '单元编辑' },
         component: () => import('@/views/verse/meta/editor')
-      }
-    ]
-  },
-
-  {
-    path: '/document',
-    name: 'Document',
-    component: Layout,
-    meta: { title: '欢迎页面' },
-    children: [
+      },
       {
-        path: 'index',
+        path: '/document/index',
         name: 'DocumentIndex',
         component: () => import('@/views/document/index'),
         children: [
           {
-            path: '/main1',
+            path: '/document/index/main1',
             name: 'DocumentIndexMain1',
-            component: () => import('@/views/document/mains/Main1')
+            component: () => import('@/views/document/mains/main1')
           },
           {
-            path: '/main2',
+            path: '/document/index/main2',
             name: 'DocumentIndexMain2',
             component: () => import('@/views/document/mains/Main2')
           }
@@ -162,7 +153,6 @@ export const constantRoutes = [
       }
     ]
   },
-
   {
     path: '/site',
     component: () => import('@/views/site/index'),

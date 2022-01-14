@@ -28,7 +28,7 @@
 
 <script>
 export default {
-  name: 'Main1'
+  name: 'DocumentIndexMain1'
 }
 </script>
 
