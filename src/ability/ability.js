@@ -20,9 +20,9 @@ export function UpdateAbility($ability, roles) {
 
   guest.forEach(item => {
     if (typeof item === 'string') {
-      can('goto', 'AbilityRouter', { path: item })
+      can('goto', AbilityRouter.name, { path: item })
     } else {
-      can('goto', 'AbilityRouter', { path: { $regex: item }})
+      can('goto', AbilityRouter.name, { path: { $regex: item }})
     }
   })
 
@@ -57,18 +57,18 @@ export function UpdateAbility($ability, roles) {
 
     menu.forEach(item => {
       if (typeof item === 'string') {
-        can(['open', 'goto'], 'AbilityRouter', { path: item })
+        can(['open', 'goto'], AbilityRouter.name, { path: item })
       } else {
-        can(['open', 'goto'], 'AbilityRouter', { path: { $regex: item }})
+        can(['open', 'goto'], AbilityRouter.name, { path: { $regex: item }})
       }
     })
     const router = ['/verse/editor', '/verse/meta/editor', '/verse/code']
 
     router.forEach(item => {
       if (typeof item === 'string') {
-        can(['goto'], 'AbilityRouter', { path: item })
+        can(['goto'], AbilityRouter.name, { path: item })
       } else {
-        can(['goto'], 'AbilityRouter', { path: { $regex: item }})
+        can(['goto'], AbilityRouter.name, { path: { $regex: item }})
       }
     })
   }
