@@ -1,7 +1,6 @@
 import Vue from 'vue'
 
 import VueCookies from 'vue-cookies'
-import { VueMasonryPlugin } from 'vue-masonry'
 
 import { abilitiesPlugin } from '@casl/vue'
 import ability from './ability'
@@ -40,8 +39,6 @@ Vue.use(abilitiesPlugin, ability, {
 // highlight
 
 Vue.use(vueHljs, { hljs })
-
-Vue.use(VueMasonryPlugin)
 
 // set head icon upload
 Vue.use(VueCropper)
