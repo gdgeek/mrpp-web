@@ -70,8 +70,30 @@ const state = {
     },
     {
       label: '探索',
-      url: '/document/index',
-      icon: 'book'
+      url: '/discovery',
+      icon: 'compass',
+      items: [
+        {
+          label: '新闻',
+          url: '/discovery/news',
+          icon: 'newspaper'
+        },
+        {
+          label: '下载',
+          url: '/discovery/download',
+          icon: 'download'
+        },
+        {
+          label: '文档',
+          url: '/discovery/document',
+          icon: 'book'
+        },
+        {
+          label: '案例',
+          url: '/discovery/example',
+          icon: 'star-half-alt'
+        }
+      ]
     },
     {
       label: '交流',
@@ -85,18 +107,6 @@ const state = {
     }
   ]
 }
-/*
-const mutations = {
-  flashSetup(state, { title, type = 'success', description = null }) {
-    state.main.title = title
-    state.main.type = type
-    state.main.description = description
-    state.main.show = true
-  },
-  flashClean(state) {
-    state.main.show = false
-  }
-}*/
 
 export default {
   state

@@ -1,18 +1,17 @@
 import Vue from 'vue'
+
+import VueCookies from 'vue-cookies'
+import { VueMasonryPlugin } from 'vue-masonry'
+
 import { abilitiesPlugin } from '@casl/vue'
 import ability from './ability'
-import VueCookies from 'vue-cookies'
-Vue.use(VueCookies)
-Vue.$cookies.config('7d')
 
 import vueHljs from 'vue-hljs'
 import hljs from 'highlight.js'
-
 // if you want to use default color, import this css file
 import 'vue-hljs/dist/style.css'
 
 import './plugins/fontawesome'
-
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
 import ElementUI from 'element-ui'
@@ -28,18 +27,31 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 import VueCropper from 'vue-cropper' // head icon upload
+
+// cookies
+
+Vue.use(VueCookies)
+Vue.$cookies.config('7d')
+
+// ability
+Vue.use(abilitiesPlugin, ability, {
+  useGlobalProperties: true
+})
+// highlight
+
+Vue.use(vueHljs, { hljs })
+
+Vue.use(VueMasonryPlugin)
+
 // set head icon upload
 Vue.use(VueCropper)
-Vue.use(vueHljs, { hljs })
+
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
 // Vue.use(ElementUI)
 Vue.config.productionTip = false
 
-Vue.use(abilitiesPlugin, ability, {
-  useGlobalProperties: true
-})/**/
 new Vue({
   el: '#app',
   router,

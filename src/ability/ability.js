@@ -52,7 +52,7 @@ export function UpdateAbility($ability, roles) {
       '/verse/index',
       '/settings/user',
       '/settings/account',
-      /main/i
+      /^\/discovery/
     ]
 
     menu.forEach(item => {

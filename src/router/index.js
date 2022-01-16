@@ -133,6 +133,30 @@ export const constantRoutes = [
         name: 'VerseMetaEditor',
         meta: { title: '单元编辑' },
         component: () => import('@/views/verse/meta/editor')
+      },
+      {
+        path: '/discovery/news',
+        name: 'DiscoveryNews',
+        meta: { title: '站内新闻' },
+        component: () => import('@/views/discovery/news')
+      },
+      {
+        path: '/discovery/download',
+        name: 'DiscoveryDownload',
+        meta: { title: '下载页面' },
+        component: () => import('@/views/discovery/download')
+      },
+      {
+        path: '/discovery/document',
+        name: 'DiscoveryDocument',
+        meta: { title: '相关文档' },
+        component: () => import('@/views/discovery/document')
+      },
+      {
+        path: '/discovery/example',
+        name: 'DiscoveryExample',
+        meta: { title: '案例展示' },
+        component: () => import('@/views/discovery/example')
       }
     ]
   },

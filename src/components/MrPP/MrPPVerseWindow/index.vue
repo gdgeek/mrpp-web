@@ -6,6 +6,9 @@
     width="70%"
   >
     <el-form ref="form" :rules="rules" :model="form" label-width="80px">
+      <el-form-item label="封面图片">
+        <Doing2 />
+      </el-form-item>
       <el-form-item prop="name" label="名称">
         <el-input v-model="form.name" />
       </el-form-item>
@@ -14,9 +17,6 @@
         <el-input v-model="form.desc" type="textarea" />
       </el-form-item>
       <!-- 载入截图组件 -->
-      <el-form-item label="视频截图">
-        <Doing2 />
-      </el-form-item>
     </el-form>
 
     <span slot="footer" class="dialog-footer">
