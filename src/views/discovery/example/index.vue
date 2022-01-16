@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mr-p-p-discovery category="mrpp-example" title="项目案例" />
+    <mr-p-p-discovery category="mrpp" title="项目案例" />
   </div>
 </template>
 

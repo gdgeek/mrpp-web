@@ -19,8 +19,8 @@
               <span slot="title">{{ it.title.rendered }}</span>
             </el-menu-item>
           </div>
-          <el-submenu v-for="item in menu.children" :key="item.id" :index="item.id.toString()" :hidden="item.items.length ===0">
-            <template slot="title">
+          <el-submenu v-for="item in menu.children" :key="item.id" class="mrpp-el-submenu" :index="item.id.toString()" :hidden="item.items.length ===0">
+            <template slot="title" class="mrpp-el-submenu-title">
               <span>{{ item.name }}</span>
             </template>
             <el-menu-item-group>
@@ -215,36 +215,5 @@ export default {
 }
 </script>
 <style>
-  .el-header, .el-footer {
-    text-align: center;
-    line-height: 60px;
-  }
 
-  .el-aside {
-
-    text-align: left;
-    line-height: 200px;
-  }
-
-  body > .el-container {
-    margin-bottom: 40px;
-  }
-
-  .el-container:nth-child(5) .el-aside,
-  .el-container:nth-child(6) .el-aside {
-    line-height: 260px;
-  }
-
-  .el-container:nth-child(7) .el-aside {
-    line-height: 320px;
-  }
-
-  .el-divider {
-    background-color: #b6d7fb;
-    height: 2px;
-  }
-  .el-divider {
-    background-color: #b6d7fb;
-    height: 1px;
-  }
 </style>
