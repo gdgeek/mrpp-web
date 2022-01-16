@@ -6,7 +6,7 @@
         <el-menu-item :index="layer+':' + item.url"><font-awesome-icon :icon="item.icon" />  <span v-if="!isCollapse">{{ item.label }}</span></el-menu-item>
       </app-link>
       <div v-else :align="align">
-        <el-menu-item disabled :index="layer+':' + item.url"><font-awesome-icon :icon="item.icon" />  <span v-if="!isCollapse">{{ item.label }}</span></el-menu-item>
+        <el-menu-item style="cursor:default" disabled :index="layer+':' + item.url"><font-awesome-icon :icon="item.icon" />  <span v-if="!isCollapse">{{ item.label }}</span></el-menu-item>
       </div>
     </div>
     <div v-else>
