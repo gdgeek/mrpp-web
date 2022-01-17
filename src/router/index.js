@@ -44,13 +44,13 @@ export const constantRoutes = [
         component: () => import('@/views/home/index')
       },
       {
-        meta: { title: '个人中心' },
+        meta: { title: '设置/个人中心' },
         path: 'settings/user',
         name: 'SettingUser',
         component: () => import('@/views/settings/user')
       },
       {
-        meta: { title: '账号设置' },
+        meta: { title: '设置/账号设置' },
         path: 'settings/account',
         name: 'SettingAccount',
         component: () => import('@/views/settings/account')
@@ -58,135 +58,114 @@ export const constantRoutes = [
       {
         path: 'polygen/upload',
         name: 'PolygenUpload',
-        meta: { title: '模型上传' },
+        meta: { title: '模型资源/模型上传' },
         component: () => import('@/views/polygen/upload')
       },
       {
         path: 'polygen/index',
         name: 'PolygenIndex',
-        meta: { title: '模型列表' },
+        meta: { title: '模型资源/模型列表' },
         component: () => import('@/views/polygen/index')
       },
       {
         path: 'polygen/view',
         name: 'PolygenView',
-        meta: { title: '模型处理' },
+        meta: { title: '模型资源/模型处理' },
         component: () => import('@/views/polygen/view')
       },
       {
         path: 'picture/upload',
         name: 'PictureUpload',
-        meta: { title: '上传图片' },
+        meta: { title: '图片资源/上传图片' },
         component: () => import('@/views/picture/upload')
       },
       {
         path: 'picture/index',
         name: 'PictureIndex',
-        meta: { title: '图片列表' },
+        meta: { title: '图片资源/图片列表' },
         component: () => import('@/views/picture/index')
       },
       {
         path: 'picture/view',
         name: 'PictureView',
-        meta: { title: '图片处理' },
+        meta: { title: '图片资源/图片处理' },
         component: () => import('@/views/picture/view')
       },
       {
         path: 'video/upload',
         name: 'VideoUpload',
-        meta: { title: '视频上传' },
+        meta: { title: '视频资源/视频上传' },
         component: () => import('@/views/video/upload')
       },
       {
         path: 'video/index',
         name: 'VideoIndex',
-        meta: { title: '视频列表' },
+        meta: { title: '视频资源/视频列表' },
         component: () => import('@/views/video/index')
       },
       {
         path: 'video/view',
         name: 'VideoView',
-        meta: { title: '视频处理' },
+        meta: { title: '视频资源/视频处理' },
         component: () => import('@/views/video/view')
       },
       {
         path: 'verse/index',
         name: 'VerseIndex',
-        meta: { title: '列表' },
+        meta: { title: '宇宙/列表' },
         component: () => import('@/views/verse/index')
       },
 
       {
         path: 'verse/editor',
         name: 'VerseEditor',
-        meta: { title: '宇宙编辑' },
+        meta: { title: '宇宙/编辑' },
         component: () => import('@/views/verse/editor')
       },
       {
         path: 'verse/code',
         name: 'VerseCode',
-        meta: { title: '宇宙逻辑' },
+        meta: { title: '宇宙/逻辑' },
         component: () => import('@/views/verse/code')
       },
       {
         path: 'verse/meta/editor',
         name: 'VerseMetaEditor',
-        meta: { title: '单元编辑' },
+        meta: { title: '宇宙/元/编辑' },
         component: () => import('@/views/verse/meta/editor')
       },
       {
         path: '/discovery/news',
         name: 'DiscoveryNews',
-        meta: { title: '站内新闻' },
+        meta: { title: '探索/站内新闻' },
         component: () => import('@/views/discovery/news')
       },
       {
         path: '/discovery/download',
         name: 'DiscoveryDownload',
-        meta: { title: '下载页面' },
+        meta: { title: '探索/下载页面' },
         component: () => import('@/views/discovery/download')
       },
       {
         path: '/discovery/document',
         name: 'DiscoveryDocument',
-        meta: { title: '相关文档' },
+        meta: { title: '探索/相关文档' },
         component: () => import('@/views/discovery/document')
       },
       {
         path: '/discovery/example',
         name: 'DiscoveryExample',
-        meta: { title: '案例展示' },
+        meta: { title: '探索/案例展示' },
         component: () => import('@/views/discovery/example')
-      }
-    ]
-  },
-
-  {
-    path: '/document',
-    name: 'Document',
-    component: Layout,
-    meta: { title: '欢迎页面' },
-    children: [
+      },
       {
-        path: 'index',
-        name: 'DocumentIndex',
-        component: () => import('@/views/document/index'),
-        children: [
-          {
-            path: '/main1',
-            name: 'DocumentIndexMain1',
-            component: () => import('@/views/document/mains/Main1')
-          },
-          {
-            path: '/main2',
-            name: 'DocumentIndexMain2',
-            component: () => import('@/views/document/mains/Main2')
-          }
-        ]
+        path: '/community/index',
+        name: 'CommunityIndex',
+        meta: { title: '交流' },
+        component: () => import('@/views/community/index')
       }
     ]
   },
-
   {
     path: '/site',
     component: () => import('@/views/site/index'),

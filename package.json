@@ -47,6 +47,7 @@
     "vue-cookies": "^1.7.4",
     "vue-cropper": "^0.5.8",
     "vue-demi": "^0.12.1",
+    "vue-froala-wysiwyg": "^4.0.8",
     "vue-hljs": "^2.0.0",
     "vue-router": "3.0.6",
     "vue-waterfall": "^1.0.6",
