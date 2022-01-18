@@ -5,7 +5,7 @@
         <el-col :xs="16" :sm="16" :md="16" :lg="16" :xl="16">
           <slot />
           &nbsp;
-          <el-button-group v-if="sorted" :inline="true">
+          <el-button-group v-if="sorted !== ''" :inline="true">
             <el-button
               v-if="sorted_name"
               size="mini"

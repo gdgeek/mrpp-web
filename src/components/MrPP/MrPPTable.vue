@@ -23,11 +23,6 @@
         label="发布时间"
         width="180"
       />
-      <el-table-column
-        prop="body"
-        label="发布时间"
-        width="180"
-      />
     </el-table>
   </div>
 </template>

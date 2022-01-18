@@ -4,7 +4,7 @@
     <el-container>
 
       <el-header>
-        <mr-p-p-header :sorted="null" :searched="searched" @search="search" @sort="sort">
+        <mr-p-p-header :sorted="''" :searched="searched" @search="search" @sort="sort">
           <el-tag type="success">交流帖子</el-tag></mr-p-p-header>
       </el-header>
       <el-main><br>
@@ -19,7 +19,7 @@
       </el-main>
 
     </el-container>
-    <mr-p-p-editor />
+    <mr-p-p-editor @post="post" />
   </div>
 </template>
 
@@ -28,7 +28,7 @@ import MrPPEditor from '@/components/MrPP/MrPPEditor.vue'
 import MrPPTable from '@/components/MrPP/MrPPTable.vue'
 import MrPPHeader from '@/components/MrPP/MrPPHeader/index.vue'
 
-import { getMessages } from '@/api/v1/message'
+import { getMessages, postMessage } from '@/api/v1/message'
 export default {
   name: 'CommuityIndex',
   components: {
@@ -74,6 +74,14 @@ export default {
     search: function(value) {
       this.searched = value
       this.refresh()
+    },
+    post: function(data) {
+      /* postMessage(data).then(r => {
+        const items = this.items
+        this.items = null
+        items.unshift(data)
+        this.items = items
+      })*/
     }
   }
 

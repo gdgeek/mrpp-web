@@ -25,10 +25,10 @@
 </template>
 
 <script>
-import { postMessage } from '@/api/v1/message'
+// import { postMessage } from '@/api/v1/message'
 export default {
   data() {
-    console.log(postMessage)
+  //  console.log(postMessage)
     return {
 
       config: {
@@ -61,10 +61,11 @@ export default {
       const self = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          postMessage({ title: self.form.title, body: self.form.body })
+          this.$emit('post', self.form)
+          /* postMessage({ title: self.form.title, body: self.form.body })
             .then((r) => {
               self.resetForm(formName)
-            })
+            })*/
         //  alert('submit!')
         } else {
           console.log('error submit!!')
