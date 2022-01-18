@@ -24,11 +24,11 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import MrPPEditor from '@/components/MrPP/MrPPEditor.vue'
 import MrPPTable from '@/components/MrPP/MrPPTable.vue'
 import MrPPHeader from '@/components/MrPP/MrPPHeader/index.vue'
 
+import { mapGetters } from 'vuex'
 import { getMessages, postMessage } from '@/api/v1/message'
 import moment from 'moment'
 moment.locale('zh-cn')
@@ -38,6 +38,12 @@ export default {
     MrPPEditor,
     MrPPTable,
     MrPPHeader
+  },
+
+  computed: {
+    ...mapGetters([
+      'userData'
+    ])
   },
   data() {
     return {
@@ -49,16 +55,7 @@ export default {
 
   created() {
     const self = this
-    getMessages().then(response => {
-      self.items = []
-      response.data.forEach(item => {
-        self.items.push({ title: item.title,
-          body: item.body,
-          updated_at: item.updated_at,
-          author: { id: 3, nickname: '极客' }
-        })
-      })
-    })
+    self.refresh()
   },
   methods: {
     refresh() {
@@ -76,10 +73,15 @@ export default {
           if (response.data) {
             self.items = []
             response.data.forEach(item => {
-              self.items.push({ title: item.data,
+              self.items.push({ title: item.title,
                 body: item.body,
                 updated_at: item.updated_at,
-                author: { id: 3, nickname: '极客' }
+                author: {
+                  id: item.author.id,
+                  username: item.author.username,
+                  nickname: item.author.nickname,
+                  email: item.author.email
+                }// item.author
               })
             })
           }
@@ -99,12 +101,16 @@ export default {
       const self = this
       postMessage(data).then(response => {
         const date = new Date()
-
-        Vue.set(self.items, 0, {
+        self.items.unshift({
           title: response.data.title,
           body: response.data.body,
           updated_at: moment(date).format('YYYY-MM-DD HH:mm:ss'),
-          author: { id: 3, nickname: '极客' }
+          author: {
+            id: self.userData.id,
+            username: self.userData.username,
+            nickname: self.userData.nickname,
+            email: self.userData.email
+          }
         })
         self.$refs.editor.clear()
       })

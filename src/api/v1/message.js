@@ -9,7 +9,7 @@ export function postMessage(data) {
 
 export function getMessage(id) {
   return request({
-    url: 'v1/messages/' + id,
+    url: 'v1/messages/' + id + '?expand=author',
     method: 'get'
   })
 }
