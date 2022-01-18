@@ -1,90 +1,81 @@
 <template>
   <div id="CommuityIndex">
+    <br>
     <el-container>
 
-      <br>
       <el-header>
-        <el-card class="box-card">
-          <el-row :gutter="0">
-            <el-col :xs="16" :sm="16" :md="16" :lg="16" :xl="16">
-              <slot />
-              &nbsp;
-              1</el-col>
-            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" />
-          </el-row>
-        </el-card>
-
+        <mr-p-p-header :sorted="null" :searched="searched" @search="search" @sort="sort">
+          <el-tag type="success">交流帖子</el-tag></mr-p-p-header>
       </el-header>
-      <el-main>
+      <el-main><br>
         <el-card class="box-card">
-          <el-table
-            :data="tableData"
-            style="width: 100%"
-          >
-            <el-table-column
-              prop="date"
-              label="日期"
-              width="180"
-            />
-            <el-table-column
-              prop="name"
-              label="姓名"
-              width="180"
-            />
-            <el-table-column
-              prop="address"
-              label="地址"
-            />
-          </el-table>
+          <mr-p-p-table :items="items" />
+          <br>
+          <el-pagination
+            layout="prev, pager, next"
+            :total="50"
+          />
         </el-card>
-
       </el-main>
+
     </el-container>
     <mr-p-p-editor />
-
   </div>
 </template>
 
 <script>
 import MrPPEditor from '@/components/MrPP/MrPPEditor.vue'
-/*
-import FroalaEditor from 'froala-editor'
-FroalaEditor.DefineIcon('alert', { NAME: 'info', SVG_KEY: 'help' })
-FroalaEditor.RegisterCommand('alert', {
-  title: 'Hello',
-  focus: false,
-  undo: false,
-  refreshAfterCallback: false,
-  callback: function() {
-    alert('Hello!')
-  }
-})*/
+import MrPPTable from '@/components/MrPP/MrPPTable.vue'
+import MrPPHeader from '@/components/MrPP/MrPPHeader/index.vue'
+
+import { getMessages } from '@/api/v1/message'
 export default {
   name: 'CommuityIndex',
   components: {
-    MrPPEditor
+    MrPPEditor,
+    MrPPTable,
+    MrPPHeader
   },
   data() {
     return {
-
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }],
-
-      config: {
-        attribution: false,
-        language: 'zh_cn',
-        //  toolbarButtons: [['bold',''], ['undo', 'redo', 'bold'], ['alert', 'clear', 'insert']],
-        events: {
-          initialized: function() {
-            console.log('initialized')
+      items: null,
+      sorted: '-created_at',
+      searched: '',
+      pagination: { current: 1, count: 1, size: 20, total: 20 }
+    }
+  },
+  methods: {
+    succeed(items) {
+      alert(items)
+      this.items = items
+    },
+    refresh() {
+      const self = this
+      getMessages(self.sorted, self.searched, self.pagination.current)
+        .then((response) => {
+          console.log(response.headers)
+          self.pagination = {
+            current: parseInt(response.headers['x-pagination-current-page']),
+            count: parseInt(response.headers['x-pagination-page-count']),
+            size: parseInt(response.headers['x-pagination-per-page']),
+            total: parseInt(response.headers['x-pagination-total-count'])
           }
-        }
-      },
-      model: 'Edit Your Content Here!'
+          if (response.data) {
+            self.succeed(response.data)
+          }
+        }).catch(function(error) {
+          console.log(error)
+        })
+    },
+    sort: function(value) {
+      this.sorted = value
+      this.refresh()
+    },
+    search: function(value) {
+      this.searched = value
+      this.refresh()
     }
   }
+
 }
 </script>

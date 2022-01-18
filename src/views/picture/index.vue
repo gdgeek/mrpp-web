@@ -66,6 +66,7 @@ import 'element-ui/lib/theme-chalk/display.css'
 import { getPicture, putPicture, deletePicture } from '@/api/resources'
 import MrPPCard from '@/components/MrPP/MrPPCard'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
+
 export default {
   components: {
     MrPPCard,

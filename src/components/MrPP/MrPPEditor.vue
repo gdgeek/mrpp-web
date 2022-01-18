@@ -7,11 +7,11 @@
       </el-form-item>
 
       <el-form-item label="内容" prop="body">
-        <froala id="edit" v-model="form.body" :tag="'textarea'" :config="config">1212</froala>
+        <froala id="edit" v-model="form.body" :tag="'textarea'" :config="config" />
 
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('form')">立即创建</el-button>
+        <el-button type="primary" @click="submitForm('form')">提交</el-button>
         <el-button @click="resetForm('form')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -25,12 +25,22 @@
 </template>
 
 <script>
-import { postMessage, getMessages } from '@/api/v1/message'
+import { postMessage } from '@/api/v1/message'
 export default {
   data() {
     console.log(postMessage)
-    console.log(getMessages)
     return {
+
+      config: {
+        attribution: false,
+        language: 'zh_cn',
+        //  toolbarButtons: [['bold',''], ['undo', 'redo', 'bold'], ['alert', 'clear', 'insert']],
+        events: {
+          initialized: function() {
+            console.log('initialized')
+          }
+        }
+      },
       form: {
         title: '',
         body: ''
@@ -48,9 +58,14 @@ export default {
   },
   methods: {
     submitForm(formName) {
+      const self = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          postMessage({ title: self.form.title, body: self.form.body })
+            .then((r) => {
+              self.resetForm(formName)
+            })
+        //  alert('submit!')
         } else {
           console.log('error submit!!')
           return false

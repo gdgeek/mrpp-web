@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 export function postMessage(data) {
+  console.error(data)
   return request({
     url: 'v1/messages',
     method: 'post',
@@ -9,12 +10,12 @@ export function postMessage(data) {
 
 export function getMessage(id) {
   return request({
-    url: 'v1/messages/' + id + '?expand=verse',
+    url: 'v1/messages/' + id,
     method: 'get'
   })
 }
 export function getMessages(sort = '-created_at', search = '', page = 0) {
-  let url = 'v1/messages?expand=image,author&sort=' + sort
+  let url = 'v1/messages?expand=author&sort=' + sort
 
   if (search !== '') {
     url += '&VerseSearch[name]=' + search
