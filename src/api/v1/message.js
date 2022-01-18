@@ -1,6 +1,5 @@
 import request from '@/utils/request'
 export function postMessage(data) {
-  console.error(data)
   return request({
     url: 'v1/messages',
     method: 'post',

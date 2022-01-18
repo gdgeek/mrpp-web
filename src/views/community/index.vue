@@ -9,7 +9,7 @@
       </el-header>
       <el-main><br>
         <el-card class="box-card">
-          <mr-p-p-table :items="items" />
+          <mr-p-p-table ref="table" :items="items" />
           <br>
           <el-pagination
             layout="prev, pager, next"
@@ -19,16 +19,19 @@
       </el-main>
 
     </el-container>
-    <mr-p-p-editor @post="post" />
+    <mr-p-p-editor ref="editor" @post="post" />
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
 import MrPPEditor from '@/components/MrPP/MrPPEditor.vue'
 import MrPPTable from '@/components/MrPP/MrPPTable.vue'
 import MrPPHeader from '@/components/MrPP/MrPPHeader/index.vue'
 
 import { getMessages, postMessage } from '@/api/v1/message'
+import moment from 'moment'
+moment.locale('zh-cn')
 export default {
   name: 'CommuityIndex',
   components: {
@@ -39,16 +42,25 @@ export default {
   data() {
     return {
       items: null,
-      sorted: '-created_at',
       searched: '',
       pagination: { current: 1, count: 1, size: 20, total: 20 }
     }
   },
+
+  created() {
+    const self = this
+    getMessages().then(response => {
+      self.items = []
+      response.data.forEach(item => {
+        self.items.push({ title: item.title,
+          body: item.body,
+          updated_at: item.updated_at,
+          author: { id: 3, nickname: '极客' }
+        })
+      })
+    })
+  },
   methods: {
-    succeed(items) {
-      alert(items)
-      this.items = items
-    },
     refresh() {
       const self = this
       getMessages(self.sorted, self.searched, self.pagination.current)
@@ -60,8 +72,16 @@ export default {
             size: parseInt(response.headers['x-pagination-per-page']),
             total: parseInt(response.headers['x-pagination-total-count'])
           }
+
           if (response.data) {
-            self.succeed(response.data)
+            self.items = []
+            response.data.forEach(item => {
+              self.items.push({ title: item.data,
+                body: item.body,
+                updated_at: item.updated_at,
+                author: { id: 3, nickname: '极客' }
+              })
+            })
           }
         }).catch(function(error) {
           console.log(error)
@@ -76,12 +96,18 @@ export default {
       this.refresh()
     },
     post: function(data) {
-      /* postMessage(data).then(r => {
-        const items = this.items
-        this.items = null
-        items.unshift(data)
-        this.items = items
-      })*/
+      const self = this
+      postMessage(data).then(response => {
+        const date = new Date()
+
+        Vue.set(self.items, 0, {
+          title: response.data.title,
+          body: response.data.body,
+          updated_at: moment(date).format('YYYY-MM-DD HH:mm:ss'),
+          author: { id: 3, nickname: '极客' }
+        })
+        self.$refs.editor.clear()
+      })
     }
   }
 

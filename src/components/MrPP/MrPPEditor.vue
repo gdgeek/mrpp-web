@@ -73,6 +73,9 @@ export default {
         }
       })
     },
+    clear() {
+      this.resetForm('form')
+    },
     resetForm(formName) {
       this.$refs[formName].resetFields()
     }
