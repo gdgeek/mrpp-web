@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import 'element-ui/lib/theme-chalk/display.css'
+import 'element-ui/lib/theme-chalk/index.css'
 import { getVerses, postVerse, putVerse, deleteVerse } from '@/api/v1/verse'
 import MrPPCard from '@/components/MrPP/MrPPCard'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'

@@ -9,6 +9,7 @@
     />
     <el-divider content-position="left">帖子</el-divider>
 
+    <el-skeleton />
     <el-row class="mrpp-header" :gutter="10">
       <el-col :span="12">
         <div class="grid-content"><b>标题</b></div>
