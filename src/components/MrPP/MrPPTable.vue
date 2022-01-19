@@ -9,7 +9,6 @@
     />
     <el-divider content-position="left">帖子</el-divider>
 
-    <el-skeleton />
     <el-row class="mrpp-header" :gutter="10">
       <el-col :span="12">
         <div class="grid-content"><b>标题</b></div>
@@ -24,17 +23,23 @@
         <div class="grid-content"><b>操作</b></div>
       </el-col>
     </el-row>
+    <div v-if="items === null || items.length == 0">
+      <br>
+      <el-skeleton :rows="10" animated />
+    </div>
     <div v-for="item in items" :key="item.id">
       <el-row class="mrpp-row" :gutter="10">
         <el-col :span="12">
           <el-popover
             placement="top-start"
             :title="item.title"
+            :open-delay="500"
             width="400"
             trigger="hover"
             :content="html(item.body)"
           >
-            <div slot="reference" class="grid-content"><router-link to="/settings/user"><el-link :underline="false" type="primary">{{ item.title }}</el-link></router-link></div>
+            <div slot="reference" class="grid-content">
+              <router-link to="/settings/user"><el-link :underline="false" type="primary">{{ item.title }}</el-link></router-link></div>
           </el-popover>
         </el-col>
         <el-col :span="4">
