@@ -4,7 +4,7 @@
     <el-container>
 
       <el-header>
-        <mr-p-p-header :sorted="''" :searched="searched" @search="search" @sort="sort">
+        <mr-p-p-header :sorted="''" :searched="searched" @search="search">
           <el-tag type="success">交流帖子</el-tag></mr-p-p-header>
       </el-header>
       <el-main><br>
@@ -89,11 +89,9 @@ export default {
           console.log(error)
         })
     },
-    sort: function(value) {
-      this.sorted = value
-      this.refresh()
-    },
+
     search: function(value) {
+      alert(value)
       this.searched = value
       this.refresh()
     },
