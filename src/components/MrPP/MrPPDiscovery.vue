@@ -18,7 +18,7 @@
               :index="'-1-' + it.id.toString()"
               @click="goto(it, -1)"
             >
-              <span slot="title">{{ it.title.rendered }}</span>
+              <span slot="title">{{ it.title.rendered | ellipsis }}</span>
             </el-menu-item>
           </div>
           <el-submenu
@@ -39,7 +39,7 @@
                   :index="item.id.toString() + '-' + it.id.toString()"
                   @click="goto(it, item.id)"
                 >
-                  {{ it.title.rendered }}
+                  {{ it.title.rendered | ellipsis }}
                 </el-menu-item>
               </div>
             </el-menu-item-group>
@@ -129,6 +129,16 @@ export default {
   components: {
     Waterfall,
     WaterfallItem
+  },
+  // Control overflow hidden titles
+  filters: {
+    ellipsis(value) {
+      if (!value) return ''
+      if (value.length > 10) {
+        return value.slice(0, 10) + '...'
+      }
+      return value
+    }
   },
   props: {
     category: {
