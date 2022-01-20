@@ -30,29 +30,14 @@ export function UpdateAbility($ability, roles) {
     const menu = [
       '/site/logout',
       '/resource',
-      '/polygen',
-      '/polygen/index',
-      '/polygen/upload',
-      '/polygen/view',
-      '/picture',
-      '/picture/index',
-      '/picture/upload',
-      '/picture/view',
-      '/video',
-      '/video/index',
-      '/video/upload',
-      '/video/view',
-      '/document',
-      '/document/index',
-      '/home',
-      '/home/index',
-      '/community',
-      '/community/index',
-      '/verse',
-      '/verse/index',
-      '/settings/user',
-      '/settings/account',
-      /^\/discovery/
+      /^\/polygen/,
+      /^\/picture/,
+      /^\/video/,
+      /^\/home/,
+      /^\/verse/,
+      /^\/settings/,
+      /^\/discovery/,
+      /^\/community/
     ]
 
     menu.forEach(item => {

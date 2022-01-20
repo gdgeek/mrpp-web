@@ -6,9 +6,10 @@
     width="70%"
   >
     <el-form ref="form" :rules="rules" :model="form" label-width="80px">
-      <el-form-item label="封面图片">
+
+      <!--  <el-form-item label="封面图片">
         <Doing2 />
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item prop="name" label="名称">
         <el-input v-model="form.name" />
       </el-form-item>
@@ -29,13 +30,9 @@
 
 <script>
 
-import Doing2 from '@/views/document/workdata/doing/doing2'
 export default {
   name: 'MrPPVerseWindow',
-  components: {
-    // 载入截图组件
-    Doing2
-  },
+
   props: {
     dialogTitle: {
       type: String,

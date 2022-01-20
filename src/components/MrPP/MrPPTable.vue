@@ -1,15 +1,12 @@
 <template>
   <div>
-    <el-popover
-      placement="top-start"
-      title="标题"
-      width="200"
-      trigger="hover"
-      content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。"
-    />
+
     <el-divider content-position="left">帖子</el-divider>
 
-    <el-row class="mrpp-header" :gutter="10">
+    <el-row
+      class="mrpp-header"
+      :gutter="10"
+    >
       <el-col :span="12">
         <div class="grid-content"><b>标题</b></div>
       </el-col>
@@ -23,7 +20,7 @@
         <div class="grid-content"><b>操作</b></div>
       </el-col>
     </el-row>
-    <div v-if="items === null || items.length == 0">
+    <div v-if="items === null ">
       <br>
       <el-skeleton :rows="10" animated />
     </div>
@@ -39,7 +36,7 @@
             :content="html(item.body)"
           >
             <div slot="reference" class="grid-content">
-              <router-link to="/settings/user"><el-link :underline="false" type="primary">{{ item.title }}</el-link></router-link></div>
+              <el-link :underline="false" type="primary" @click="gotoPost(item)">{{ item.title }}</el-link></div>
           </el-popover>
         </el-col>
         <el-col :span="4">
@@ -50,7 +47,7 @@
         </el-col>
         <el-col :span="4">
           <div class="grid-content">
-            <el-button v-if="item.author.id === userData.id" size="mini" icon="el-icon-delete" circle /></div>
+            <el-button v-if="item.author.id === userData.id" size="mini" icon="el-icon-delete" circle @click="remove(item)" /></div>
         </el-col>
       </el-row>
     </div>
@@ -97,8 +94,12 @@ export default {
       }
       return s
     },
-    select(item) {
-      alert(JSON.stringify(item))
+    remove(item) {
+      this.$emit('remove', item)
+    },
+    gotoPost(item) {
+      const self = this
+      self.$router.push({ path: '/community/post', query: { id: item.id }})
     },
     filterHtml(html) {
       return html.replace(/<[^>]*>/g, '')

@@ -9,7 +9,7 @@ export function postMessage(data) {
 
 export function getMessage(id) {
   return request({
-    url: 'v1/messages/' + id + '?expand=author',
+    url: 'v1/messages/' + id + '?expand=replies',
     method: 'get'
   })
 }
@@ -17,7 +17,7 @@ export function getMessages(sort = '-created_at', search = '', page = 0) {
   let url = 'v1/messages?expand=author&sort=' + sort
 
   if (search !== '') {
-    url += '&VerseSearch[name]=' + search
+    url += '&MessageSearch[title]=' + search
   }
   if (page > 1) {
     url += '&page=' + page

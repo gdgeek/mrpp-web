@@ -1,39 +1,35 @@
 <template>
-  <el-card class="box-card">
-    <el-divider content-position="left">发帖</el-divider>
-    <el-form ref="form" :model="form" :rules="rules" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="标题" prop="title">
-        <el-input v-model="form.title" />
-      </el-form-item>
+  <el-form ref="form" :model="form" :rules="rules" label-width="100px" class="demo-ruleForm">
+    <el-form-item label="标题" prop="title">
+      <el-input v-model="form.title" />
+    </el-form-item>
 
-      <el-form-item label="内容" prop="body">
-        <froala id="edit" v-model="form.body" :tag="'textarea'" :config="config" />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('form')">提交</el-button>
-        <el-button @click="resetForm('form')">重置</el-button>
-      </el-form-item>
-    </el-form>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-  </el-card>
+    <el-form-item label="内容" prop="body">
+      <froala id="edit" v-model="form.body" :tag="'textarea'" :config="config" />
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="submitForm('form')">提交</el-button>
+      <el-button @click="resetForm('form')">重置</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script>
-// import { postMessage } from '@/api/v1/message'
-export default {
-  data() {
-  //  console.log(postMessage)
-    return {
 
+// import Doing2 from '@/views/document/workdata/doing/doing2'
+export default {
+  name: 'MrPPMessageFrom',
+  props: {
+    data: {
+      type: Object,
+      default: null
+    }
+  },
+  data: function() {
+    return {
       config: {
         attribution: false,
         language: 'zh_cn',
-        //  toolbarButtons: [['bold',''], ['undo', 'redo', 'bold'], ['alert', 'clear', 'insert']],
         events: {
           initialized: function() {
             console.log('initialized')
@@ -54,6 +50,12 @@ export default {
           { min: 10, message: '长度至少10个字符', trigger: 'blur' }
         ]
       }
+    }
+  },
+  mounted() {
+    if (this.data !== null) {
+      this.form.title = this.data.title
+      this.form.body = this.data.body
     }
   },
   methods: {
@@ -77,3 +79,7 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+</style>
