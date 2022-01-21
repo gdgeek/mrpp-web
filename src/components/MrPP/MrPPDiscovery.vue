@@ -121,9 +121,9 @@
                   v-for="it in item.items"
                   :key="it.id"
                 >
-                  <el-col style="width:240px">
+                  <el-col style="width:280px">
                     <div style="cursor: pointer" @click="goto(it, item.id)">
-                      <el-card class="box-card" style="height: 320px;">
+                      <el-card class="box-card">
                         <div slot="header" class="clearfix">
                           <span>{{ it.title.rendered }}</span>
                         </div>
@@ -177,7 +177,7 @@ export default {
       menu: null,
       article: null,
       active: '-1',
-      subTitleLength: 6
+      subTitleLength: 4
     }
   },
   watch: {
