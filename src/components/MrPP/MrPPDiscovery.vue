@@ -1,52 +1,72 @@
 <template>
   <el-container class="home-container">
     <el-container>
-      <el-aside width="200px">
-        <el-menu
-          v-if="menu !== null"
-          :default-active="active"
-          class="el-menu-vertical-demo"
-        >
-          <el-menu-item index="-1" @click="navigation()">
-            <i class="el-icon-menu" />
-            <span slot="title">导航</span>
-          </el-menu-item>
-          <div v-if="menu.items.length !== 0">
-            <el-menu-item
-              v-for="it in menu.items"
-              :key="it.id"
-              :index="'-1-' + it.id.toString()"
-              @click="goto(it, -1)"
-            >
-              <span slot="title">{{ it.title.rendered | ellipsis }}</span>
-            </el-menu-item>
-          </div>
-          <el-submenu
-            v-for="item in menu.children"
-            :key="item.id"
-            class="mrpp-el-submenu"
-            :index="item.id.toString()"
-            :hidden="item.items.length === 0"
+      <el-aside id="discovery-el-aside" width="200px">
+        <el-scrollbar wrap-class="scrollbar-wrapper">
+          <el-menu
+            v-if="menu !== null"
+            :default-active="active"
+            class="el-menu-vertical-demo"
+            background-color="#f4f5f7"
           >
-            <template slot="title" class="mrpp-el-submenu-title">
-              <span>{{ item.name }}</span>
-            </template>
-            <el-menu-item-group>
-              <div v-if="item.items.length !== 0">
-                <el-menu-item
-                  v-for="it in item.items"
-                  :key="it.id"
-                  :index="item.id.toString() + '-' + it.id.toString()"
-                  @click="goto(it, item.id)"
-                >
-                  {{ it.title.rendered | ellipsis }}
-                </el-menu-item>
-              </div>
-            </el-menu-item-group>
-          </el-submenu>
-        </el-menu>
+            <el-menu-item index="-1" @click="navigation()">
+              <i class="el-icon-menu" />
+              <span slot="title" style="font-weight: 700;color: #919399;">导航</span>
+            </el-menu-item>
+            <div v-if="menu.items.length !== 0">
+              <el-menu-item
+                v-for="it in menu.items"
+                :key="it.id"
+                :index="'-1-' + it.id.toString()"
+                @click="goto(it, -1)"
+              >
+                <span slot="title">{{ it.title.rendered | ellipsis }}</span>
+              </el-menu-item>
+            </div>
+
+            <div
+              v-for="item in menu.children"
+              :key="item.id"
+            >
+              <el-submenu
+                v-if="item.items.length !== 0 && item.items.length<subTitleLength"
+                class="mrpp-el-submenu"
+                :index="item.id.toString()"
+                :hidden="item.items.length === 0"
+              >
+                <template slot="title" class="mrpp-el-submenu-title">
+                  <span style="color:#2c384b">{{ item.name }}</span>
+                </template>
+                <el-menu-item-group>
+                  <div v-if="item.items.length !== 0">
+                    <el-menu-item
+                      v-for="it in item.items"
+                      :key="it.id"
+                      :index="item.id.toString() + '-' + it.id.toString()"
+                      @click="goto(it, item.id)"
+                    >
+                      <span style="color:#2c384b">{{ it.title.rendered | ellipsis }}</span>
+                    </el-menu-item>
+                  </div>
+                </el-menu-item-group>
+              </el-submenu>
+              <el-menu-item
+                v-else
+                :index="item.id.toString()"
+                :hidden="item.items.length === 0"
+                @click="navigation()"
+              >
+                <template slot="title" class="mrpp-el-submenu-title">
+                  <span style="color:#2c384b">{{ item.name }}</span>
+                </template>
+              </el-menu-item>
+            </div>
+
+          </el-menu>
+        </el-scrollbar>
       </el-aside>
-      <el-main>
+
+      <el-main id="discovery-el-main">
 
         <div v-if="article !== null">
           <el-card class="box-card">
@@ -59,7 +79,7 @@
         <div v-else-if="menu !== null">
           <div>
             <el-divider content-position="left">
-              <big>{{ title }}</big>
+              <big style="font-weight: 700;color: #3ea1d7;">{{ title }}</big>
             </el-divider>
           </div>
           <el-row :gutter="10">
@@ -74,7 +94,7 @@
                       <div slot="header" class="clearfix">
                         <span>{{ it.title.rendered }}</span>
                       </div>
-                      <div class="text item" v-html="it.excerpt.rendered" />
+                      <div style="overflow: hidden" v-html="it.excerpt.rendered" />
                     </el-card>
                     <br>
                   </div>
@@ -90,7 +110,9 @@
             :hidden="item.items.length === 0"
           >
             <div>
-              <el-divider content-position="left">{{ item.name }}</el-divider>
+              <el-divider content-position="left">
+                <span style="color:#1d7296">{{ item.name }}</span>
+              </el-divider>
             </div>
             <el-row :gutter="10">
 
@@ -99,13 +121,13 @@
                   v-for="it in item.items"
                   :key="it.id"
                 >
-                  <el-col style="width:280px">
+                  <el-col style="width:240px">
                     <div style="cursor: pointer" @click="goto(it, item.id)">
-                      <el-card class="box-card">
+                      <el-card class="box-card" style="height: 320px;">
                         <div slot="header" class="clearfix">
                           <span>{{ it.title.rendered }}</span>
                         </div>
-                        <div class="text item" v-html="it.excerpt.rendered" />
+                        <div style="overflow: hidden" v-html="it.excerpt.rendered" />
                       </el-card>
                       <br>
                     </div>
@@ -134,8 +156,8 @@ export default {
   filters: {
     ellipsis(value) {
       if (!value) return ''
-      if (value.length > 10) {
-        return value.slice(0, 10) + '...'
+      if (value.length > 9) {
+        return value.slice(0, 9) + '...'
       }
       return value
     }
@@ -154,7 +176,8 @@ export default {
     return {
       menu: null,
       article: null,
-      active: '-1'
+      active: '-1',
+      subTitleLength: 6
     }
   },
   watch: {
@@ -246,3 +269,22 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+#discovery-el-aside {
+  position: fixed;
+  z-index: 10;
+  top: 52px;
+  bottom: 0;
+  overflow-x: hidden !important;
+  overflow-y: auto;
+  box-sizing: border-box;
+  // background-color: #ddf0e9;
+  background-color: #f4f5f7;
+
+}
+#discovery-el-main {
+  min-height: calc(100vh - 50px);
+  margin: 0 5px 0 205px;
+}
+</style>
