@@ -78,7 +78,7 @@
           </el-col>
           <el-col :span="8">
             <el-container>
-              <el-main><el-card class="box-card">info</el-card></el-main>
+              <el-main><el-card v-if="item" class="box-card"><mr-p-p-penk-card :user_id="item.author_id" /></el-card></el-main>
             </el-container>
           </el-col>
         </el-row>
@@ -92,6 +92,7 @@
 import { postReply, deleteReply } from '@/api/v1/reply'
 import { getMessage, deleteMessage, putMessage } from '@/api/v1/message'
 import MrPPMessageFrom from '@/components/MrPP/MrPPMessageFrom.vue'
+import MrPPPenkCard from '@/components/MrPP/MrPPPenkCard.vue'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
 moment.locale('zh-cn')
@@ -103,7 +104,8 @@ export default {
     ])
   },
   components: {
-    MrPPMessageFrom
+    MrPPMessageFrom,
+    MrPPPenkCard
   },
   data() {
     return {

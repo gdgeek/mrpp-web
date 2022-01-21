@@ -2,6 +2,7 @@
   <div class="verse-index">
     <mr-p-p-verse-window ref="createdDialog" dialog-title="创建宇宙" dialog-submit="创 建" @submit="(form, item) =>submitCreate(form)" />
     <mr-p-p-verse-window ref="changedDialog" dialog-title="修改数据" dialog-submit="修 改" @submit="submitChange" />
+    <mr-p-p-verse-qrcode />
 
     <br>
     <el-container>
@@ -30,7 +31,7 @@
             :lg="6"
             :xl="4"
           >
-            <mr-p-p-card :item="item" @named="changedWindow" @deleted="deletedWindow">
+            <mr-p-p-verse-card :item="item">
               <el-table
                 v-if="item.info !== null"
                 slot="info"
@@ -49,7 +50,29 @@
               <router-link slot="enter" :to="'/verse/editor?id='+item.id">
                 <el-button type="primary" size="mini">编辑</el-button>
               </router-link>
-            </mr-p-p-card>
+
+              <el-button-group slot="buttons" style="float: right" :inline="true">
+                <el-button
+                  type="plain"
+                  size="mini"
+                  @click="qrcode(item.id)"
+                >
+                  <font-awesome-icon icon="qrcode" /></el-button>
+                <el-button
+                  type="plain"
+                  size="mini"
+                  icon="el-icon-edit"
+                  @click="changedWindow(item)"
+                />
+                <el-button
+                  type="plain"
+                  size="mini"
+                  icon="el-icon-delete"
+                  @click="deletedWindow(item)"
+                />
+              &nbsp;
+              </el-button-group>
+            </mr-p-p-verse-card>
             <br>
 
           </el-col>
@@ -78,15 +101,17 @@
 <script>
 import 'element-ui/lib/theme-chalk/index.css'
 import { getVerses, postVerse, putVerse, deleteVerse } from '@/api/v1/verse'
-import MrPPCard from '@/components/MrPP/MrPPCard'
+import MrPPVerseCard from '@/components/MrPP/MrPPVerseCard'
+import MrPPVerseQrcode from '@/components/MrPP/MrPPQRCodeVerse.vue'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 import MrPPVerseWindow from '@/components/MrPP/MrPPVerseWindow'
 export default {
   name: 'VerseEditor',
   components: {
-    MrPPCard,
+    MrPPVerseCard,
     MrPPHeader,
-    MrPPVerseWindow
+    MrPPVerseWindow,
+    MrPPVerseQrcode
   },
   data() {
     return {
@@ -157,6 +182,9 @@ export default {
       this.searched = value
       this.refresh()
     },
+    qrcode: function(id) {
+      // alert(id)
+    },
     named: function(id, newValue) {
       const self = this
       const verse = { name: newValue }
@@ -168,7 +196,7 @@ export default {
     },
     deletedWindow: function(item) {
       const self = this
-      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+      this.$confirm('此操作将永久销毁此宇宙, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         closeOnClickModal: false,

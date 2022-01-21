@@ -52,7 +52,7 @@ export default {
       }
     }
   },
-  mounted() {
+  created() {
     if (this.data !== null) {
       this.form.title = this.data.title
       this.form.body = this.data.body
