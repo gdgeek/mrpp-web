@@ -179,7 +179,7 @@ export default {
       menu: null,
       article: null,
       active: '-1',
-      subTitleLength: 4
+      subTitleLength: 20
     }
   },
   watch: {
