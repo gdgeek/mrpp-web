@@ -11,7 +11,7 @@
           >
             <el-menu-item index="-1" @click="navigation()">
               <i class="el-icon-menu" />
-              <span slot="title" style="font-weight: 700;color: #919399;">导航</span>
+              <span slot="title" style="font-weight: 700;">导航</span>
             </el-menu-item>
             <div v-if="menu.items.length !== 0">
               <el-menu-item
@@ -27,15 +27,15 @@
             <div
               v-for="item in menu.children"
               :key="item.id"
+              :hidden="item.items.length === 0"
             >
               <el-submenu
-                v-if="item.items.length !== 0 && item.items.length<subTitleLength"
+                v-if="item.items.length < subTitleLength"
                 class="mrpp-el-submenu"
                 :index="item.id.toString()"
-                :hidden="item.items.length === 0"
               >
                 <template slot="title" class="mrpp-el-submenu-title">
-                  <span style="color:#2c384b">{{ item.name }}</span>
+                  {{ item.name }}
                 </template>
                 <el-menu-item-group>
                   <div v-if="item.items.length !== 0">
@@ -45,7 +45,7 @@
                       :index="item.id.toString() + '-' + it.id.toString()"
                       @click="goto(it, item.id)"
                     >
-                      <span style="color:#2c384b">{{ it.title.rendered | ellipsis }}</span>
+                      {{ it.title.rendered | ellipsis }}
                     </el-menu-item>
                   </div>
                 </el-menu-item-group>
@@ -53,11 +53,10 @@
               <el-menu-item
                 v-else
                 :index="item.id.toString()"
-                :hidden="item.items.length === 0"
-                @click="navigation()"
+                @click="gotoCategories(item.id)"
               >
                 <template slot="title" class="mrpp-el-submenu-title">
-                  <span style="color:#2c384b">{{ item.name }}</span>
+                  <i class="el-icon-menu" /> {{ item.name }}
                 </template>
               </el-menu-item>
             </div>
@@ -76,53 +75,21 @@
             <span v-html="article.content" />
           </el-card>
         </div>
-        <div v-else-if="menu !== null">
-          <div>
-            <el-divider content-position="left">
-              <big style="font-weight: 700;color: #3ea1d7;">{{ title }}</big>
-            </el-divider>
-          </div>
-          <el-row :gutter="10">
-            <waterfall :options="{}">
-              <waterfall-item
-                v-for="it in menu.items"
-                :key="it.id"
-              >
-                <el-col style="width:280px">
-                  <div style="cursor: pointer" @click="goto(it, -1)">
-                    <el-card class="box-card">
-                      <div slot="header" class="clearfix">
-                        <span>{{ it.title.rendered }}</span>
-                      </div>
-                      <div style="overflow: hidden" v-html="it.excerpt.rendered" />
-                    </el-card>
-                    <br>
-                  </div>
-                </el-col>
-              </waterfall-item>
-            </waterfall>
-          </el-row>
-          <br>
-
-          <div
-            v-for="item in menu.children"
-            :key="item.id"
-            :hidden="item.items.length === 0"
-          >
+        <div v-else-if="menu !== null ">
+          <div v-if="active === '-1'">
             <div>
               <el-divider content-position="left">
-                <span style="color:#1d7296">{{ item.name }}</span>
+                <big style="font-weight: 700;color: #3ea1d7;">{{ title }}</big>
               </el-divider>
             </div>
             <el-row :gutter="10">
-
               <waterfall :options="{}">
                 <waterfall-item
-                  v-for="it in item.items"
+                  v-for="it in menu.items"
                   :key="it.id"
                 >
                   <el-col style="width:280px">
-                    <div style="cursor: pointer" @click="goto(it, item.id)">
+                    <div style="cursor: pointer" @click="goto(it, -1)">
                       <el-card class="box-card">
                         <div slot="header" class="clearfix">
                           <span>{{ it.title.rendered }}</span>
@@ -136,6 +103,41 @@
               </waterfall>
             </el-row>
             <br>
+          </div>
+          <div
+            v-for="item in menu.children"
+            :key="item.id"
+            :hidden="item.items.length === 0"
+          >
+            <div v-if="active === '-1' || active == item.id.toString()">
+              <div>
+                <el-divider content-position="left">
+                  <span style="color:#1d7296">{{ item.name }}</span>
+                </el-divider>
+              </div>
+              <el-row :gutter="10">
+
+                <waterfall :options="{}">
+                  <waterfall-item
+                    v-for="it in item.items"
+                    :key="it.id"
+                  >
+                    <el-col style="width:280px">
+                      <div style="cursor: pointer" @click="goto(it, item.id)">
+                        <el-card class="box-card">
+                          <div slot="header" class="clearfix">
+                            <span>{{ it.title.rendered }}</span>
+                          </div>
+                          <div style="overflow: hidden" v-html="it.excerpt.rendered" />
+                        </el-card>
+                        <br>
+                      </div>
+                    </el-col>
+                  </waterfall-item>
+                </waterfall>
+              </el-row>
+              <br>
+            </div>
           </div>
         </div>
       </el-main>
@@ -188,6 +190,9 @@ export default {
           this.$route.query.categories.toString() +
           '-' +
           this.$route.query.articleid.toString()
+      } else if (typeof this.$route.query.categories !== 'undefined') {
+        this.article = null
+        this.active = this.$route.query.categories.toString()
       } else {
         this.article = null
         this.active = '-1'
@@ -205,6 +210,13 @@ export default {
     navigation() {
       const self = this
       this.$router.push({ path: self.$route.path })
+    },
+    gotoCategories(categories) {
+      const self = this
+      this.$router.push({
+        path: self.$route.path,
+        query: { categories }
+      })
     },
     goto(item, categories) {
       const self = this
