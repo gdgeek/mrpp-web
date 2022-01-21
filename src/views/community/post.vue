@@ -32,7 +32,7 @@
                     </el-button-group>
                   </div>
                   <el-skeleton v-if="item === null" :rows="6" animated />
-                  <froalaView v-else v-model="item.body" />
+                  <div v-else v-html="item.body" />
                 </el-card>
               </el-main>
             </el-container>
@@ -44,7 +44,25 @@
                     <el-timeline-item timestamp="现在就回复" placement="top">
                       <el-form ref="form" :model="form" :rules="rules" label-width="0px" class="demo-ruleForm">
                         <el-form-item label="" prop="body">
-                          <froala id="edit" v-model="form.body" :tag="'textarea'" :config="config" />
+
+                          <editor
+                            id="reply-editor"
+                            v-model="form.body"
+                            api-key="nmpheyzdn3q78nliem5jlyz3w1qktvzd3can1siffivt3twq"
+                            :init="{
+                              height: 200,
+                              menubar: false,
+                              plugins: [
+                                'advlist autolink lists link image charmap print preview anchor',
+                                'searchreplace visualblocks code fullscreen',
+                                'insertdatetime media table paste code help wordcount'
+                              ],
+                              toolbar:
+                                'undo redo | formatselect | bold italic backcolor | \
+           alignleft aligncenter alignright alignjustify | \
+           bullist numlist outdent indent | removeformat | help'
+                            }"
+                          />
                         </el-form-item>
                         <el-form-item>
                           <el-button style="float: right; padding: 5px 10px" @click="submitForm('form')"><font-awesome-icon icon="edit" />回复</el-button>
@@ -59,7 +77,7 @@
                     <div v-else>
                       <el-timeline-item v-for="reply in replies" :key="reply.id" :timestamp="reply.updated_at" placement="top">
                         <el-card :body-style="{ padding: '15px 10px 0px 20px' }">
-                          <froalaView v-model="reply.body" />
+                          <div v-html="reply.body" />
                           <div style="float: right; padding: 5px 0px" class="bottom clearfix">
 
                             <span v-text="signature(reply)" /> 发布于<time class="time">{{ reply.updated_at }}</time>
@@ -89,6 +107,7 @@
 
 <script>
 
+import Editor from '@tinymce/tinymce-vue'
 import { postReply, deleteReply } from '@/api/v1/reply'
 import { getMessage, deleteMessage, putMessage } from '@/api/v1/message'
 import MrPPMessageFrom from '@/components/MrPP/MrPPMessageFrom.vue'
@@ -104,6 +123,7 @@ export default {
     ])
   },
   components: {
+    Editor,
     MrPPMessageFrom,
     MrPPPenkCard
   },

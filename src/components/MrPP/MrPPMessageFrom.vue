@@ -5,8 +5,24 @@
     </el-form-item>
 
     <el-form-item label="内容" prop="body">
-      <froala id="edit" v-model="form.body" :tag="'textarea'" :config="config" />
-    </el-form-item>
+      <editor
+        id="edit"
+        v-model="form.body"
+        api-key="nmpheyzdn3q78nliem5jlyz3w1qktvzd3can1siffivt3twq"
+        :init="{
+          height: 300,
+          menubar: false,
+          plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount'
+          ],
+          toolbar:
+            'undo redo | formatselect | bold italic backcolor | \
+           alignleft aligncenter alignright alignjustify | \
+           bullist numlist outdent indent | removeformat | help'
+        }"
+      /></el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submitForm('form')">提交</el-button>
       <el-button @click="resetForm('form')">重置</el-button>
@@ -15,10 +31,13 @@
 </template>
 
 <script>
-
+import Editor from '@tinymce/tinymce-vue'
 // import Doing2 from '@/views/document/workdata/doing/doing2'
 export default {
   name: 'MrPPMessageFrom',
+  components: {
+    'editor': Editor
+  },
   props: {
     data: {
       type: Object,
