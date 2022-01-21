@@ -27,23 +27,8 @@
       </div>
       <div class="clearfix">
         <slot name="enter">入口</slot>
+        <slot name="buttons" />
 
-        <el-button-group style="float: right" :inline="true">
-
-          <el-button
-            type="plain"
-            size="mini"
-            icon="el-icon-edit"
-            @click="named()"
-          />
-          <el-button
-            type="plain"
-            size="mini"
-            icon="el-icon-delete"
-            @click="deleted()"
-          />
-          &nbsp;
-        </el-button-group>
       </div>
       <div class="bottom clearfix" />
     </el-card>
@@ -52,24 +37,15 @@
 
 <script>
 export default {
-  name: 'MrPPCard',
+  name: 'MrPPVerseCard',
   props: {
     item: {
       type: Object,
       required: true
     }
   },
-  created() {},
-  methods: {
-    named() {
-      const self = this
-      this.$emit('named', self.item)
-    },
-    deleted() {
-      const self = this
-      this.$emit('deleted', self.item)
-    }
-  }
+  created() {}
+
 }
 </script>
 

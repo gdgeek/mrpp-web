@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import 'element-ui/lib/theme-chalk/display.css'
+import 'element-ui/lib/theme-chalk/index.css'
 import { getPolygen, putPolygen, deletePolygen } from '@/api/resources'
 import MrPPCard from '@/components/MrPP/MrPPCard'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'

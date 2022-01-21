@@ -12,7 +12,7 @@
           :label="item.key"
         >
           <span style="float: left">
-            <font-awesome-icon :icon="item.key" /></span>
+            <font-awesome-icon icon="item.key" /></span>
           <span style="float: right; color: #8492a6; font-size: 13px">{{ item.key }}</span>
         </el-option>
       </el-select>

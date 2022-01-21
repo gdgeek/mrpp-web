@@ -161,8 +161,14 @@ export const constantRoutes = [
       {
         path: '/community/index',
         name: 'CommunityIndex',
-        meta: { title: '交流' },
+        meta: { title: '交流/列表' },
         component: () => import('@/views/community/index')
+      },
+      {
+        path: '/community/post',
+        name: 'CommunityPost',
+        meta: { title: '交流/帖子' },
+        component: () => import('@/views/community/post')
       }
     ]
   },
