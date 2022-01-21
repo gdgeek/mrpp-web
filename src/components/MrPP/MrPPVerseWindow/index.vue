@@ -7,9 +7,9 @@
   >
     <el-form ref="form" :rules="rules" :model="form" label-width="80px">
 
-      <!--  <el-form-item label="封面图片">
-        <Doing2 />
-      </el-form-item> -->
+      <el-form-item label="封面图片">
+        <mr-p-p-cropper ref="image" :image-url="'imageUrl'" :file-name="'verse.picture'" @saveFile="saveFile" />
+      </el-form-item>
       <el-form-item prop="name" label="名称">
         <el-input v-model="form.name" />
       </el-form-item>
@@ -29,10 +29,14 @@
 </template>
 
 <script>
+import MrPPCropper from '@/components/MrPP/MrPPCropper.vue'
 
 export default {
   name: 'MrPPVerseWindow',
 
+  components: {
+    MrPPCropper
+  },
   props: {
     dialogTitle: {
       type: String,
@@ -46,10 +50,12 @@ export default {
   data: function() {
     return {
       dialogVisible: false,
+      imageUrl: null,
       form: {
         name: '',
         desc: ''
       },
+      imageId: -1,
       item: null,
       rules: {
         name: [
@@ -71,7 +77,7 @@ export default {
       const self = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$emit('submit', self.form, self.item)
+          this.$emit('submit', self.form, self.item, self.imageId)
         } else {
           console.log('error submit!!')
           return false
@@ -79,9 +85,13 @@ export default {
       })
     },
     show(item = null) {
-      // alert(item.id + '!')
+      const self = this
       this.item = item
       if (this.item) {
+        setTimeout(() => {
+          self.$refs['image'].setImageUrl(this.item.image.url)
+        }, 0)
+        // alert(this.item.image.url)
         this.form.name = this.item.name
         const info = JSON.parse(this.item.info)
         if (info !== null) {
@@ -92,8 +102,10 @@ export default {
     },
     hide() {
       this.dialogVisible = false
+    },
+    saveFile(imageId) {
+      this.imageId = imageId
     }
-
   }
 }
 </script>

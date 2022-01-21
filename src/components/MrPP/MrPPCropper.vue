@@ -2,7 +2,7 @@
   <div>
     <!-- <el-card class="box-card"> -->
     <el-upload
-      class="avatar-uploader"
+      class="file-uploader"
       action=""
       :auto-upload="false"
       :show-file-list="false"
@@ -10,8 +10,8 @@
       accept="image/jpeg,image/gif,image/png,image/bmp"
       style="float: left"
     >
-      <img v-if="imageUrl" :src="imageUrl" class="avatar">
-      <i v-else class="el-icon-plus avatar-uploader-icon" />
+      <img v-if="showImage" :src="showImage" class="file">
+      <i v-else class="el-icon-plus file-uploader-icon" />
     </el-upload>
 
     <!-- 用户基本信息 end-->
@@ -46,34 +46,21 @@
           />
         </div>
       </div>
-      <!-- <div class="action-box">
-          <el-upload
-            class="upload-demo"
-            action=""
-            :auto-upload="false"
-            :show-file-list="false"
-            :on-change="handleChangeUpload"
-          >
-            <el-button type="primary" plain>更换图片</el-button>
-          </el-upload>
-        </div> -->
+
       <div slot="footer" class="dialog-footer">
         <el-button-group style="float: left">
           <!--   <el-button type="primary" plain @click="clearImgHandle">清除图片</el-button> -->
-          <el-button type="primary" plain @click="rotateLeftHandle">
+          <el-button size="mini" type="primary" plain @click="rotateLeftHandle">
             左旋转
           </el-button>
-          <el-button type="primary" plain @click="rotateRightHandle">
+          <el-button size="mini" type="primary" plain @click="rotateRightHandle">
             右旋转
           </el-button>
-          <el-button type="primary" plain @click="changeScaleHandle(1)">
+          <el-button size="mini" type="primary" plain @click="changeScaleHandle(1)">
             放大
           </el-button>
-          <el-button type="primary" plain @click="changeScaleHandle(-1)">
+          <el-button size="mini" type="primary" plain @click="changeScaleHandle(-1)">
             缩小
-          </el-button>
-          <el-button type="primary" plain @click="downloadHandle('blob')">
-            下载
           </el-button>
         </el-button-group>
         <el-button-group>
@@ -90,8 +77,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { putUserData } from '@/api/v1/user'
 import { postFile } from '@/api/files'
 import SparkMD5 from 'spark-md5'
 import {
@@ -102,20 +87,18 @@ import {
   fileUrl
 } from '@/assets/js/file.js'
 export default {
-  name: 'Doing2',
-  computed: {
-    ...mapGetters(['userData']),
-    imageUrl() {
-      if (typeof this.userData.avatar === 'undefined') {
-        return null
-      }
-      return this.userData.avatar.url
+  name: 'MrPPCropper',
+  props: {
+
+    fileName: {
+      type: String,
+      require: true
     }
   },
   data: function() {
     return {
+      url: null,
       isDisable: false,
-      // 剪裁组件配置开始
       // isPreview: false,
       dialogVisible: false,
       // previewImg: '', // 预览图片地址
@@ -142,31 +125,14 @@ export default {
       loading: false
     }
   },
+  computed: {
+    showImage() {
+      return this.url
+    }
+  },
   methods: {
-    refreshUserdata(data) {
-      console.log(data)
-      this.$store.commit('user/setUser', data)
-    },
-    saveInfo() {
-      const self = this
-      self.isDisable = true
-      setTimeout(() => {
-        this.isDisable = false // 防重复提交，两秒后才能再次点击
-      }, 2000)
-      this.$refs.infoForm.validate(valid => {
-        if (valid) {
-          putUserData({ info: JSON.stringify(self.infoForm) }).then(
-            response => {
-              console.log(response.data)
-              self.refreshUserdata(response.data)
-              this.$message({
-                message: '修改信息成功',
-                type: 'success'
-              })
-            }
-          )
-        }
-      })
+    setImageUrl(imageUrl) {
+      this.url = imageUrl
     },
     // 头像上传方法开始
     // 上传按钮 限制图片大小和类型
@@ -235,23 +201,12 @@ export default {
       // let cropAxis = [data.axis.x1, data.axis.y1, data.axis.x2, data.axis.y2]
       // console.log(cropAxis)
     },
-    saveAvatar(file, md5, url) {
+    saveFile(file, md5, url) {
+      this.url = url
       const self = this
       postFile(file.name, md5, file.type, url)
         .then(response => {
-          putUserData({ avatar_id: response.data.id })
-            .then(response => {
-              self.refreshUserdata(response.data)
-              this.$message({
-                message: '修改头像成功',
-                type: 'success'
-              })
-              this.loading = false
-            })
-            .catch(err => {
-              this.loading = false
-              console.log(err)
-            })
+          self.$emit('saveFile', response.data.id)
         })
         .catch(err => {
           this.loading = false
@@ -262,7 +217,7 @@ export default {
       const self = this
       // 获取截图的 blob 数据
       this.$refs.cropper.getCropBlob(blob => {
-        blob.name = self.userData.username + '.avatar'
+        blob.name = self.fileName
         blob.extension = '.jpg'
         const file = blob
 
@@ -271,10 +226,10 @@ export default {
           fileCos().then(cos => {
             fileHas(key, cos).then(function(has) {
               if (has) {
-                self.saveAvatar(file, md5, fileUrl(key, cos))
+                self.saveFile(file, md5, fileUrl(key, cos))
               } else {
                 fileUpload(key, file, p => {}, cos).then(data => {
-                  self.saveAvatar(file, md5, fileUrl(key, cos))
+                  self.saveFile(file, md5, fileUrl(key, cos))
                 })
               }
             })
@@ -297,15 +252,15 @@ export default {
   }
 }
 
-.avatar-uploader {
+.file-uploader {
   cursor: pointer;
   position: relative;
   overflow: hidden;
 }
-.avatar-uploader:hover {
+.file-uploader:hover {
   border-color: #409eff;
 }
-.avatar-uploader-icon {
+.file-uploader-icon {
   font-size: 28px;
   color: #8c939d;
   width: 132px;
@@ -316,7 +271,7 @@ export default {
   margin-right: 12px;
   border-radius: 6px;
 }
-.avatar {
+.file {
   width: 132px;
   height: 132px;
   display: block;

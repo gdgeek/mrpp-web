@@ -7,7 +7,6 @@
           <span slot="header" class="mrpp-title">
             <b class="card-title" nowrap>{{ item.name }}</b>
           </span>
-
           <img
             v-if="item.image === null"
             src="@/assets/image/none.png"
@@ -36,6 +35,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'MrPPVerseCard',
   props: {

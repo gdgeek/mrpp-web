@@ -1,6 +1,6 @@
 <template>
   <div class="verse-index">
-    <mr-p-p-verse-window ref="createdDialog" dialog-title="创建宇宙" dialog-submit="创 建" @submit="(form, item) =>submitCreate(form)" />
+    <mr-p-p-verse-window ref="createdDialog" dialog-title="创建宇宙" dialog-submit="创 建" @submit="(form, item, imageId) =>submitCreate(form, imageId)" />
     <mr-p-p-verse-window ref="changedDialog" dialog-title="修改数据" dialog-submit="修 改" @submit="submitChange" />
     <mr-p-p-verse-qrcode />
 
@@ -148,19 +148,19 @@ export default {
       }
       return table
     },
-    submitChange(form, item) {
+    submitChange(form, item, imageId) {
       const self = this
       const json = { description: form.desc }
-      const data = { name: form.name, info: JSON.stringify(json) }
+      const data = { name: form.name, info: JSON.stringify(json), image_id: imageId }
       putVerse(item.id, data).then((response) => {
         self.refresh()
         this.$refs.changedDialog.$emit('hide')
       })
     },
-    submitCreate(form) {
+    submitCreate(form, imageId) {
       const self = this
       const json = { description: form.desc }
-      const data = { name: form.name, info: JSON.stringify(json) }
+      const data = { name: form.name, info: JSON.stringify(json), image_id: imageId }
       postVerse(data).then((response) => {
         console.log(response.data.id)
         self.$router.push({ path: '/verse/editor', query: { id: response.data.id }})
