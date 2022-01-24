@@ -53,6 +53,7 @@
     "vue-hljs": "^2.0.0",
     "vue-router": "3.0.6",
     "vue-waterfall": "^1.0.6",
+    "vue2-dropzone": "^3.6.0",
     "vue2-waterfall": "^3.0.1",
     "vuex": "3.1.0",
     "wpapi": "^1.2.2"

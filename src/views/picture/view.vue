@@ -99,6 +99,9 @@ export default {
         }, {
           item: '图片尺寸',
           text: printVector2(JSON.parse(this.data.info).size)
+        }, {
+          item: '文件大小',
+          text: this.data.file.size + '字节'
         }
         ]
       } else {

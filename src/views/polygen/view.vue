@@ -110,7 +110,13 @@ export default {
         }, {
           item: '创建时间',
           text: this.data.created_at
-        }, {
+        },
+        {
+
+          item: '文件大小',
+          text: this.data.file.size + '字节'
+        },
+        {
           item: '模型尺寸',
           text: printVector3(JSON.parse(this.data.info).size)
         }, {

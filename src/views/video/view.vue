@@ -93,7 +93,13 @@ export default {
         }, {
           item: '创建时间',
           text: this.data.created_at
-        }, {
+        },
+        {
+
+          item: '文件大小',
+          text: this.data.file.size + '字节'
+        },
+        {
           item: '视频尺寸',
           text: printVector2(JSON.parse(this.data.info).size)
         }
