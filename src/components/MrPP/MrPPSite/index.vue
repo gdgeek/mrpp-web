@@ -15,24 +15,40 @@
       <!-- box end -->
       <!-- footer start -->
       <div class="footer">
-        <div class="foot-summary linkcolor">
-          <el-link
-            href="https://trello.com/b/oxFuPkQy/"
-            target="_blank"
-            type="primary"
-            :underline="false"
-          >
-            <i class="el-icon-s-flag" />
-            当前进行工作
-          </el-link>
-        </div>
-        <hr>
-        <div class="foot-summary linkcolor">
-          <el-link type="primary" :underline="false" target="_blank" href="@BPMrPP.pdf">
-            <i class="el-icon-picture" />
-            平台商业计划书
-          </el-link>
-        </div>
+        <el-collapse v-model="activeNames" @change="handleChange">
+          <el-collapse-item name="work">
+            <template slot="title">
+              <el-link :underline="false" type="primary">
+                <i class="el-icon-s-flag" /> 当前进行的工作
+              </el-link>
+            </template>
+            <el-card style="align" class="box-card">
+              <blockquote class="trello-board-compact">
+                <a href="https://trello.com/b/oxFuPkQy/">Trello Board</a>
+              </blockquote>
+            </el-card>
+          </el-collapse-item>
+          <el-collapse-item title="平台商业计划书" name="2">
+            <template slot="title"> <el-link
+
+              type="primary"
+              :underline="false"
+            >
+              <i class="el-icon-picture" /> 平台商业计划书
+            </el-link>
+
+            </template>
+
+            <el-card style="align" class="box-card">
+              <el-link type="primary" :underline="false" target="_blank" href="/BPMrPP.pdf">
+
+                打开pdf文档
+              </el-link>
+            </el-card>
+          </el-collapse-item>
+
+        </el-collapse>
+
       </div>
       <div class="foot-tips linkcolor">
         <el-link href="https://bujiaban.com" target="_blank" :underline="false">
@@ -50,13 +66,32 @@
         </el-link>
       </div>
       <br>
-      <!-- footer end -->
+    <!-- footer end -->
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      activeNames: []
+    }
+  },
+  beforeCreate() {
+    document.querySelector('body').classList.add('login-page')
+    this.script = document.createElement('script')
+    this.script.type = 'text/javascript'
+    this.script.src = 'https://p.trellocdn.com/embed.min.js'
+    document.body.appendChild(this.script)
+  },
+  methods: {
+
+    handleChange(val) {
+
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
