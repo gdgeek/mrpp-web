@@ -138,9 +138,9 @@ export default {
         }, image_type)
       })
     },
-    save(file, md5, url, info) {
+    save(data, info) {
       const self = this
-      postFile(file.name, md5, file.type, url).then((response) => {
+      postFile(data).then((response) => {
         const video = { image_id: response.data.id, info }
         putVideo(self.data.id, video).then((response) => {
           self.data.image_id = response.data.image_id
@@ -164,13 +164,14 @@ export default {
           fileMD5(file, (p) => {}, new SparkMD5()).then(function(md5) {
             const key = md5 + file.extension
             fileCos().then(cos => {
+              const data = { key, md5, filename: file.name, url: fileUrl(key, cos) }
               fileHas(key, cos).then(function(has) {
                 if (has) {
-                  self.save(file, md5, fileUrl(key, cos), info)
+                  self.save(data, info)
                 } else {
                   fileUpload(key, file, (p) => {}, cos)
-                    .then(data => {
-                      self.save(file, md5, fileUrl(key, cos), info)
+                    .then(r => {
+                      self.save(data, info)
                     })
                 }
               })

@@ -60,11 +60,11 @@ function fileUpload (filename, file, progress, cos) {
     })
   })
 }
-function fileUrl (filename, cos) {
+function fileUrl (key, cos) {
   let url = cos.getObjectUrl({
     Bucket: config.bucket,
     Region: config.region,
-    Key: filename,
+    Key: key,
     Expires: 60,
     Sign: true
   }, function (err, data) {

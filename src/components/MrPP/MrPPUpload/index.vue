@@ -93,13 +93,13 @@ export default {
       return ret
     },
 
-    saveFile(filename, md5, type, url) {
+    saveFile(data) {
       const self = this
       self.step('succeed')
       self.upload = self.progress(1)
-      postFile(filename, md5, type, url).then((response) => {
+      postFile(data).then((response) => {
         self.save = self.progress(0.5)
-        self.$emit('saveResource', filename, response.data.id).then(() => {
+        self.$emit('saveResource', data.filename, response.data.id).then(() => {
           self.save = self.progress(1)
         })
       }).catch(err => {
@@ -116,20 +116,17 @@ export default {
         }, new SparkMD5()).then(function(md5) {
           const key = md5 + file.extension
           fileCos().then(cos => {
+            const data = { filename: file.name, md5, key, url: fileUrl(key, cos) }
             fileHas(key, cos).then(function(has) {
               self.step('upload')
-              let type = file.type
-              if (type === '') {
-                type = file.extension
-              }
               if (has) {
-                self.saveFile(file.name, md5, type, fileUrl(key, cos))
+                self.saveFile(data)
               } else {
                 fileUpload(key, file, function(p) {
                   self.upload = self.progress(p)
                 }, cos
-                ).then(data => {
-                  self.saveFile(file.name, md5, type, fileUrl(key, cos))
+                ).then(r => {
+                  self.saveFile(data)
                 })
               }
             })

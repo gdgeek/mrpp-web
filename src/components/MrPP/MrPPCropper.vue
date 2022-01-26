@@ -201,10 +201,10 @@ export default {
       // let cropAxis = [data.axis.x1, data.axis.y1, data.axis.x2, data.axis.y2]
       // console.log(cropAxis)
     },
-    saveFile(file, md5, url) {
-      this.url = url
+    saveFile(data) {
+      this.url = data.url
       const self = this
-      postFile(file.name, md5, file.type, url)
+      postFile(data)
         .then(response => {
           self.$emit('saveFile', response.data.id)
         })
@@ -224,12 +224,13 @@ export default {
         fileMD5(file, p => {}, new SparkMD5()).then(function(md5) {
           const key = md5 + file.extension
           fileCos().then(cos => {
+            const data = { filename: file.name, key, md5, url: fileUrl(key, cos) }
             fileHas(key, cos).then(function(has) {
               if (has) {
-                self.saveFile(file, md5, fileUrl(key, cos))
+                self.saveFile(data)
               } else {
-                fileUpload(key, file, p => {}, cos).then(data => {
-                  self.saveFile(file, md5, fileUrl(key, cos))
+                fileUpload(key, file, p => {}, cos).then(r => {
+                  self.saveFile(data)
                 })
               }
             })

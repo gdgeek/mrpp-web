@@ -4,32 +4,47 @@ const state = {
     opened: true,
     withoutAnimation: false
   },
+  blind: false,
   device: 'desktop'
 }
 
 const mutations = {
-  TOGGLE_SIDEBAR: state => {
-    state.sidebar.opened = !state.sidebar.opened
-    state.sidebar.withoutAnimation = false
+  setSidebar: (state, { opened, withoutAnimation }) => {
+    if (!state.blind) {
+      state.blind = true
+      state.sidebar.opened = opened
+      state.sidebar.withoutAnimation = withoutAnimation
+
+      setTimeout(() => {
+        var myEvent = new Event('resize')
+        window.dispatchEvent(myEvent)
+      }, 100)
+      setTimeout(() => {
+        state.blind = false
+      }, 110)
+    }
   },
-  CLOSE_SIDEBAR: (state, withoutAnimation) => {
-    state.sidebar.opened = false
-    state.sidebar.withoutAnimation = withoutAnimation
-  },
-  TOGGLE_DEVICE: (state, device) => {
+
+  toggleDevice: (state, device) => {
     state.device = device
   }
 }
 
 const actions = {
-  toggleSideBar({ commit }) {
-    commit('TOGGLE_SIDEBAR')
+  toggleSideBar({ commit, state }) {
+    commit('setSidebar', {
+      opened: !state.sidebar.opened,
+      withoutAnimation: false
+    })
   },
   closeSideBar({ commit }, { withoutAnimation }) {
-    commit('CLOSE_SIDEBAR', withoutAnimation)
+    commit('setSidebar', {
+      opened: false,
+      withoutAnimation: withoutAnimation
+    })
   },
   toggleDevice({ commit }, device) {
-    commit('TOGGLE_DEVICE', device)
+    commit('toggleDevice', device)
   }
 }
 

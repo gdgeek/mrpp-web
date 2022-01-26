@@ -81,10 +81,6 @@ export default {
   methods: {
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
-      setTimeout(() => {
-        var myEvent = new Event('resize')
-        window.dispatchEvent(myEvent)
-      }, 100)
     },
     async logout() {
       await this.$store.dispatch('user/logout')

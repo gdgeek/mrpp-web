@@ -243,9 +243,9 @@ export default {
         self.expire = false
       })
     },
-    saveFile(filename, md5, type, url, center, size) {
+    saveFile(data, center, size) {
       const self = this
-      postFile(filename, md5, type, url).then((response) => {
+      postFile(data).then((response) => {
         console.log(response.data)
         self.updatePolygen(response.data.id, center, size)
       })
@@ -267,13 +267,14 @@ export default {
           const key = md5 + file.extension
 
           fileCos().then(cos => {
+            const data = { md5, key, filename: file.name, url: fileUrl(key, cos) }
             fileHas(key, cos).then(function(has) {
               if (has) {
-                self.saveFile(file.name, md5, file.type, fileUrl(key, cos), center, size)
+                self.saveFile(data, center, size)
               } else {
                 fileUpload(key, file, (p) => {}, cos
-                ).then(data => {
-                  self.saveFile(file.name, md5, file.type, fileUrl(key, cos), center, size)
+                ).then(r => {
+                  self.saveFile(data, center, size)
                 })
               }
             })

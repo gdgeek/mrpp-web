@@ -13,16 +13,15 @@ export function getToken() {
   return token
 }
 
-export function setToken(value) {
-  if (typeof Vue.$cookies !== 'undefined') {
-    Vue.$cookies.set(TokenKey, value)
-  }
-  token = value
-}
-
 export function removeToken() {
   if (typeof Vue.$cookies !== 'undefined') {
     Vue.$cookies.remove(TokenKey)
   }
   token = null
+}
+export function setToken(value) {
+  if (typeof Vue.$cookies !== 'undefined') {
+    Vue.$cookies.set(TokenKey, value)
+  }
+  token = value
 }

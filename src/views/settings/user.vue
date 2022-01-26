@@ -383,9 +383,9 @@ export default {
       // let cropAxis = [data.axis.x1, data.axis.y1, data.axis.x2, data.axis.y2]
       // console.log(cropAxis)
     },
-    saveAvatar(file, md5, url) {
+    saveAvatar(data) {
       const self = this
-      postFile(file.name, md5, file.type, url).then((response) => {
+      postFile(data).then((response) => {
         putUserData({ avatar_id: response.data.id }).then((response) => {
           self.refreshUserdata(response.data)
           this.$message({
@@ -413,13 +413,14 @@ export default {
         fileMD5(file, (p) => {}, new SparkMD5()).then(function(md5) {
           const key = md5 + file.extension
           fileCos().then(cos => {
+            const data = { md5, key, filename: file.name, url: fileUrl(key, cos) }
             fileHas(key, cos).then(function(has) {
               if (has) {
-                self.saveAvatar(file, md5, fileUrl(key, cos))
+                self.saveAvatar(data)
               } else {
                 fileUpload(key, file, (p) => {}, cos)
-                  .then(data => {
-                    self.saveAvatar(file, md5, fileUrl(key, cos))
+                  .then(r => {
+                    self.saveAvatar(data)
                   })
               }
             })
