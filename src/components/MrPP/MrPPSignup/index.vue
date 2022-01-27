@@ -9,10 +9,10 @@
         class="signup-form"
         label-width="80px"
       >
-        <el-form-item label="用户名" prop="username">
+        <el-form-item label="用户名" prop="username" style="margin-bottom:26px">
           <el-input v-model="form.username" suffix-icon="el-icon-user" />
         </el-form-item>
-        <el-form-item label="密码" prop="password">
+        <el-form-item label="密码" prop="password" style="margin-bottom:26px">
           <el-input
             v-model="form.password"
             autocomplete="off"
@@ -20,7 +20,7 @@
             type="password"
           />
         </el-form-item>
-        <el-form-item label="确认密码" prop="checkPassword">
+        <el-form-item label="确认密码" prop="checkPassword" style="margin-bottom:26px">
           <el-input
             v-model="form.checkPassword"
             type="password"
