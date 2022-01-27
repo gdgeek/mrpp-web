@@ -1,19 +1,27 @@
 <template>
   <mr-p-p-site>
-    <div class="module-head">
+
+    <div v-if="countdown" class="module-head">
+
+      <h1 class="module-welcome">一切即将开始!</h1>
+      <p class="module-text">距离网站发布时间：</p>
+      <p class="module-text">还剩下{{ leftDay }}天，{{ leftHour }}小时{{ leftMinute }}分{{ leftSecond }}秒。</p>
+      <p class="module-text">
+        <font-awesome-icon icon="check-circle" @click="touch('a')" />-
+        <font-awesome-icon icon="biking" @click="touch('b')" />-
+        <font-awesome-icon icon="snowflake" @click="touch('c')" />
+      </p>
+
+    </div>
+    <div v-else class="module-head">
       <h1 class="module-welcome">欢迎!</h1>
       <p class="module-text">准备好出发了么？</p>
 
       <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
         <el-tab-pane name="login" label="账户密码登录"><mr-p-p-login>账户密码登录</mr-p-p-login></el-tab-pane>
-
         <el-tab-pane name="qrcode" label="微信扫码（登陆/注册）"><mr-p-p-qrcode :active="qrcode">微信扫码进入</mr-p-p-qrcode></el-tab-pane>
       </el-tabs>
-      <!--
-      <el-alert v-if="!!alert.show" :title="alert.title" :type="alert.type">
-        {{ alert.description }}
-      </el-alert>
-      -->
+
     </div>
 
   </mr-p-p-site>
@@ -33,26 +41,81 @@ export default {
   },
   data() {
     return {
-      activeName: 'login'
-
+      activeName: 'login',
+      leftDay: 0,
+      leftHour: 0,
+      leftMinute: 0,
+      leftSecond: 0,
+      countdown: true,
+      passowrd: ''
     }
   },
   computed: {
     qrcode() {
       return this.activeName === 'qrcode'
     }
-    /*,
-    alert() {
-      return this.$store.state.flash.main
-    }*/
+  },
+  watch: {
+    $route: {
+      handler: function(value) {
+        if (value.params.id) {
+          this.computeLeftTime()
+          this.countDown = setInterval(() => {
+            this.computeLeftTime()
+          }, 1000)
+        } else {
+          clearInterval(this.countDown)
+          this.countDown = ''
+        }
+      },
+      deep: true
+    }
+  },
+  created() {
+    this.computeLeftTime()
+    this.countDown = setInterval(() => {
+      this.computeLeftTime()
+    }, 1000)
   },
   destroyed() {
     // this.$store.commit('flashClean')
   },
   methods: {
+    touch(key) {
+      if (key === 'c') {
+        this.passowrd = ''
+      }
+      this.passowrd += key
+      if (this.passowrd === 'cba') {
+        this.countdown = false
+      }
+    },
+    computeLeftTime() { // 计算倒计时
+      const endDate = new Date(new Date('2022-02-01T00:00:00'))
+      const nowDate = new Date()
+      if (endDate <= nowDate) {
+        clearInterval(this.countDown)
+        // 更新项目状态
+        this.countdown = false
+      } else {
+        const totalSeconds = parseInt((endDate - nowDate) / 1000)
+        // 天数
+        this.leftDay = Math.floor(totalSeconds / (60 * 60 * 24))
+        // 取模（余数）
+        var modulo = totalSeconds % (60 * 60 * 24)
+        // 小时数
+        this.leftHour = Math.floor(modulo / (60 * 60)) > 9 ? Math.floor(modulo / (60 * 60)) : '0' + Math.floor(modulo / (60 * 60)).toString()
+        modulo = modulo % (60 * 60)
+        // 分钟
+        this.leftMinute = Math.floor(modulo / 60) > 9 ? Math.floor(modulo / 60) : '0' + Math.floor(modulo / 60).toString()
+        // 秒
+        this.leftSecond = modulo % 60 > 9 ? modulo % 60 : '0' + (modulo % 60).toString()
+      }
+    },
     handleClick(tab, event) {
       console.log(this.activeName)
     }
+
   }
 }
 </script>
