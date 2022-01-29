@@ -62,7 +62,7 @@
         <el-form ref="passwordForm" :model="passwordForm" :rules="passwordRules" label-width="80px">
           <el-row :gutter="24">
             <el-col :xs="20" :sm="20" :md="14" :lg="14" :xl="14" :offset="4">
-              <el-form-item label="旧的密码" prop="oldPassword">
+              <el-form-item label="旧的密码" prop="oldPassword" style="margin-bottom:26px">
                 <el-input
                   v-model="passwordForm.oldPassword"
                   type="password"
@@ -70,7 +70,7 @@
                 />
               </el-form-item>
 
-              <el-form-item label="新的密码" prop="password">
+              <el-form-item label="新的密码" prop="password" style="margin-bottom:26px">
                 <el-input
                   v-model="passwordForm.password"
                   type="password"
@@ -78,7 +78,7 @@
                 />
               </el-form-item>
 
-              <el-form-item label="确认密码" prop="checkPassword">
+              <el-form-item label="确认密码" prop="checkPassword" style="margin-bottom:26px">
                 <el-input
                   v-model="passwordForm.checkPassword"
                   type="password"
