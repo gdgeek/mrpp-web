@@ -22,7 +22,7 @@
                 <i class="el-icon-s-flag" /> 当前进行的工作
               </el-link>
             </template>
-            <el-card style="align" class="box-card">
+            <el-card align="center" class="box-card">
               <blockquote class="trello-board-compact">
                 <a href="https://trello.com/b/oxFuPkQy/">Trello Board</a>
               </blockquote>
@@ -39,7 +39,7 @@
 
             </template>
 
-            <el-card style="align" class="box-card">
+            <el-card align="center" class="box-card">
               <el-link type="primary" :underline="false" target="_blank" href="/BPMrPP.pdf">
 
                 打开pdf文档

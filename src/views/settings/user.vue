@@ -14,7 +14,7 @@
       <el-row :gutter="24">
         <el-col :xs="16" :sm="16" :md="12" :lg="10" :xl="10" :offset="3">
           <el-form ref="nicknameForm" :model="nicknameForm" :rules="nicknameRules" label-width="80px">
-            <el-form-item label="昵称" prop="nickname">
+            <el-form-item label="昵称" prop="nickname" style="margin-bottom:26px">
               <el-input
                 v-model="nicknameForm.nickname"
                 placeholder="昵称"
@@ -51,7 +51,7 @@
       <el-divider />
       <div class="box-title">
         <h3 class="font-color">基本信息</h3>
-        <small>请填写你的基本信息，以获得更有乐趣的个性化交互和体验。</small>
+        <small style="line-height:16px">请填写你的基本信息，以获得更有乐趣的个性化交互和体验。</small>
       </div>
 
       <!-- 用户基本信息 star-->

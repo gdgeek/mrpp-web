@@ -10,10 +10,10 @@
       :model="form"
       label-width="75px"
     >
-      <el-form-item label="用户名" prop="username">
+      <el-form-item label="用户名" prop="username" style="margin-bottom:26px">
         <el-input v-model="form.username" suffix-icon="el-icon-user" />
       </el-form-item>
-      <el-form-item label="密码" prop="password">
+      <el-form-item label="密码" prop="password" style="margin-bottom:26px">
         <el-input
           v-model="form.password"
           type="password"
