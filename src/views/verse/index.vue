@@ -2,7 +2,7 @@
   <div class="verse-index">
     <mr-p-p-verse-window ref="createdDialog" dialog-title="创建宇宙" dialog-submit="创 建" @submit="(form, item, imageId) =>submitCreate(form, imageId)" />
     <mr-p-p-verse-window ref="changedDialog" dialog-title="修改数据" dialog-submit="修 改" @submit="submitChange" />
-    <mr-p-p-verse-qrcode />
+    <mr-p-p-verse-qrcode ref="qrcode" />
 
     <br>
     <el-container>
@@ -99,12 +99,13 @@
 </template>
 
 <script>
+
 import 'element-ui/lib/theme-chalk/index.css'
 import { getVerses, postVerse, putVerse, deleteVerse } from '@/api/v1/verse'
 import MrPPVerseCard from '@/components/MrPP/MrPPVerseCard'
 import MrPPVerseQrcode from '@/components/MrPP/MrPPQRCodeVerse.vue'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
-import MrPPVerseWindow from '@/components/MrPP/MrPPVerseWindow'
+import MrPPVerseWindow from '@/components/MrPP/MrPPVerseWindow/index.vue'
 export default {
   name: 'VerseEditor',
   components: {
@@ -173,6 +174,8 @@ export default {
     },
     changedWindow: function(item) {
       this.$refs.changedDialog.$emit('show', item)
+
+      // qrcode
     },
     sort: function(value) {
       this.sorted = value
@@ -183,7 +186,7 @@ export default {
       this.refresh()
     },
     qrcode: function(id) {
-      // alert(id)
+      this.$refs.qrcode.$emit('open', id)
     },
     named: function(id, newValue) {
       const self = this

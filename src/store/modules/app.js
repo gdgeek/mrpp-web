@@ -9,7 +9,7 @@ const state = {
 }
 
 const mutations = {
-  setSidebar: (state, { opened, withoutAnimation }) => {
+  /* setSidebar: (state, { opened, withoutAnimation }) => {
     if (!state.blind) {
       state.blind = true
       state.sidebar.opened = opened
@@ -23,25 +23,70 @@ const mutations = {
         state.blind = false
       }, 110)
     }
-  },
+  },*/
 
+  //    state.blind = true
+  //  state.sidebar.opened = opened
+  // state.sidebar.withoutAnimation = withoutAnimation
+  setBlind: (state, blind) => {
+    state.blind = blind
+  },
+  setSidebarOpened: (state, opened) => {
+    state.sidebar.opened = opened
+  },
+  setSidebarWithoutAnimation: (state, withoutAnimation) => {
+    state.sidebar.withoutAnimation = withoutAnimation
+  },
   toggleDevice: (state, device) => {
     state.device = device
   }
 }
 
 const actions = {
+  setSidebar({ commit, state }, { opened, withoutAnimation }) {
+    if (!state.blind) {
+      commit('setBlind', true)
+      commit('setSidebarOpened', opened)
+      commit('setSidebarWithoutAnimation', withoutAnimation)
+
+      setTimeout(() => {
+        var myEvent = new Event('resize')
+        window.dispatchEvent(myEvent)
+      }, 100)
+      setTimeout(() => {
+        commit('setBlind', false)
+      }, 110)
+    }
+  },
   toggleSideBar({ commit, state }) {
-    commit('setSidebar', {
-      opened: !state.sidebar.opened,
-      withoutAnimation: false
-    })
+    if (!state.blind) {
+      commit('setBlind', true)
+      commit('setSidebarOpened', !state.sidebar.opened)
+      commit('setSidebarWithoutAnimation', false)
+
+      setTimeout(() => {
+        var myEvent = new Event('resize')
+        window.dispatchEvent(myEvent)
+      }, 100)
+      setTimeout(() => {
+        commit('setBlind', false)
+      }, 110)
+    }
   },
   closeSideBar({ commit }, { withoutAnimation }) {
-    commit('setSidebar', {
-      opened: false,
-      withoutAnimation: withoutAnimation
-    })
+    if (!state.blind) {
+      commit('setBlind', true)
+      commit('setSidebarOpened', false)
+      commit('setSidebarWithoutAnimation', withoutAnimation)
+
+      setTimeout(() => {
+        var myEvent = new Event('resize')
+        window.dispatchEvent(myEvent)
+      }, 100)
+      setTimeout(() => {
+        commit('setBlind', false)
+      }, 110)
+    }
   },
   toggleDevice({ commit }, device) {
     commit('toggleDevice', device)
