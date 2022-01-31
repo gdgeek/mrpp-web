@@ -1,7 +1,9 @@
 <template>
   <el-container class="home-container">
+
     <el-container>
       <el-aside id="discovery-el-aside" width="200px">
+
         <el-scrollbar wrap-class="scrollbar-wrapper">
           <el-menu
             v-if="menu !== null"
@@ -66,7 +68,6 @@
       </el-aside>
 
       <el-main id="discovery-el-main">
-
         <div v-if="article !== null">
           <el-card class="box-card">
             <span slot="header" class="mrpp-title">
@@ -140,6 +141,7 @@
             </div>
           </div>
         </div>
+
       </el-main>
     </el-container>
   </el-container>
@@ -184,6 +186,19 @@ export default {
   },
   watch: {
     $route: function(to, from) {
+      this.readRoute()
+    }
+  },
+  created() {
+    const self = this
+
+    this.readRoute()
+    self.readMenu(self.category).then(menu => {
+      self.menu = menu
+    })
+  },
+  methods: {
+    readRoute() {
       if (typeof this.$route.query.articleid !== 'undefined') {
         this.select(this.$route.query.articleid)
         this.active =
@@ -197,16 +212,7 @@ export default {
         this.article = null
         this.active = '-1'
       }
-    }
-  },
-  created() {
-    const self = this
-
-    self.readMenu(self.category).then(menu => {
-      self.menu = menu
-    })
-  },
-  methods: {
+    },
     navigation() {
       const self = this
       this.$router.push({ path: self.$route.path })
