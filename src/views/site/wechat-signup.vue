@@ -12,8 +12,8 @@
 
 // @ is an alias to /src
 import MrPPSite from '@/components/MrPP/MrPPSite'
-import MrPPSignup from '@/components/MrPP/MrPPSignup'
-import MrPPBinding from '@/components/MrPP/MrPPBinding'
+import MrPPSignup from '@/components/MrPP/MrPPSignup.vue'
+import MrPPBinding from '@/components/MrPP/MrPPBinding.vue'
 export default {
   name: 'WechatSignup',
   components: {
@@ -21,24 +21,11 @@ export default {
     MrPPSignup,
     MrPPBinding
   },
-  data() {
-    return {
-
-    }
-  },
   computed: {
 
     token() {
       return this.$route.query.token
     }
-  },
-  beforeDestroy() {
-  },
-  created() {
-
-  },
-  methods: {
-
   }
 }
 </script>

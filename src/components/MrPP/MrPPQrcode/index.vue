@@ -1,7 +1,5 @@
 <template>
-
   <div>
-
     <h2 class="login-title">微信扫码（登陆/注册）</h2>
     <div
       v-if="active"
@@ -11,18 +9,24 @@
       @click="reload()"
     >
       <el-image
-        :src="qrcode "
+        :src="qrcode"
         style="width: 100%; height: 300px"
         fit="contain"
         lazy
-      />
+      >
+        <div slot="error" class="image-slot">
+          <div
+            v-loading="loading"
+            element-loading-text="读取微信二维码"
+            class="father"
+          />
+        </div>
+      </el-image>
     </div>
-
   </div>
 </template>
 
 <script>
-
 import { qrcode, openid } from '@/api/wechats'
 import { setToken } from '@/utils/auth'
 // @ is an alias to /src
@@ -36,6 +40,7 @@ export default {
   },
   data() {
     return {
+      loading: true,
       qrcode: null,
       token: null,
       interval: null,
@@ -63,10 +68,11 @@ export default {
     load() {
       const self = this
       qrcode().then(response => {
-        console.log(response.data)
         self.qrcode = response.data.qrcode
         self.token = response.data.token
-        setTimeout(() => { self.expire = true }, response.data.lifetime * 1000)
+        setTimeout(() => {
+          self.expire = true
+        }, response.data.lifetime * 1000)
         self.expire = false
       })
     },
@@ -85,15 +91,21 @@ export default {
       if (self.expire) {
         return
       }
-      openid(this.token).then((response) => {
-        if (typeof (response.data) !== 'undefined') {
-          if (typeof (response.data.token) !== 'undefined' && response.data.token === self.token) {
-            if (typeof (response.data.access_token) !== 'undefined') {
+      openid(this.token).then(response => {
+        if (typeof response.data !== 'undefined') {
+          if (
+            typeof response.data.token !== 'undefined' &&
+            response.data.token === self.token
+          ) {
+            if (typeof response.data.access_token !== 'undefined') {
               setToken(response.data.access_token)
               this.$router.push('/')
               // this.$router.push({ path: '/site/wechat-login', query: { token: response.data.token }})
             } else {
-              this.$router.push({ path: '/site/wechat-signup', query: { token: response.data.token }})
+              this.$router.push({
+                path: '/site/wechat-signup',
+                query: { token: response.data.token }
+              })
             }
           }
         }
@@ -112,3 +124,13 @@ export default {
   }
 }
 </script>
+<style scoped>
+
+.father {
+  position: absolute;
+  height: 300px;
+  width: 100%;
+  background-color: #2aabd2;
+}
+
+</style>
