@@ -55,7 +55,7 @@ export default {
         name: '',
         desc: ''
       },
-      imageId: -1,
+      imageId: null,
       item: null,
       rules: {
         name: [
